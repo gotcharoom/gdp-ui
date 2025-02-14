@@ -4,8 +4,7 @@ import {Outlet, useMatches} from "react-router-dom";
 
 const CommonLayout = () => {
     const matches = useMatches();
-    const title = matches.find((match) => match.handle?.title)?.handle?.title || "Default Title";
-
+    const title = matches.reverse().find((match) => match.handle?.title)?.handle?.title || "Default Title";
 
     return (
         <>

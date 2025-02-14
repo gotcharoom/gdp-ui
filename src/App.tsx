@@ -1,28 +1,13 @@
 // Styles
 import './App.css'
 import './styles/main.scss'
-import {BrowserRouter, Routes} from "react-router-dom";
-import {JSX, Suspense} from "react";
-
-// Routes
-import UserRoutes from "@routes/user/UserRoutes.tsx";
-import AdminRoutes from "@routes/admin/AdminRoutes.tsx";
-
-const RouteArray: JSX.Element[] = [
-    ...UserRoutes,
-    ...AdminRoutes
-]
+import {RouterProvider} from "react-router-dom";
+import CustomRouter from "@routes/CustomRouter.tsx";
 
 const App = () => {
 
   return (
-      <BrowserRouter>
-          <Suspense fallback={<div> Now Loading... </div>}>
-              <Routes>
-                  {RouteArray}
-              </Routes>
-          </Suspense>
-      </BrowserRouter>
+    <RouterProvider router={CustomRouter} />
   )
 }
 

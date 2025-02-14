@@ -1,14 +1,24 @@
 import CommonLayout from "@layout/test/CommonLayout.tsx";
-import {Route} from "react-router-dom";
-import {JSX, lazy} from "react";
+import {RouteObject} from "react-router-dom";
+import {lazy} from "react";
+import withSuspense from "@utils/withSuspense.tsx";
 
-// Routes
+// Components
 const SampleUserMain = lazy(() => import("@pages/sample/SampleUserMain.tsx"))
+const SampleUserMainComponent = withSuspense(SampleUserMain);
 
-const UserRoutes: JSX.Element[] = [
-    <Route path="/" element={<CommonLayout />} key={'user-root'}  handle={{title: 'test'}}>
-        <Route path="/" element={<SampleUserMain />} key={'user-sample-main'}  handle={{title: 'test2'}}/>
-    </Route>
-];
-
+const UserRoutes: RouteObject[] = [
+    {
+        path: "/",
+        element: <CommonLayout />,
+        handle: { title: "Home" },
+        children: [
+            {
+                path: "test",
+                element: <SampleUserMainComponent />,
+                handle: { title: "Home2" },
+            },
+        ],
+    },
+]
 export default UserRoutes;
