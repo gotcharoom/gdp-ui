@@ -1,13 +1,13 @@
 import CommonLayout from "@layout/test/CommonLayout.tsx";
 import {Route} from "react-router-dom";
-import {JSX} from "react";
+import {JSX, lazy} from "react";
 
 // Routes
-import Challenge from "@routes/user/Challenge.tsx";
+const SampleUserMain = lazy(() => import("@pages/sample/SampleUserMain.tsx"))
 
 const UserRoutes: JSX.Element[] = [
     <Route path="/" element={<CommonLayout />}>
-        {Challenge}
+        <Route path="/" element={<SampleUserMain />} state/>
     </Route>
 ];
 
