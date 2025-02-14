@@ -4,6 +4,7 @@ import {createBrowserRouter} from "react-router-dom";
 import UserRoutes from "@routes/user/UserRoutes.tsx";
 import AdminRoutes from "@routes/admin/AdminRoutes.tsx";
 
+
 const CustomRouter = createBrowserRouter([
     ...UserRoutes,
     ...AdminRoutes

@@ -1,9 +1,17 @@
+import {useOutletContext} from "react-router-dom";
+
 const SampleUserMain = () => {
+    const { title } = useOutletContext<{ title: string }>();
 
     return (
-        <div>
-            test main
-        </div>
+        <>
+            <div>
+                {title}
+            </div>
+            <div>
+                test
+            </div>
+        </>
     );
 }
 
