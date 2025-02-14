@@ -4,7 +4,7 @@ import CommonLayout from "@layout/test/CommonLayout.tsx";
 
 // 추후 변경
 const AdminRoutes: JSX.Element[] = [
-    <Route path="/admin" element={<CommonLayout />}/>
+    <Route path="/admin" element={<CommonLayout />} key={'admin-root'}/>
 ];
 
 export default AdminRoutes;

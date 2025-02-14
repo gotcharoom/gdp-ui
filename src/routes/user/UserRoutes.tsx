@@ -6,8 +6,8 @@ import {JSX, lazy} from "react";
 const SampleUserMain = lazy(() => import("@pages/sample/SampleUserMain.tsx"))
 
 const UserRoutes: JSX.Element[] = [
-    <Route path="/" element={<CommonLayout />}>
-        <Route path="/" element={<SampleUserMain />} state/>
+    <Route path="/" element={<CommonLayout />} key={'user-root'}  handle={{title: 'test'}}>
+        <Route path="/" element={<SampleUserMain />} key={'user-sample-main'}  handle={{title: 'test2'}}/>
     </Route>
 ];
 

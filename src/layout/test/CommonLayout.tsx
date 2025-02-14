@@ -1,8 +1,12 @@
 // import Header from './Header';
 
-import {Outlet} from "react-router-dom";
+import {Outlet, useMatches} from "react-router-dom";
 
 const CommonLayout = () => {
+    const matches = useMatches();
+    const title = matches.find((match) => match.handle?.title)?.handle?.title || "Default Title";
+
+
     return (
         <>
         {/*<Header/>*/}
@@ -10,6 +14,7 @@ const CommonLayout = () => {
         {/*    <Outlet/>*/}
         {/*</main>*/}
         <main>
+            {title}
             1234
             <Outlet />
         </main>
