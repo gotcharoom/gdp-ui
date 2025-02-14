@@ -32,6 +32,8 @@
       "@styles/*": ["styles/*"],
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
+      "@stores/*": ["stores/*"],
+      "@hooks/*": ["hooks/*"]
     }
   },
   "include": ["src"]
