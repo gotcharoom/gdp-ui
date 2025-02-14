@@ -1,4 +1,4 @@
-import CommonLayout from "@layout/test/CommonLayout.tsx";
+import CommonLayout from "@layout/CommonLayout.tsx";
 import {RouteObject} from "react-router-dom";
 import {lazy} from "react";
 import withSuspense from "@utils/withSuspense.tsx";

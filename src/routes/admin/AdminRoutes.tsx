@@ -1,5 +1,5 @@
 import {RouteObject} from "react-router-dom";
-import CommonLayout from "@layout/test/CommonLayout.tsx";
+import CommonLayout from "@layout/CommonLayout.tsx";
 
 // 추후 변경
 const AdminRoutes: RouteObject[] = [
