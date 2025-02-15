@@ -1,8 +1,5 @@
 const Snb = () => {
-
-    return (
-        <></>
-    );
-}
+    return <></>;
+};
 
 export default Snb;

@@ -1,5 +1,5 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import type { RootState, AppDispatch } from "@stores/store.ts";
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import type { RootState, AppDispatch } from '@stores/store.ts';
 
 // Hook 생성으로 타입을 매번 지정해줄 필요가 없게됨
 

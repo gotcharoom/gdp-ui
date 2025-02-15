@@ -1,4 +1,4 @@
-import instance from "@utils/axiosInstance.ts";
+import instance from '@utils/axiosInstance.ts';
 
 instance.interceptors.request.use(
     function (config) {
@@ -7,11 +7,11 @@ instance.interceptors.request.use(
         const refreshToken = '';
 
         if (accessToken && refreshToken) {
-            config.headers.common["Authorization"] = `${accessToken}`;
+            config.headers.common['Authorization'] = `${accessToken}`;
         }
         return config;
     },
     function (error) {
         return Promise.reject(error);
-    }
+    },
 );

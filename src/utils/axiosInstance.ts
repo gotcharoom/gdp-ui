@@ -1,16 +1,16 @@
-import axios, {AxiosInstance, CreateAxiosDefaults} from 'axios';
+import axios, { AxiosInstance, CreateAxiosDefaults } from 'axios';
 
-const config:CreateAxiosDefaults = {
-    baseURL:import.meta.env.VITE_API_URL,
-    params : {
+const config: CreateAxiosDefaults = {
+    baseURL: import.meta.env.VITE_API_URL,
+    params: {
         api_key: import.meta.env.VITE_API_KEY,
-        language : "ko-KR",
+        language: 'ko-KR',
     },
     headers: {
-        "Authorization": ``
-    }
-}
+        Authorization: ``,
+    },
+};
 
-const instance:AxiosInstance = axios.create(config);
+const instance: AxiosInstance = axios.create(config);
 
 export default instance;

@@ -1,4 +1,4 @@
-import instance from "@utils/axiosInstance.ts";
+import instance from '@utils/axiosInstance.ts';
 
 instance.interceptors.response.use(
     function (response) {
@@ -6,5 +6,5 @@ instance.interceptors.response.use(
     },
     function (error) {
         return Promise.reject(error);
-    }
+    },
 );

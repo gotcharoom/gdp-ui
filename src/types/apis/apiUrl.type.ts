@@ -1,5 +1,5 @@
 interface ApiUrl {
-    [key: string]: string
+    [key: string]: string;
 }
 
 export default ApiUrl;

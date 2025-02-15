@@ -1,13 +1,9 @@
-import {createBrowserRouter} from "react-router-dom";
+import { createBrowserRouter } from 'react-router-dom';
 
 // Routes
-import UserRoutes from "@routes/user/UserRoutes.tsx";
-import AdminRoutes from "@routes/admin/AdminRoutes.tsx";
+import UserRoutes from '@routes/user/UserRoutes.tsx';
+import AdminRoutes from '@routes/admin/AdminRoutes.tsx';
 
+const CustomRouter = createBrowserRouter([...UserRoutes, ...AdminRoutes]);
 
-const CustomRouter = createBrowserRouter([
-    ...UserRoutes,
-    ...AdminRoutes
-]);
-
-export default CustomRouter
+export default CustomRouter;

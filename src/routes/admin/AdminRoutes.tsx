@@ -1,13 +1,13 @@
-import {RouteObject} from "react-router-dom";
-import CommonLayout from "@layout/CommonLayout.tsx";
+import { RouteObject } from 'react-router-dom';
+import CommonLayout from '@layout/CommonLayout.tsx';
 
 // 추후 변경
 const AdminRoutes: RouteObject[] = [
     {
-        path: "/admin",
+        path: '/admin',
         element: <CommonLayout />,
-        handle: { title: "Home" },
+        handle: { title: 'Home' },
     },
-]
+];
 
 export default AdminRoutes;
