@@ -33,7 +33,8 @@
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
       "@stores/*": ["stores/*"],
-      "@hooks/*": ["hooks/*"]
+      "@hooks/*": ["hooks/*"],
+      "@apis/*": ["apis/*"]
     }
   },
   "include": ["src"]
