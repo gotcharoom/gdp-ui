@@ -1,0 +1,8 @@
+@use '../layoutConstants' as *;
+
+.snb {
+
+  .snb__custom-drawer {
+    width: $snb__custom-drawer--width;
+  }
+}

@@ -35,7 +35,8 @@ const SnbListItem = (props: SnbListItemProps) => {
     };
 
     const calPadding = (): SxProps<Theme> => {
-        return { pl: (depth - 1) * 4 };
+        const defaultPadding = 2;
+        return { pl: (depth - 1) * 4 + defaultPadding };
     };
 
     const drawExpand = (item: MenuItem, index) => {

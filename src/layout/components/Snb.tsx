@@ -6,6 +6,8 @@ import { MenuItem } from '@types/layout/components/menuItem.type.ts';
 import SnbListItem from '@layout/components/SnbListItem.tsx';
 import { useLocation } from 'react-router-dom';
 
+import '@styles/layout/components/Snb.scss';
+
 export interface SnbProps {
     isOpen: boolean;
     toggleDrawer: (isOpen: boolean) => () => void;
@@ -33,7 +35,7 @@ const Snb = (props: SnbProps) => {
     }, [props.isOpen]);
 
     return (
-        <Drawer open={open} onClose={props.toggleDrawer(false)}>
+        <Drawer className={'snb'} open={open} onClose={props.toggleDrawer(false)} PaperProps={{ className: 'snb__custom-drawer' }}>
             <SnbListItem items={targetMenuItems} />
         </Drawer>
     );

@@ -1,5 +1,5 @@
 import '@styles/layout/components/Header.scss';
-import { Button, IconButton } from '@mui/material';
+import { Avatar, Button, IconButton } from '@mui/material';
 
 interface HeaderProps {
     toggleMenu: (isOpen: boolean) => void;
@@ -38,7 +38,7 @@ const Header = (props: HeaderProps) => {
                 </div>
                 <div className={'header__social__account'}>
                     <IconButton className={'account'}>
-                        <img className={'logo'} alt={'header__logo'} src={'logo/Discord_Logo.png'} />
+                        <Avatar className={'logo'} alt='Remy Sharp' src='logo/GDP_LOGO.png' />
                     </IconButton>
                 </div>
             </div>
