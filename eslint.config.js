@@ -4,6 +4,8 @@ import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
+import prettier from 'eslint-config-prettier'; // Prettier 설정 추가
+import prettierPlugin from 'eslint-plugin-prettier'; // Prettier 플러그인 추가
 
 export default tseslint.config(
     { ignores: ['dist'] }, // `dist` 폴더는 ESLint 검사를 무시
@@ -31,6 +33,7 @@ export default tseslint.config(
             react,
             'react-hooks': reactHooks,
             'react-refresh': reactRefresh,
+            prettier: prettierPlugin, // Prettier 플러그인 추가
         },
         rules: {
             /* 권장 설정 */
