@@ -45,6 +45,7 @@ export default tseslint.config(
             /* 개별 설정 */
             'react-refresh/only-export-components': ['warn', { allowConstantExport: true }], // React Fast Refresh 관련 : 컴포넌트만 export 하도록 경고
             'prettier/prettier': 'error', // Prettier 규칙을 위반하면 ESLint에서 에러로 처리
+            'react/react-in-jsx-scope': 'off', // JSX에서 React import 안 해도 되도록 설정
         },
     },
 );
