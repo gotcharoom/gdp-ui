@@ -14,6 +14,11 @@ const UserRoutes: RouteObject[] = [
         handle: { title: 'Home' },
         children: [
             {
+                index: true,
+                element: <SampleUserMainComponent />,
+                handle: { title: 'Home2' },
+            },
+            {
                 path: 'test',
                 element: <SampleUserMainComponent />,
                 handle: { title: 'Home2' },
