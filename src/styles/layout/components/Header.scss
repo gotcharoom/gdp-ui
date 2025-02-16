@@ -19,11 +19,24 @@
     align-items: center;
 
     .header__nav__logo {
-      width: $header--logo-weight;
-      height: 100%;
+      width: $header__logo--size;
+      height: $header__logo--size;
+      padding-left: $header__logo--padding;
+
+      .logo {
+        @extend .logo
+      }
     }
 
-    .header__nav__logo .logo {
+    .header__nav__menu {
+      width: $header__menu--size;
+      height: $header__menu--size;
+      padding-left: $header__menu--padding;
+
+      color: grey;
+    }
+
+    .header__nav__menu .menu {
       width: 100%;
       height: 100%;
       object-fit: contain;
@@ -33,7 +46,48 @@
   .header__social {
     display: flex;
     width: 100%;
+    height: 100%;
     justify-content: end;
     align-items: center;
+
+    .header__social__discord {
+      width: $header__social__discord--size;
+      height: $header__social__discord--size;
+      padding-right: $header__social__discord--padding;
+    }
+
+    .header__social__discord .discord {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+
+      .logo {
+        @extend .logo
+      }
+    }
+
+    .header__social__account {
+      width: $header__social__account--size;
+      height: $header__social__account--size;
+      padding-right: $header__social__account--padding;
+    }
+
+    .header__social__account .account {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+
+
+      .logo {
+        @extend .logo
+      }
+    }
+
+  }
+
+  .logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 }
