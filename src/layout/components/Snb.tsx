@@ -20,10 +20,12 @@ const Snb = (props: SnbProps) => {
     const location = useLocation();
 
     const allMenuItems: MenuItem[] = pathUtils.extractMenuItems(routes);
-    const targetMenuItems: MenuItem[] =
-        allMenuItems
-            .sort((a, b) => b.path.length - a.path.length)
-            .find((item) => location.pathname === item.path || location.pathname.startsWith(item.path))?.children || [];
+    const targetMenu: MenuItem = allMenuItems
+        .sort((a, b) => b.path.length - a.path.length)
+        .find((item) => location.pathname === item.path || location.pathname.startsWith(item.path));
+
+    const targetMenuItems: MenuItem[] = targetMenu?.children || [];
+    const targetMenuTitle: string = targetMenu?.title || 'Default Title';
 
     /* Privates */
 
@@ -36,7 +38,7 @@ const Snb = (props: SnbProps) => {
 
     return (
         <Drawer className={'snb'} open={open} onClose={props.toggleDrawer(false)} PaperProps={{ className: 'snb__custom-drawer' }}>
-            <SnbListItem items={targetMenuItems} />
+            <SnbListItem key={'root-sub-list-item'} items={targetMenuItems} parentTitle={targetMenuTitle} />
         </Drawer>
     );
 };

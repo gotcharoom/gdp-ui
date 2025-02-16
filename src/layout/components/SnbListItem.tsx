@@ -1,13 +1,14 @@
 import { MenuItem } from '@types/layout/components/menuItem.type.ts';
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { SxProps } from '@mui/system';
 import { Theme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 export interface SnbListItemProps {
     items: MenuItem[];
+    parentTitle: string;
     depth?: number;
 }
 
@@ -26,8 +27,9 @@ const SnbListItem = (props: SnbListItemProps) => {
         }));
     };
 
-    const routeToPath = (item: MenuItem) => {
+    const routeToPath = (item: MenuItem, index) => {
         navigate(item.path);
+        toggleCollapse(index);
     };
 
     const hasChildren = (item: MenuItem): boolean => {
@@ -54,7 +56,7 @@ const SnbListItem = (props: SnbListItemProps) => {
 
         return (
             <Collapse in={openState[index]}>
-                <SnbListItem items={item.children} depth={depth} />
+                <SnbListItem key={'sub-list-item' + item.title + depth} items={item.children} parentTitle={item.title} depth={depth} />
             </Collapse>
         );
     };
@@ -65,30 +67,34 @@ const SnbListItem = (props: SnbListItemProps) => {
             return toggleCollapse(index);
         }
 
-        return routeToPath(item);
+        return routeToPath(item, index);
     };
 
     /* Lifecycle */
 
     return (
-        <>
-            <List disablePadding={props?.depth != undefined && props.depth > 1}>
+        <Fragment key={'fragment' + props.parentTitle + depth}>
+            <List key={'list' + props.parentTitle + depth} disablePadding={props?.depth != undefined && props.depth > 1}>
                 {props.items.map((item, index) => {
                     return (
-                        <>
-                            <ListItemButton key={item.title} sx={calPadding()} onClick={onClickMenuItem(item, index)}>
-                                <ListItemIcon>
+                        <Fragment key={'inner-fragment' + item.title + depth + index}>
+                            <ListItemButton
+                                key={'list-item-button' + item.title + depth + index}
+                                sx={calPadding()}
+                                onClick={onClickMenuItem(item, index)}
+                            >
+                                <ListItemIcon key={'list-item-icon' + item.title + depth + index}>
                                     <SendIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={item.title} />
                                 {drawExpand(item, index)}
                             </ListItemButton>
                             {drawCollapseItems(item, index)}
-                        </>
+                        </Fragment>
                     );
                 })}
             </List>
-        </>
+        </Fragment>
     );
 };
 
