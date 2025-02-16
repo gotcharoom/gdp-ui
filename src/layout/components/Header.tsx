@@ -21,7 +21,7 @@ const Header = (props: HeaderProps) => {
         <div className={'header'}>
             <div className={'header__nav'}>
                 <div className={'header__nav__logo'}>
-                    <img className={'logo'} alt={'header__logo'} src={'logo/GDP_LOGO.png'} />
+                    <img className={'logo'} alt={'header__logo'} src={'/logo/GDP_LOGO.png'} />
                 </div>
                 <div className={'header__nav__menu'}>
                     <IconButton className={'menu'} onClick={onClickMenu}>
@@ -33,12 +33,12 @@ const Header = (props: HeaderProps) => {
             <div className={'header__social'}>
                 <div className={'header__social__discord'}>
                     <IconButton className={'discord'}>
-                        <img className={'logo'} alt={'header__logo'} src={'logo/Discord_Logo.png'} />
+                        <img className={'logo'} alt={'header__logo'} src={'/logo/Discord_Logo.png'} />
                     </IconButton>
                 </div>
                 <div className={'header__social__account'}>
                     <IconButton className={'account'}>
-                        <Avatar className={'logo'} alt='Remy Sharp' src='logo/GDP_LOGO.png' />
+                        <Avatar className={'logo'} alt='Remy Sharp' src='/logo/GDP_LOGO.png' />
                     </IconButton>
                 </div>
             </div>
