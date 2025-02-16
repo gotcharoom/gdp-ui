@@ -1,5 +1,7 @@
+import '@styles/layout/components/Footer.scss';
+
 const Footer = () => {
-    return <></>;
+    return <div className={'footer'}>footer</div>;
 };
 
 export default Footer;

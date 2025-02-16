@@ -1,4 +1,4 @@
-import { Outlet, RouteObject, useMatches } from 'react-router-dom';
+import { Outlet, useMatches } from 'react-router-dom';
 
 // Components
 import Header from '@layout/components/Header.tsx';
@@ -36,7 +36,7 @@ const CommonLayout = () => {
         <div className={'common-layout'}>
             <Header toggleMenu={onClickMenu} />
             <Snb isOpen={open} toggleDrawer={toggleDrawer} />
-            <main>
+            <main className={'common-layout__main'}>
                 <Outlet context={{ title }} />
             </main>
             <Footer />

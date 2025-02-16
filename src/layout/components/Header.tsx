@@ -19,7 +19,9 @@ const Header = (props: HeaderProps) => {
     return (
         <div className={'header'}>
             <div className={'header__nav'}>
-                <div className={'header__nav__logo'}>Logo</div>
+                <div className={'header__nav__logo'}>
+                    <img className={'logo'} alt={'header__logo'} src={'logo/GDP_LOGO.png'} />
+                </div>
                 <div className={'header__nav__menu'} onClick={onClickMenu}>
                     Menu
                 </div>

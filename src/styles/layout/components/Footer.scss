@@ -1,0 +1,7 @@
+@use '../layoutConstants' as *;
+
+.footer {
+  width: 100%;
+  height: $footer--height;
+  flex-shrink: 0;
+}
