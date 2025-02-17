@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom';
-import { MenuItem } from '@types/layout/components/menuItem.type.ts';
+import { MenuItem } from '@gdp-types/layout/components/menuItem.type.ts';
 
 const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
     return (
