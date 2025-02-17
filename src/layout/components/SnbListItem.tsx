@@ -79,12 +79,16 @@ const SnbListItem = (props: SnbListItemProps) => {
                     return (
                         <Fragment key={'inner-fragment' + item.title + depth + index}>
                             <ListItemButton
+                                className={'snb_list__item-button'}
                                 key={'list-item-button' + item.title + depth + index}
                                 sx={calPadding()}
                                 onClick={onClickMenuItem(item, index)}
                             >
-                                <ListItemIcon key={'list-item-icon' + item.title + depth + index}>
-                                    <SendIcon />
+                                <ListItemIcon
+                                    className={'snb__list__item-button__icon'}
+                                    key={'list-item-icon' + item.title + depth + index}
+                                >
+                                    <span className='material-icons icon'>{item.icon}</span>
                                 </ListItemIcon>
                                 <ListItemText primary={item.title} />
                                 {drawExpand(item, index)}

@@ -26,7 +26,10 @@ const UserRoutes: RouteObject[] = [
                     {
                         index: true,
                         element: <SampleUserMainComponent />,
-                        handle: { title: 'Home1' },
+                        handle: {
+                            title: 'Home1',
+                            icon: 'more-horizon',
+                        },
                     },
                     {
                         path: 'test',

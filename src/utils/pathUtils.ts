@@ -11,10 +11,11 @@ const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
             .flatMap((route) => {
                 const fullPath = `${basePath}/${route.path ?? ''}`.replace('//', '/').replace(/\/+$/g, '');
                 const title = route.handle?.title || 'Untitled';
+                const icon = route.handle?.icon || 'apps';
 
                 const children = route.children ? extractMenuItems(route.children, fullPath) : [];
 
-                return { path: fullPath, title, children } as MenuItem;
+                return { path: fullPath, title, icon, children } as MenuItem;
             })
     );
 };

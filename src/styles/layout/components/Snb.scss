@@ -5,4 +5,17 @@
   .snb__custom-drawer {
     width: $snb__custom-drawer--width;
   }
+
+  .snb_list__item-button {
+    display: flex;
+  }
+  .snb_list__item-button .snb__list__item-button__icon {
+    display: flex;
+    width: $snb__list__item-button__icon--width;
+  }
+
+  .snb_list__item-button .snb__list__item-button__icon .icon{
+    width: 100%;
+  }
+
 }
