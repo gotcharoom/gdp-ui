@@ -4,11 +4,14 @@ import { Provider } from 'react-redux';
 
 import App from './App.tsx';
 import { store } from '@stores/store.ts';
+import { enableMocking } from '@utils/mswUtil.ts';
 
-createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </StrictMode>,
-);
+enableMocking().then(() => {
+    createRoot(document.getElementById('root')!).render(
+        <StrictMode>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </StrictMode>,
+    );
+});
