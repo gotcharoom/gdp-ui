@@ -31,7 +31,7 @@ const CommonLayout = () => {
 
     return (
         <div className={'common-layout'}>
-            <Header toggleMenu={onClickMenu} />
+            <Header onClickMenu={onClickMenu} />
             <Snb isOpen={open} toggleDrawer={toggleDrawer} />
             <main className={'common-layout__main'}>
                 <Outlet context={{ title }} />

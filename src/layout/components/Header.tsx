@@ -2,7 +2,7 @@ import '@styles/layout/components/Header.scss';
 import { Avatar, Button, IconButton } from '@mui/material';
 
 interface HeaderProps {
-    toggleMenu: (isOpen: boolean) => void;
+    onClickMenu: (isOpen: boolean) => void;
 }
 
 const Header = (props: HeaderProps) => {
@@ -12,7 +12,7 @@ const Header = (props: HeaderProps) => {
 
     /* Event */
     const onClickMenu = () => {
-        props.toggleMenu(true);
+        props.onClickMenu(true);
     };
 
     /* Lifecycle */
