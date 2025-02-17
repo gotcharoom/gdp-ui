@@ -1,5 +1,5 @@
 import axios from '@utils/axiosInstance.ts';
-import ApiUrl from '@types/apis/apiUrl.type.ts';
+import ApiUrl from '@gdp-types/apis/apiUrl.type.ts';
 
 const urls: ApiUrl = {
     test: '',
