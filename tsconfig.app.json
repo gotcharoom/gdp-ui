@@ -35,7 +35,8 @@
       "@utils/*": ["utils/*"],
       "@stores/*": ["stores/*"],
       "@hooks/*": ["hooks/*"],
-      "@apis/*": ["apis/*"]
+      "@apis/*": ["apis/*"],
+      "@mocks/*": ["mocks/*"]
     }
   },
   "include": ["src"]
