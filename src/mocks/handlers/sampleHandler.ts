@@ -1,6 +1,6 @@
 import * as mswUtil from '@utils/mswUtil.ts';
 import { HttpHandler } from 'msw';
-import SampleData from '@mocks/datas/sampleData.ts';
+import SampleData from '../datas/sampleData.ts';
 
 const url: { [key: string]: string } = {
     sampletest: '',
