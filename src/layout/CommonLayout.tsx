@@ -12,10 +12,7 @@ const CommonLayout = () => {
     /* Hooks */
     const matches = useMatches();
 
-    /*
-     * TODO. [TR-YOO] Default title 다른 용어로 변경하기
-     * */
-    const title = matches.reverse().find((match) => match.handle?.title)?.handle?.title || 'Default Title';
+    const title = matches.reverse().find((match) => match.handle?.title)?.handle?.title;
 
     const [open, setOpen] = useState(false);
 

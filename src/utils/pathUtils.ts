@@ -1,9 +1,6 @@
 import { RouteObject } from 'react-router-dom';
 import { MenuItem } from '@types/layout/components/menuItem.type.ts';
 
-/*
- * TODO. [TR-YOO] Untitled 부분 다른 이름으로 변경하기
- * */
 const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
     return (
         routes
