@@ -31,7 +31,7 @@
       "@pages/*": ["pages/*"],
       "@routes/*": ["routes/*"],
       "@styles/*": ["styles/*"],
-      "@types/*": ["types/*"],
+      "@gdp-types/*": ["types/*"],
       "@utils/*": ["utils/*"],
       "@stores/*": ["stores/*"],
       "@hooks/*": ["hooks/*"],

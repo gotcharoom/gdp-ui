@@ -2,7 +2,7 @@ import { Drawer } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { RoutesContext } from '@/contexts/RoutesContext.ts';
 import pathUtils from '@utils/routerUtils.ts';
-import { MenuItem } from '@types/layout/components/menuItem.type.ts';
+import { MenuItem } from '@gdp-types/layout/components/menuItem.type.ts';
 import SnbListItem from '@layout/components/SnbListItem.tsx';
 import { useLocation } from 'react-router-dom';
 

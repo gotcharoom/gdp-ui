@@ -1,6 +1,5 @@
-import { MenuItem } from '@types/layout/components/menuItem.type.ts';
+import { MenuItem } from '@gdp-types/layout/components/menuItem.type.ts';
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
 import { Fragment, useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { SxProps } from '@mui/system';
