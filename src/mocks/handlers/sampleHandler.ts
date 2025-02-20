@@ -1,9 +1,9 @@
 import * as mswUtil from '@utils/mswUtil.ts';
 import { HttpHandler } from 'msw';
-import SampleData from '../datas/sampleData.ts';
+import { SampleData } from '../datas/sampleData.ts';
 
 const url: { [key: string]: string } = {
-    sampletest: '',
+    sampletest: '/test',
 };
 
 const sampleHandler: HttpHandler[] = [mswUtil.postRest(url.sampletest, SampleData)];

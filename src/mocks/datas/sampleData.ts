@@ -10,4 +10,4 @@ const SampleData: SampleDataType = {
     password: 'test',
 };
 
-export default SampleData;
+export { SampleData, type SampleDataType };
