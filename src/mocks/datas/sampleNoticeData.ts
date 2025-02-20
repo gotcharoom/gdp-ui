@@ -16,4 +16,4 @@ const SampleNoticeData: SampleNoticeDataType = {
     date: 'test',
 };
 
-export default SampleNoticeData;
+export { SampleNoticeData, type SampleNoticeDataType };

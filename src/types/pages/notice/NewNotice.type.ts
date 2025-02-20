@@ -1,6 +1,6 @@
 interface NewNotice {
     search: string;
-    pagePerItems: 20;
+    pagePerItems: number;
 }
 
 export default NewNotice;
