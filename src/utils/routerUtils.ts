@@ -5,6 +5,7 @@ const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
     return (
         routes
             // .filter((route) => route.path !== undefined)
+            .filter((route) => route.path !== undefined && !route.path.includes(':'))
             .flatMap((route) => {
                 const fullPath = `${basePath}/${route.path ?? ''}`.replace('//', '/').replace(/\/+$/g, '');
                 const title = route.handle?.title || 'Untitled';
