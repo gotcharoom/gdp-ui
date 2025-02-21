@@ -26,7 +26,7 @@ const SnbListItem = (props: SnbListItemProps) => {
         }));
     };
 
-    const routeToPath = (item: MenuItem, index) => {
+    const routeToPath = (item: MenuItem, index: number) => {
         navigate(item.path);
         toggleCollapse(index);
     };
@@ -40,7 +40,7 @@ const SnbListItem = (props: SnbListItemProps) => {
         return { pl: (depth - 1) * 4 + defaultPadding };
     };
 
-    const drawExpand = (item: MenuItem, index) => {
+    const drawExpand = (item: MenuItem, index: number) => {
         if (!hasChildren(item)) {
             return null;
         }
@@ -48,7 +48,7 @@ const SnbListItem = (props: SnbListItemProps) => {
         return <>{openState[index] ? <ExpandLess /> : <ExpandMore />}</>;
     };
 
-    const drawCollapseItems = (item: MenuItem, index) => {
+    const drawCollapseItems = (item: MenuItem, index: number) => {
         if (!hasChildren(item)) {
             return null;
         }
