@@ -52,6 +52,14 @@ const UserRoutes: RouteObject[] = [
                             icon: 'more-horizon',
                         },
                     },
+                    {
+                        path: ':id',
+                        element: <SampleNoticeComponent />,
+                        handle: {
+                            title: '공지사항',
+                            icon: 'more-horizon',
+                        },
+                    },
                 ],
             },
         ],

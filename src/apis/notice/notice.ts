@@ -8,7 +8,7 @@ const urls: ApiUrl = {
 };
 
 const getNoticeList = async (notice: NewNotice) => {
-    return await axios.getData<SampleNoticeDataType>(urls.notice, { params: notice }).then((res) => res.data);
+    return await axios.getData<SampleNoticeDataType[]>(urls.notice, { params: notice }).then((res) => res.data);
 };
 
 export { getNoticeList };
