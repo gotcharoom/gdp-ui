@@ -7,6 +7,9 @@ import withSuspense from '@utils/withSuspense.tsx';
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
 
+const Login = lazy(() => import('@pages/common/Login.tsx'));
+const LoginComponent = withSuspense(Login);
+
 const UserRoutes: RouteObject[] = [
     {
         path: '/',
@@ -18,6 +21,11 @@ const UserRoutes: RouteObject[] = [
                 index: true,
                 element: <SampleUserMainComponent />,
                 handle: { title: 'Home1' },
+            },
+            {
+                path: 'login',
+                element: <LoginComponent />,
+                handle: { title: 'Login' },
             },
             {
                 path: 'test',
