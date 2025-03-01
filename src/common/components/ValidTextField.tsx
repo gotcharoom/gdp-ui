@@ -3,6 +3,7 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form';
 import { TextFieldVariants } from '@mui/material/TextField/TextField';
 import { ReactNode } from 'react';
+import * as React from 'react';
 
 interface ValidTextFieldProps<T extends FieldValues, V extends TextFieldVariants> {
     // Yup Props
@@ -14,6 +15,7 @@ interface ValidTextFieldProps<T extends FieldValues, V extends TextFieldVariants
     className?: string;
     label?: string;
     variant?: V;
+    type?: React.InputHTMLAttributes<unknown>['type'];
 }
 const ValidTextField = <T extends FieldValues = FieldValues, V extends TextFieldVariants>(props: ValidTextFieldProps<T, V>) => {
     return (
@@ -26,6 +28,7 @@ const ValidTextField = <T extends FieldValues = FieldValues, V extends TextField
                     label={props?.label}
                     variant={props?.variant}
                     value={value}
+                    type={props.type}
                     onChange={onChange}
                     error={!!props.errors[props.field]}
                     helperText={props.errors[props.field]?.message as ReactNode}
