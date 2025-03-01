@@ -1,9 +1,10 @@
-import { Button, Checkbox, FormControlLabel, Paper, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Paper } from '@mui/material';
 import '@styles/pages/common/login.scss';
 import { useOutletContext } from 'react-router-dom';
 import { loginSchema } from '@/validations/login/loginSchema.ts';
-import { Controller, useForm } from 'react-hook-form';
+import { Control, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import ValidTextField from '@/common/components/ValidTextField.tsx';
 
 interface LoginFormInputs {
     id: string;
@@ -38,22 +39,22 @@ const LoginPage = () => {
             <Paper className={'login__paper'} elevation={3}>
                 <div className={'login__paper__title'}>{title}</div>
                 <div className={'login__paper__input-container'}>
-                    <Controller
-                        name='id'
+                    <ValidTextField
+                        className={'input-container__input'}
                         control={control}
-                        render={({ field: { onChange, value } }) => (
-                            <TextField
-                                className={'input-container__input'}
-                                label='아이디'
-                                variant='outlined'
-                                value={value}
-                                onChange={onChange}
-                                error={!!errors.id}
-                                helperText={errors.id?.message}
-                            />
-                        )}
+                        field='id'
+                        errors={errors}
+                        variant='outlined'
+                        label={'아이디'}
                     />
-                    <TextField className={'input-container__input'} label='비밀번호' variant='outlined' />
+                    <ValidTextField
+                        className={'input-container__input'}
+                        control={control}
+                        field='password'
+                        errors={errors}
+                        variant='outlined'
+                        label={'비밀번호'}
+                    />
                 </div>
                 <div className={'login__paper__login'}>
                     <FormControlLabel control={<Checkbox />} label='Remember Me' />
