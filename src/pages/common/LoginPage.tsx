@@ -2,14 +2,11 @@ import { Button, Checkbox, FormControlLabel, Paper } from '@mui/material';
 import '@styles/pages/common/login.scss';
 import { useOutletContext } from 'react-router-dom';
 import { loginSchema } from '@/validations/login/loginSchema.ts';
-import { Control, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ValidTextField from '@/common/components/ValidTextField.tsx';
-
-interface LoginFormInputs {
-    id: string;
-    password: string;
-}
+import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
+import { postLoginRequest } from '@apis/login/login.ts';
 
 const LoginPage = () => {
     /* Hooks */
@@ -18,7 +15,7 @@ const LoginPage = () => {
         control,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginFormInputs>({
+    } = useForm<LoginRequestForm>({
         resolver: yupResolver(loginSchema),
         defaultValues: {
             id: '',
@@ -28,8 +25,8 @@ const LoginPage = () => {
 
     /* Privates */
     /* Event */
-    const onSubmit = (data: any) => {
-        console.log('로그인 시도', data);
+    const onSubmit = async (data: LoginRequestForm) => {
+        await postLoginRequest(data).then((res) => console.log(res.message));
     };
 
     /* Lifecycle */
@@ -54,6 +51,7 @@ const LoginPage = () => {
                         errors={errors}
                         variant='outlined'
                         label={'비밀번호'}
+                        type={'password'}
                     />
                 </div>
                 <div className={'login__paper__login'}>
