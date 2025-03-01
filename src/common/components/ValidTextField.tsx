@@ -8,7 +8,7 @@ interface ValidTextFieldProps<T extends FieldValues, V extends TextFieldVariants
     // Yup Props
     control: Control<T>;
     field: Path<T>;
-    errors: FieldErrors;
+    errors: FieldErrors<T>;
 
     // TextField Props;
     className?: string;
@@ -28,7 +28,7 @@ const ValidTextField = <T extends FieldValues = FieldValues, V extends TextField
                     value={value}
                     onChange={onChange}
                     error={!!props.errors[props.field]}
-                    helperText={props.errors[props.field] as ReactNode}
+                    helperText={props.errors[props.field]?.message as ReactNode}
                 />
             )}
         />
