@@ -1,7 +1,7 @@
 import { RouteObject } from 'react-router-dom';
-import CommonLayout from '@layout/CommonLayout.tsx';
+import CommonLayout from '@/common/layout/CommonLayout.tsx';
 import { lazy } from 'react';
-import withSuspense from '@utils/withSuspense.tsx';
+import withSuspense from '@/common/utils/withSuspense.tsx';
 
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);

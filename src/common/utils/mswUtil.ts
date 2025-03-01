@@ -9,7 +9,7 @@ const enableMocking = async () => {
     }
 
     // 해당 파일에서 설정한 MSW의 worker 객체를 동적 로딩해 모킹을 설정
-    const { worker } = await import('../mocks/browser.ts');
+    const { worker } = await import('@mocks/browser.ts');
 
     // 가져온 서비스 워커를 브라우저에서 시작해 API 요청을 가로채고, 정의된 핸들러로 응답 반환
     worker.start();

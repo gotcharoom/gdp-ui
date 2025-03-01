@@ -1,14 +1,14 @@
-import CommonLayout from '@layout/CommonLayout.tsx';
+import CommonLayout from '@/common/layout/CommonLayout.tsx';
 import { RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
-import withSuspense from '@utils/withSuspense.tsx';
+import withSuspense from '@/common/utils/withSuspense.tsx';
 
 // Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
 
-const Login = lazy(() => import('@pages/common/Login.tsx'));
-const LoginComponent = withSuspense(Login);
+const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
+const LoginComponent = withSuspense(LoginPage);
 
 const UserRoutes: RouteObject[] = [
     {

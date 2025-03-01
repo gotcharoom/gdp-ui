@@ -1,4 +1,4 @@
-import ApiResponse from '@/types/utils/ApiResponse.type';
+import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios';
 
 const config: CreateAxiosDefaults = {

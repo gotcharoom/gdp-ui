@@ -1,13 +1,36 @@
-import { Button, Checkbox, darken, FormControlLabel, Paper, TextField } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, Paper, TextField } from '@mui/material';
 import '@styles/pages/common/login.scss';
 import { useOutletContext } from 'react-router-dom';
+import { loginSchema } from '@/validations/login/loginSchema.ts';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
-const Login = () => {
+interface LoginFormInputs {
+    id: string;
+    password: string;
+}
+
+const LoginPage = () => {
     /* Hooks */
     const { title } = useOutletContext<{ title: string }>();
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormInputs>({
+        resolver: yupResolver(loginSchema),
+        defaultValues: {
+            id: '',
+            password: '',
+        },
+    });
 
     /* Privates */
     /* Event */
+    const onSubmit = (data: any) => {
+        console.log('로그인 시도', data);
+    };
+
     /* Lifecycle */
 
     return (
@@ -15,12 +38,26 @@ const Login = () => {
             <Paper className={'login__paper'} elevation={3}>
                 <div className={'login__paper__title'}>{title}</div>
                 <div className={'login__paper__input-container'}>
-                    <TextField className={'input-container__input'} id='outlined-basic' label='아이디' variant='outlined' />
-                    <TextField className={'input-container__input'} id='outlined-basic' label='비밀번호' variant='outlined' />
+                    <Controller
+                        name='id'
+                        control={control}
+                        render={({ field: { onChange, value } }) => (
+                            <TextField
+                                className={'input-container__input'}
+                                label='아이디'
+                                variant='outlined'
+                                value={value}
+                                onChange={onChange}
+                                error={!!errors.id}
+                                helperText={errors.id?.message}
+                            />
+                        )}
+                    />
+                    <TextField className={'input-container__input'} label='비밀번호' variant='outlined' />
                 </div>
                 <div className={'login__paper__login'}>
                     <FormControlLabel control={<Checkbox />} label='Remember Me' />
-                    <Button className={'login__button'} variant='contained'>
+                    <Button className={'login__button'} variant='contained' onClick={handleSubmit(onSubmit)}>
                         로그인
                     </Button>
                 </div>
@@ -57,4 +94,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default LoginPage;

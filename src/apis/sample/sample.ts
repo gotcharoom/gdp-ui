@@ -1,4 +1,4 @@
-import * as axios from '@utils/axiosInstance.ts';
+import * as axios from '@/common/utils/axiosInstance.ts';
 import ApiUrl from '@gdp-types/apis/apiUrl.type.ts';
 import { SampleDataType } from '@/mocks/datas/sampleData';
 
