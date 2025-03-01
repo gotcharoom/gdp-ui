@@ -30,21 +30,21 @@ const Login = () => {
                     <Button className={'support__button'}>회원 가입</Button>
                 </div>
                 <div className={'login__paper__social'}>
-                    <Button className={'social__container--google'} variant='outlined'>
+                    <Button className={'social__container--google'} variant='contained'>
                         <div className={'google__icon__container'}>
                             <img className={'google__icon'} alt={'google__icon'} src={'/logo/GDP_SOCIAL_LOGIN_GOOGLE.png'} />
                         </div>
 
                         <div className={'google__text__container'}>구글 로그인</div>
                     </Button>
-                    <Button className={'social__container--kakao'} variant='outlined'>
+                    <Button className={'social__container--kakao'} variant='contained'>
                         <div className={'kakao__icon__container'}>
                             <img className={'kakao__icon'} alt={'kakao__icon'} src={'/logo/GDP_SOCIAL_LOGIN_KAKAO.png'} />
                         </div>
 
                         <div className={'kakao__text__container'}>카카오 로그인</div>
                     </Button>
-                    <Button className={'social__container--naver'} variant='outlined'>
+                    <Button className={'social__container--naver'} variant='contained'>
                         <div className={'naver__icon__container'}>
                             <img className={'naver__icon'} alt={'naver__icon'} src={'/logo/GDP_SOCIAL_LOGIN_NAVER.png'} />
                         </div>

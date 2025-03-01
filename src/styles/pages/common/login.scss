@@ -81,7 +81,6 @@
         @extend .social__container;
 
         background-color: $social__color__google;
-        border: 1px solid  color-mix(in srgb, $social__color__google 90%, black 10%);
 
         .google__icon__container {
           @extend .social__icon__container;
@@ -105,7 +104,6 @@
         @extend .social__container;
 
         background-color: $social__color--kakao;
-        border: 1px solid color-mix(in srgb, $social__color--kakao 90%, black 10%);
 
         .kakao__icon__container {
           @extend .social__icon__container;
@@ -125,7 +123,6 @@
         @extend .social__container;
 
         background-color: $social__color--naver;
-        border: 1px solid color-mix(in srgb, $social__color--naver 90%, black 10%);
 
         .naver__icon__container {
           @extend .social__icon__container;
