@@ -1,5 +1,4 @@
 // import * as axios from '@/common/utils/axiosInstance.ts';
-import ApiUrl from '@gdp-types/apis/apiUrl.type.ts';
 import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
 import UserState from '@/types/pages/login/UserState.type.ts';
 import { getData, postData } from '@/common/utils/axiosUtils.ts';
@@ -7,13 +6,15 @@ import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import { store } from '@stores/store.ts';
 import { resetUser } from '@stores/slices/userSlice.ts';
 import { removeAuth } from '@stores/slices/authSlice.ts';
+import Provider from '@/common/constants/Provider.ts';
 
-const urls: ApiUrl = {
+const urls = {
     login: '/api/v1/auth/login',
     refresh: '/api/v1/auth/refresh',
     info: '/api/v1/auth/info',
     logout: '/api/v1/auth/logout',
     check: '/api/v1/auth/check',
+    socialLogin: (provider: string) => `/api/oauth2/authorization/${provider}`,
 };
 
 const postLoginRequest = async (data: LoginRequestForm) => {
@@ -41,4 +42,8 @@ const postTokenCheck = async () => {
     return response.data;
 };
 
-export { postLoginRequest, postRefreshToken, postLogoutRequest, getLoginUserInfo, postTokenCheck };
+const requestSocialLoginUri = (provider: Provider) => {
+    return urls.socialLogin(provider);
+};
+
+export { postLoginRequest, postRefreshToken, postLogoutRequest, getLoginUserInfo, postTokenCheck, requestSocialLoginUri };

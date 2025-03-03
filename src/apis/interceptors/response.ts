@@ -2,9 +2,6 @@ import { AxiosInstance, AxiosResponse } from 'axios';
 import { postLogoutRequest, postRefreshToken } from '@apis/login/login.ts';
 import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
-import { resetUser } from '@stores/slices/userSlice.ts';
-import { store } from '@/stores/store.ts';
-import { removeAuth } from '@stores/slices/authSlice.ts';
 
 export const setResponseInterceptor = (instance: AxiosInstance) => {
     instance.interceptors.response.use(
