@@ -14,6 +14,11 @@ export default defineConfig(({ mode }) => {
                     changeOrigin: true,
                     secure: env.VITE_API_SECURE as unknown as boolean,
                 },
+                '/sample': {
+                    target: env.VITE_API_URL, // 환경 변수 적용
+                    changeOrigin: true,
+                    secure: env.VITE_API_SECURE as unknown as boolean,
+                },
             },
         },
     };

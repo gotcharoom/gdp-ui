@@ -20,16 +20,16 @@ const enableMocking = async () => {
     }
 
     // 해당 파일에서 설정한 MSW의 worker 객체를 동적 로딩해 모킹을 설정
-    const { worker } = await import('@mocks/browser.ts');
-
-    const apiExists = await checkApiExists('https://api.example.com'); // 실제 API 엔드포인트
-
-    if (!apiExists) {
-        console.log('MSW 활성화: API가 존재하지 않습니다.');
-        return worker.start();
-    } else {
-        console.log('MSW 비활성화: 실제 API 사용');
-    }
+    // const { worker } = await import('@mocks/browser.ts');
+    //
+    // const apiExists = await checkApiExists('https://api.example.com'); // 실제 API 엔드포인트
+    //
+    // if (!apiExists) {
+    //     console.log('MSW 활성화: API가 존재하지 않습니다.');
+    //     return worker.start();
+    // } else {
+    //     console.log('MSW 비활성화: 실제 API 사용');
+    // }
 };
 
 const getRest = <T>(url: string, response?: T) => {

@@ -1,5 +1,9 @@
 import '@styles/layout/components/Header.scss';
 import { Avatar, Button, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useCallback, useLayoutEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@stores/store.ts';
 
 interface HeaderProps {
     onClickMenu: (isOpen: boolean) => void;
@@ -7,6 +11,10 @@ interface HeaderProps {
 
 const Header = (props: HeaderProps) => {
     /* Hooks */
+    // const user: UserState = useSelector((state: RootState) => state.user);
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const [isLogined, setIsLogined] = useState(isAuthenticated);
+    const navigate = useNavigate();
 
     /* Privates */
 
@@ -15,7 +23,14 @@ const Header = (props: HeaderProps) => {
         props.onClickMenu(true);
     };
 
+    const onClickLogin = useCallback(() => {
+        navigate('/login');
+    }, [navigate]);
+
     /* Lifecycle */
+    useLayoutEffect(() => {
+        setIsLogined(isAuthenticated);
+    }, [isAuthenticated]);
 
     return (
         <div className={'header'}>
@@ -37,9 +52,13 @@ const Header = (props: HeaderProps) => {
                     </IconButton>
                 </div>
                 <div className={'header__social__account'}>
-                    <IconButton className={'account'}>
-                        <Avatar className={'logo'} alt='Remy Sharp' src='/logo/GDP_LOGO.png' />
-                    </IconButton>
+                    {isLogined ? (
+                        <IconButton className={'account'}>
+                            <Avatar className={'logo'} alt='Remy Sharp' src='/logo/GDP_LOGO.png' />
+                        </IconButton>
+                    ) : (
+                        <Button onClick={onClickLogin}>로그인</Button>
+                    )}
                 </div>
             </div>
         </div>

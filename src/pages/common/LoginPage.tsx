@@ -1,16 +1,24 @@
 import { Button, Checkbox, FormControlLabel, Paper } from '@mui/material';
 import '@styles/pages/common/login.scss';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { loginSchema } from '@/validations/login/loginSchema.ts';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ValidTextField from '@/common/components/ValidTextField.tsx';
 import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
 import { postLoginRequest } from '@apis/login/login.ts';
+import { useCallback, useEffect } from 'react';
+import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@stores/store.ts';
+import { setAuth } from '@stores/slices/authSlice.ts';
 
 const LoginPage = () => {
     /* Hooks */
     const { title } = useOutletContext<{ title: string }>();
+    const dispatch = useDispatch();
+    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const navigate = useNavigate();
     const {
         control,
         handleSubmit,
@@ -24,12 +32,34 @@ const LoginPage = () => {
     });
 
     /* Privates */
+    const routeToRoot = useCallback(() => {
+        navigate('/');
+    }, [navigate]);
+
     /* Event */
-    const onSubmit = async (data: LoginRequestForm) => {
-        await postLoginRequest(data).then((res) => console.log(res.message));
-    };
+    const onSubmit = useCallback(
+        async (request: LoginRequestForm) => {
+            try {
+                const response = await postLoginRequest(request);
+                dispatch(setAuth());
+
+                if (response.code === ResponseCode.SUCCESS.code) {
+                    navigate('/'); //
+                }
+            } catch (e) {
+                console.error('Login Error:', e);
+                throw e;
+            }
+        },
+        [dispatch, navigate],
+    );
 
     /* Lifecycle */
+    useEffect(() => {
+        if (isAuthenticated) {
+            routeToRoot();
+        }
+    }, [isAuthenticated, routeToRoot]);
 
     return (
         <div className={'login'}>
