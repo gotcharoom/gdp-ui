@@ -22,23 +22,15 @@ export const setResponseInterceptor = (instance: AxiosInstance) => {
                     if (response.status == 200 && response.code == ResponseCode.SUCCESS.code) {
                         return instance(prevRequest);
                     } else {
-                        await handleLogout();
+                        await postLogoutRequest();
                         return Promise.reject(error);
                     }
                 } catch (e) {
-                    await handleLogout();
+                    await postLogoutRequest();
                     return Promise.reject(e);
                 }
             }
             return Promise.reject(error);
         },
     );
-};
-
-const handleLogout = async () => {
-    await postLogoutRequest();
-    store.dispatch(resetUser());
-    store.dispatch(removeAuth());
-
-    window.location.href = '/login';
 };
