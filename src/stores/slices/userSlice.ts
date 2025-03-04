@@ -1,24 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import UserState from '@gdp-types/stores/slices/userSlice.type.ts';
+import UserState from '@/types/pages/login/UserState.type.ts';
 
 const initialState: UserState = {
-    name: 'Guest',
-    age: 0,
+    id: '',
     email: '',
 };
-
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<UserState>) => {
-            state.name = action.payload.name;
-            state.age = action.payload.age;
+            state.id = action.payload.id;
             state.email = action.payload.email;
         },
         resetUser: (state) => {
-            state.name = 'Guest';
-            state.age = 0;
+            state.id = '';
             state.email = '';
         },
     },

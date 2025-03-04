@@ -1,5 +1,6 @@
 interface ApiResponse<T> {
-    code: string;
+    status: number;
+    code: number;
     data: T;
     message: string;
 }

@@ -1,11 +1,14 @@
 import { RouteObject } from 'react-router-dom';
-import { MenuItem } from '@gdp-types/layout/components/menuItem.type.ts';
+import { MenuItem } from '@/types/layout/components/menuItem.type.ts';
 
 const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
+    const exceptionList: string[] = ['login', 'error'];
+
     return (
         routes
             // .filter((route) => route.path !== undefined)
             .filter((route) => route.path !== undefined && !route.path.includes(':'))
+            .filter((route) => !exceptionList.includes(route.path as string))
             .flatMap((route) => {
                 const fullPath = `${basePath}/${route.path ?? ''}`.replace('//', '/').replace(/\/+$/g, '');
                 const title = route.handle?.title || 'Untitled';
