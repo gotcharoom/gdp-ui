@@ -1,4 +1,4 @@
-@use '../layoutConstants' as *;
+@use '../../constants/layoutConstants' as *;
 
 .header {
   display: flex;
@@ -61,6 +61,7 @@
       width: $header__social__account--size;
       height: $header__social__account--size;
       padding-right: $header__social__account--padding;
+      display: flex;
     }
 
     .header__social__account .account {

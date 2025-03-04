@@ -1,11 +1,16 @@
-import CommonLayout from '@layout/CommonLayout.tsx';
+import CommonLayout from '@/common/layout/CommonLayout.tsx';
 import { RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
-import withSuspense from '@utils/withSuspense.tsx';
+import withSuspense from '@/common/utils/withSuspense.tsx';
 
 // Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
+
+const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
+const LoginComponent = withSuspense(LoginPage);
+const ErrorPage = lazy(() => import('@pages/common/ErrorPage.tsx'));
+const ErrorPageComponent = withSuspense(ErrorPage);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -18,6 +23,16 @@ const UserRoutes: RouteObject[] = [
                 index: true,
                 element: <SampleUserMainComponent />,
                 handle: { title: 'Home1' },
+            },
+            {
+                path: 'login',
+                element: <LoginComponent />,
+                handle: { title: 'Login' },
+            },
+            {
+                path: 'error',
+                element: <ErrorPageComponent />,
+                handle: { title: 'Error' },
             },
             {
                 path: 'test',
