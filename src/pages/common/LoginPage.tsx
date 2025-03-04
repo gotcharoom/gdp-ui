@@ -56,6 +56,7 @@ const LoginPage = () => {
     );
 
     const onClickSocialLogin = useCallback((provider: Provider) => {
+        console.log('1111');
         window.location.href = requestSocialLoginUri(provider);
     }, []);
 
@@ -101,28 +102,26 @@ const LoginPage = () => {
                     <Button className={'support__button'}>회원 가입</Button>
                 </div>
                 <div className={'login__paper__social'}>
-                    <Button className={'social__container--google'} variant='contained'>
-                        <div className={'google__icon__container'} onClick={() => onClickSocialLogin(Provider.GOOGLE)}>
+                    <Button className={'social__container--google'} variant='contained' onClick={() => onClickSocialLogin(Provider.GOOGLE)}>
+                        <div className={'google__icon__container'}>
                             <img className={'google__icon'} alt={'google__icon'} src={'/logo/GDP_SOCIAL_LOGIN_GOOGLE.png'} />
                         </div>
 
                         <div className={'google__text__container'}>구글 로그인</div>
                     </Button>
-                    <Button className={'social__container--kakao'} variant='contained'>
-                        <div className={'kakao__icon__container'} onClick={() => onClickSocialLogin(Provider.KAKAO)}>
+                    <Button className={'social__container--kakao'} variant='contained' onClick={() => onClickSocialLogin(Provider.KAKAO)}>
+                        <div className={'kakao__icon__container'}>
                             <img className={'kakao__icon'} alt={'kakao__icon'} src={'/logo/GDP_SOCIAL_LOGIN_KAKAO.png'} />
                         </div>
 
                         <div className={'kakao__text__container'}>카카오 로그인</div>
                     </Button>
-                    <Button className={'social__container--naver'} variant='contained'>
+                    <Button className={'social__container--naver'} variant='contained' onClick={() => onClickSocialLogin(Provider.NAVER)}>
                         <div className={'naver__icon__container'}>
                             <img className={'naver__icon'} alt={'naver__icon'} src={'/logo/GDP_SOCIAL_LOGIN_NAVER.png'} />
                         </div>
 
-                        <div className={'naver__text__container'} onClick={() => onClickSocialLogin(Provider.NAVER)}>
-                            네이버 로그인
-                        </div>
+                        <div className={'naver__text__container'}>네이버 로그인</div>
                     </Button>
                 </div>
             </Paper>

@@ -9,6 +9,8 @@ const SampleUserMainComponent = withSuspense(SampleUserMain);
 
 const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
 const LoginComponent = withSuspense(LoginPage);
+const ErrorPage = lazy(() => import('@pages/common/ErrorPage.tsx'));
+const ErrorPageComponent = withSuspense(ErrorPage);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -26,6 +28,11 @@ const UserRoutes: RouteObject[] = [
                 path: 'login',
                 element: <LoginComponent />,
                 handle: { title: 'Login' },
+            },
+            {
+                path: 'error',
+                element: <ErrorPageComponent />,
+                handle: { title: 'Error' },
             },
             {
                 path: 'test',

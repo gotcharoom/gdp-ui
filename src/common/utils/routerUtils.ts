@@ -2,7 +2,7 @@ import { RouteObject } from 'react-router-dom';
 import { MenuItem } from '@/types/layout/components/menuItem.type.ts';
 
 const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
-    const exceptionList: string[] = ['login'];
+    const exceptionList: string[] = ['login', 'error'];
 
     return (
         routes
