@@ -1,9 +1,9 @@
 import { Outlet, useMatches } from 'react-router-dom';
 
 // Components
-import Header from '@layout/components/Header.tsx';
-import Snb from '@layout/components/Snb.tsx';
-import Footer from '@layout/components/Footer.tsx';
+import Header from '@/common/layout/components/Header.tsx';
+import Snb from '@/common/layout/components/Snb.tsx';
+import Footer from '@/common/layout/components/Footer.tsx';
 
 import '@styles/layout/CommonLayout.scss';
 import { useState } from 'react';

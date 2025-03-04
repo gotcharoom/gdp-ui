@@ -1,9 +1,9 @@
 import { Drawer } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
-import { RoutesContext } from '@/contexts/RoutesContext.ts';
-import pathUtils from '@utils/routerUtils.ts';
-import { MenuItem } from '@gdp-types/layout/components/menuItem.type.ts';
-import SnbListItem from '@layout/components/SnbListItem.tsx';
+import { RoutesContext } from '@/common/contexts/RoutesContext.ts';
+import pathUtils from '@/common/utils/routerUtils.ts';
+import { MenuItem } from '@/types/layout/components/menuItem.type.ts';
+import SnbListItem from '@/common/layout/components/SnbListItem.tsx';
 import { useLocation } from 'react-router-dom';
 
 import '@styles/layout/components/Snb.scss';

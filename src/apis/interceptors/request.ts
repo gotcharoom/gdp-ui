@@ -1,17 +1,12 @@
-import { instance } from '@utils/axiosInstance.ts';
+import { AxiosInstance } from 'axios';
 
-instance.interceptors.request.use(
-    function (config) {
-        // const accessToken = getCookie("accessToken");
-        const accessToken = '';
-        const refreshToken = '';
-
-        if (accessToken && refreshToken) {
-            config.headers.common['Authorization'] = `${accessToken}`;
-        }
-        return config;
-    },
-    function (error) {
-        return Promise.reject(error);
-    },
-);
+export const setRequestInterceptor = (instance: AxiosInstance) => {
+    instance.interceptors.request.use(
+        (config) => {
+            return config;
+        },
+        async (error) => {
+            return Promise.reject(error);
+        },
+    );
+};

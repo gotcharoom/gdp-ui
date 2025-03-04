@@ -7,6 +7,7 @@
 
   .common-layout__main {
     flex: 1;
+    display: flex;
     background-color: whitesmoke;
     overflow-y: auto;
   }
