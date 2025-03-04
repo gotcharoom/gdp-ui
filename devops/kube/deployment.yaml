@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gdp-frontend-deploy
+  namespace: gdp
+  labels:
+    app: gdp-frontend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: gdp-frontend-deploy
+  template:
+    metadata:
+      labels:
+        pod: gdp-frontend-deploy
+    spec:
+      imagePullSecrets:
+        - name: harbor-image-pull-secret
+      containers:
+        - name: gdp-frontend
+          image: harbor.stdtrinfra.com/gdp-frontend/gdp-front:latest
+          ports:
+            - containerPort: 5173
+          envFrom:
+            - secretRef:
+                name: gdp-frontend-secret
