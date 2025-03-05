@@ -14,7 +14,7 @@ const urls = {
     info: '/api/v1/auth/info',
     logout: '/api/v1/auth/logout',
     check: '/api/v1/auth/check',
-    socialLogin: (provider: string) => `/api/v1/oauth2/authorization/${provider}`,
+    socialLogin: (provider: string) => `${import.meta.env.VITE_API_URL}/api/v1/oauth2/authorization/${provider}`,
 };
 
 const postLoginRequest = async (data: LoginRequestForm) => {
