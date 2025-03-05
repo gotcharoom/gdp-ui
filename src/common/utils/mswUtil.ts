@@ -12,8 +12,8 @@ const enableMocking = async () => {
     const { worker } = await import('@mocks/browser.ts');
 
     return worker.start({
-        onUnhandledRequest: (req) => {
-            console.warn(`🚨 Unhandled request: ${req.method} ${req.url}`);
+        onUnhandledRequest: () => {
+            // console.warn(`🚨 Unhandled request: ${req.method} ${req.url}`);
             return 'bypass';
         },
     });
