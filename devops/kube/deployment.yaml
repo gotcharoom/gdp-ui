@@ -21,7 +21,7 @@ spec:
         - name: gdp-frontend
           image: harbor.stdtrinfra.com/gdp-frontend/gdp-front:latest
           ports:
-            - containerPort: 5173
+            - containerPort: 80
           envFrom:
             - secretRef:
                 name: gdp-frontend-secret
