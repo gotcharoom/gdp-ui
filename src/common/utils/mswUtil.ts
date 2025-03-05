@@ -11,11 +11,18 @@ const enableMocking = async () => {
     // 해당 파일에서 설정한 MSW의 worker 객체를 동적 로딩해 모킹을 설정
     const { worker } = await import('@mocks/browser.ts');
 
-    return worker.start({ onUnhandledRequest: 'bypass' });
+    return worker.start({
+        onUnhandledRequest: (req) => {
+            console.warn(`🚨 Unhandled request: ${req.method} ${req.url}`);
+            return 'bypass';
+        },
+    });
 };
 
+const baseUrl = import.meta.env.VITE_API_URL;
+
 const getRest = <T>(url: string, response?: T) => {
-    return http.get(url, async () => {
+    return http.get(baseUrl + url, async () => {
         return new Response(
             JSON.stringify({
                 code: 201,
@@ -33,7 +40,7 @@ const getRest = <T>(url: string, response?: T) => {
 };
 
 const postRest = <T>(url: string, response?: T) => {
-    return http.post(url, async () => {
+    return http.post(baseUrl + url, async () => {
         return new Response(
             JSON.stringify({
                 code: 1001,
@@ -51,7 +58,7 @@ const postRest = <T>(url: string, response?: T) => {
 };
 
 const deleteRest = <T>(url: string, response?: T) => {
-    return http.delete(url, async () => {
+    return http.delete(baseUrl + url, async () => {
         return new Response(
             JSON.stringify({
                 code: 1001,
