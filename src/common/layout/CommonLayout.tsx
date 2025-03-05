@@ -7,10 +7,11 @@ import Footer from '@/common/layout/components/Footer.tsx';
 
 import '@styles/layout/CommonLayout.scss';
 import { useState } from 'react';
+import { ExtendedMatch } from '@/types/common/ExtendMatch.type.ts';
 
 const CommonLayout = () => {
     /* Hooks */
-    const matches = useMatches();
+    const matches = useMatches() as ExtendedMatch[];
 
     const title = matches.reverse().find((match) => match.handle?.title)?.handle?.title;
 
