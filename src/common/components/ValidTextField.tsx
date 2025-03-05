@@ -17,7 +17,9 @@ interface ValidTextFieldProps<T extends FieldValues, V extends TextFieldVariants
     variant?: V;
     type?: React.InputHTMLAttributes<unknown>['type'];
 }
-const ValidTextField = <T extends FieldValues = FieldValues, V extends TextFieldVariants>(props: ValidTextFieldProps<T, V>) => {
+const ValidTextField = <T extends FieldValues = FieldValues, V extends TextFieldVariants = 'outlined'>(
+    props: ValidTextFieldProps<T, V>,
+) => {
     return (
         <Controller
             name={props.field}
