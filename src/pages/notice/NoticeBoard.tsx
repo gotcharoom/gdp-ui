@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //csss
-import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, Pagination, Stack } from '@mui/material';
 
 const initBoard: SampleNoticeDataType = {
     category: '',
@@ -38,7 +38,8 @@ const NoticeBoard = () => {
     useEffect(() => {
         async function fetchAndSetNotice() {
             const data = await getNoticeList(noticeData);
-            setNotices(data);
+            // setNotices(data);
+            console.log(data);
         }
         fetchAndSetNotice();
     }, []);
@@ -89,6 +90,14 @@ const NoticeBoard = () => {
                     </>
                 );
             })}
+            <div>
+                <Stack spacing={2}>
+                    <Pagination count={10} />
+                    <Pagination count={10} color='primary' />
+                    <Pagination count={10} color='secondary' />
+                    <Pagination count={10} disabled />
+                </Stack>
+            </div>
         </div>
     );
 };

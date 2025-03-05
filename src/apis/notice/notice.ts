@@ -1,14 +1,13 @@
-import * as axios from '@utils/axiosInstance.ts';
-import ApiUrl from '@/types/apis/apiUrl.type';
+import { getData } from '@/common/utils/axiosUtils.ts';
 import NewNotice from '@/types/pages/notice/NewNotice.type';
 import { SampleNoticeDataType } from '@/mocks/datas/sampleNoticeData';
 
-const urls: ApiUrl = {
+const urls = {
     notice: '/notice',
 };
 
 const getNoticeList = async (notice: NewNotice) => {
-    return await axios.getData<SampleNoticeDataType[]>(urls.notice, { params: notice }).then((res) => res.data);
+    return await getData<SampleNoticeDataType[]>(urls.notice, { params: notice }).then((res) => res.data);
 };
 
 export { getNoticeList };
