@@ -4,7 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "npm run local",
+    "local": "vite",
+    "dev": "vite --mode dev",
+    "deploy": "tsc -b && vite build --mode deploy",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

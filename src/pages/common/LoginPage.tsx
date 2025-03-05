@@ -35,28 +35,27 @@ const LoginPage = () => {
     /* Privates */
     const routeToRoot = useCallback(() => {
         navigate('/');
-    }, [navigate]);
+    }, []);
 
     /* Event */
     const onSubmit = useCallback(
         async (request: LoginRequestForm) => {
             try {
                 const response = await postLoginRequest(request);
-                dispatch(setAuth());
 
                 if (response.code === ResponseCode.SUCCESS.code) {
-                    navigate('/'); //
+                    dispatch(setAuth());
+                    routeToRoot();
                 }
             } catch (e) {
                 console.error('Login Error:', e);
                 throw e;
             }
         },
-        [dispatch, navigate],
+        [dispatch, routeToRoot],
     );
 
     const onClickSocialLogin = useCallback((provider: Provider) => {
-        console.log('1111');
         window.location.href = requestSocialLoginUri(provider);
     }, []);
 

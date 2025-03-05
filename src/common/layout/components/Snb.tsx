@@ -20,7 +20,7 @@ const Snb = (props: SnbProps) => {
     const location = useLocation();
 
     const allMenuItems: MenuItem[] = pathUtils.extractMenuItems(routes);
-    const targetMenu: MenuItem = allMenuItems
+    const targetMenu: MenuItem | undefined = allMenuItems
         .sort((a, b) => b.path.length - a.path.length)
         .find((item) => location.pathname === item.path || location.pathname.startsWith(item.path));
 
