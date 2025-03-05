@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
     return {
         plugins: [react(), tsconfigPaths()],
         server: {
-            port: 5173,
+            port: env.VITE_PORT ? Number(env.VITE_PORT) : 5173,
             strictPort: true,
             proxy: {
                 '/api': {
