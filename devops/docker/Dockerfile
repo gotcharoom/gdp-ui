@@ -8,6 +8,6 @@ COPY dist/ .
 COPY entrypoint.sh entrypoint.sh
 RUN chmod +x entrypoint.sh
 
-EXPORT 5173
+EXPOSE 5173
 
 ENTRYPOINT ["sh", "entrypoint.sh"]
