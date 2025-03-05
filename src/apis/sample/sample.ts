@@ -3,6 +3,7 @@ import { SampleDataType } from '@/mocks/datas/sampleData';
 
 const urls = {
     test: '/sample/response/success',
+    // test: '/test',
 };
 
 interface Test {
