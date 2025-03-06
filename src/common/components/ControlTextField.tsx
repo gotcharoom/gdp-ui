@@ -5,7 +5,7 @@ import { TextFieldVariants } from '@mui/material/TextField/TextField';
 import { ReactNode } from 'react';
 import * as React from 'react';
 
-interface ValidTextFieldProps<T extends FieldValues, V extends TextFieldVariants> {
+interface ControlTextFieldProps<T extends FieldValues, V extends TextFieldVariants> {
     // Yup Props
     control: Control<T>;
     field: Path<T>;
@@ -17,8 +17,8 @@ interface ValidTextFieldProps<T extends FieldValues, V extends TextFieldVariants
     variant?: V;
     type?: React.InputHTMLAttributes<unknown>['type'];
 }
-const ValidTextField = <T extends FieldValues = FieldValues, V extends TextFieldVariants = 'outlined'>(
-    props: ValidTextFieldProps<T, V>,
+const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFieldVariants = 'outlined'>(
+    props: ControlTextFieldProps<T, V>,
 ) => {
     return (
         <Controller
@@ -40,4 +40,4 @@ const ValidTextField = <T extends FieldValues = FieldValues, V extends TextField
     );
 };
 
-export default ValidTextField;
+export default ControlTextField;

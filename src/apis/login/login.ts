@@ -7,6 +7,7 @@ import { store } from '@stores/store.ts';
 import { resetUser } from '@stores/slices/userSlice.ts';
 import { removeAuth } from '@stores/slices/authSlice.ts';
 import Provider from '@/common/constants/Provider.ts';
+import RememberMeRequestForm from '@/types/pages/login/RememberMeRequestForm.type.ts';
 
 const urls = {
     login: '/api/v1/auth/login',
@@ -15,6 +16,7 @@ const urls = {
     logout: '/api/v1/auth/logout',
     check: '/api/v1/auth/check',
     socialLogin: (provider: string) => `${import.meta.env.VITE_API_URL}/api/v1/oauth2/authorization/${provider}`,
+    rememberMe: '/api/v1/auth/remember-me',
 };
 
 const postLoginRequest = async (data: LoginRequestForm) => {
@@ -46,4 +48,20 @@ const requestSocialLoginUri = (provider: Provider) => {
     return urls.socialLogin(provider);
 };
 
-export { postLoginRequest, postRefreshToken, postLogoutRequest, getLoginUserInfo, postTokenCheck, requestSocialLoginUri };
+const postRequestRememberMe = async (data: boolean) => {
+    const form: RememberMeRequestForm = {
+        rememberMe: data ?? false,
+    };
+
+    return await postData<ApiResponse<unknown>>(urls.rememberMe, form);
+};
+
+export {
+    postLoginRequest,
+    postRefreshToken,
+    postLogoutRequest,
+    getLoginUserInfo,
+    postTokenCheck,
+    requestSocialLoginUri,
+    postRequestRememberMe,
+};
