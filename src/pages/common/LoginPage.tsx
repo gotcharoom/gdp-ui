@@ -24,6 +24,7 @@ const LoginPage = () => {
     const {
         control,
         handleSubmit,
+        getValues,
         formState: { errors },
     } = useForm<LoginRequestForm>({
         resolver: yupResolver(loginSchema),
@@ -61,9 +62,15 @@ const LoginPage = () => {
         [dispatch, routeToRoot],
     );
 
-    const onClickSocialLogin = useCallback((provider: Provider) => {
-        window.location.href = requestSocialLoginUri(provider);
-    }, []);
+    const onClickSocialLogin = useCallback(
+        async (provider: Provider) => {
+            const isRememberMe = getValues().rememberMe;
+
+            await postRequestRememberMe(isRememberMe);
+            window.location.href = requestSocialLoginUri(provider);
+        },
+        [getValues],
+    );
 
     /* Lifecycle */
     useEffect(() => {
