@@ -1,18 +1,19 @@
-import { Button, Checkbox, FormControlLabel, Paper } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import '@styles/pages/common/login.scss';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { loginSchema } from '@/validations/login/loginSchema.ts';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import ValidTextField from '@/common/components/ValidTextField.tsx';
+import ControlTextField from '@/common/components/ControlTextField.tsx';
 import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
-import { postLoginRequest, requestSocialLoginUri } from '@apis/login/login.ts';
+import { postLoginRequest, postRequestRememberMe, requestSocialLoginUri } from '@apis/login/login.ts';
 import { useCallback, useEffect } from 'react';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 import { setAuth } from '@stores/slices/authSlice.ts';
 import Provider from '@/common/constants/Provider.ts';
+import ControlCheckbox from '@/common/components/ControlCheckbox.tsx';
 
 const LoginPage = () => {
     /* Hooks */
@@ -23,24 +24,29 @@ const LoginPage = () => {
     const {
         control,
         handleSubmit,
+        getValues,
         formState: { errors },
     } = useForm<LoginRequestForm>({
         resolver: yupResolver(loginSchema),
         defaultValues: {
             id: '',
             password: '',
+            rememberMe: false,
         },
     });
 
     /* Privates */
     const routeToRoot = useCallback(() => {
         navigate('/');
-    }, []);
+    }, [navigate]);
 
     /* Event */
+
     const onSubmit = useCallback(
         async (request: LoginRequestForm) => {
             try {
+                const isRememberMe = request.rememberMe;
+                await postRequestRememberMe(isRememberMe);
                 const response = await postLoginRequest(request);
 
                 if (response.code === ResponseCode.SUCCESS.code) {
@@ -48,6 +54,7 @@ const LoginPage = () => {
                     routeToRoot();
                 }
             } catch (e) {
+                await postRequestRememberMe(false);
                 console.error('Login Error:', e);
                 throw e;
             }
@@ -55,9 +62,15 @@ const LoginPage = () => {
         [dispatch, routeToRoot],
     );
 
-    const onClickSocialLogin = useCallback((provider: Provider) => {
-        window.location.href = requestSocialLoginUri(provider);
-    }, []);
+    const onClickSocialLogin = useCallback(
+        async (provider: Provider) => {
+            const isRememberMe = getValues().rememberMe;
+
+            await postRequestRememberMe(isRememberMe);
+            window.location.href = requestSocialLoginUri(provider);
+        },
+        [getValues],
+    );
 
     /* Lifecycle */
     useEffect(() => {
@@ -71,7 +84,7 @@ const LoginPage = () => {
             <Paper className={'login__paper'} elevation={3}>
                 <div className={'login__paper__title'}>{title}</div>
                 <div className={'login__paper__input-container'}>
-                    <ValidTextField
+                    <ControlTextField
                         className={'input-container__input'}
                         control={control}
                         field='id'
@@ -79,7 +92,7 @@ const LoginPage = () => {
                         variant='outlined'
                         label={'아이디'}
                     />
-                    <ValidTextField
+                    <ControlTextField
                         className={'input-container__input'}
                         control={control}
                         field='password'
@@ -90,7 +103,7 @@ const LoginPage = () => {
                     />
                 </div>
                 <div className={'login__paper__login'}>
-                    <FormControlLabel control={<Checkbox />} label='Remember Me' />
+                    <ControlCheckbox control={control} field='rememberMe' />
                     <Button className={'login__button'} variant='contained' onClick={handleSubmit(onSubmit)}>
                         로그인
                     </Button>
