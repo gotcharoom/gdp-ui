@@ -21,7 +21,11 @@
       padding-left: $header__logo--padding;
 
       .logo {
-        @extend .logo
+        @extend .logo;
+
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 

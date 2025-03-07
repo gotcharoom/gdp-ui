@@ -25,6 +25,10 @@ const Header = (props: HeaderProps) => {
     }, []);
 
     /* Event */
+    const onClickLogo = useCallback(() => {
+        navigate('/');
+    }, [navigate]);
+
     const onClickMenu = useCallback(() => {
         props.onClickMenu(true);
     }, [props]);
@@ -51,7 +55,7 @@ const Header = (props: HeaderProps) => {
         <div className={'header'}>
             <div className={'header__nav'}>
                 <div className={'header__nav__logo'}>
-                    <img className={'logo'} alt={'header__logo'} src={'/logo/GDP_LOGO.png'} />
+                    <img className={'logo'} onClick={onClickLogo} alt={'header__logo'} src={'/logo/GDP_LOGO.png'} />
                 </div>
                 <div className={'header__nav__menu'}>
                     <IconButton className={'menu'} onClick={onClickMenu}>
