@@ -3,7 +3,7 @@ import { CSSProperties, ReactNode } from 'react';
 import '@styles/common/components/CommonModal.scss';
 import CloseIcon from '@mui/icons-material/Close';
 
-interface CommonModalProp {
+interface CommonModalProps {
     width: CSSProperties['width'];
     height: CSSProperties['height'];
     maxWidth?: CSSProperties['maxWidth'];
@@ -18,7 +18,7 @@ interface CommonModalProp {
     buttons?: ReactNode;
 }
 
-const CommonModal = (props: CommonModalProp) => {
+const CommonModal = (props: CommonModalProps) => {
     return (
         <Modal className={'common-modal'} open={props.open} onClose={props.handleClose}>
             <Paper
@@ -41,7 +41,7 @@ const CommonModal = (props: CommonModalProp) => {
                         </IconButton>
                     </div>
                     <div className={'common-modal__page__contents'}>{props.children}</div>
-                    {props?.buttons ?? <div className={'common-modal__page__buttons'}>{props.buttons}</div>}
+                    {props?.buttons && <div className={'common-modal__page__buttons'}>{props.buttons}</div>}
                 </>
             </Paper>
         </Modal>

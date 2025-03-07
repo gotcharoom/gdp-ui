@@ -1,0 +1,16 @@
+.find-id-modal {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .find-id-modal__text-field {
+    flex: 1;
+  }
+
+  .find-id-modal__button__submit {
+    margin: 0 0 0 10px;
+    width: 15%;
+  }
+}

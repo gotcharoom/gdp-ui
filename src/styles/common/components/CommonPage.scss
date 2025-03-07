@@ -21,7 +21,7 @@
   .common-page__contents {
     flex: 1;
     width: 100%;
-
-    padding: $paper__padding 0;
+    box-sizing: border-box;
+    padding: $paper__content__height__padding $paper__content__width__padding--large;
   }
 }

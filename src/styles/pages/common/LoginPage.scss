@@ -15,8 +15,6 @@
     flex-direction: column;
     align-items: center;
 
-    padding: 0 $login__container__side__padding;
-
     .input-container__input {
       width: 100%;
       padding-bottom: 2%;
@@ -26,7 +24,6 @@
   .login__option {
     width: 100%;
     box-sizing: border-box;
-    padding: 0 $login__container__side__padding;
     flex-direction: column;
 
     display: flex;
@@ -42,7 +39,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 25%;
+    padding: 0 10%;
     box-sizing: border-box;
 
     .support__button {
@@ -56,7 +53,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 0 $login__container__side__padding;
 
     .social__container--google {
       @extend .social__container;

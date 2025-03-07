@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
 import { postLoginRequest, postRequestRememberMe, requestSocialLoginUri } from '@apis/login/login.ts';
-import { CSSProperties, ReactNode, useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
@@ -16,16 +16,11 @@ import Provider from '@/common/constants/Provider.ts';
 import ControlCheckbox from '@/common/components/ControlCheckbox.tsx';
 import CommonPage from '@/common/components/CommonPage.tsx';
 import CommonModal from '@/common/components/CommonModal.tsx';
+import ModalConfig from '@/types/common/components/ModalConfig.type.ts';
+import FindIdModal from '@pages/common/components/FindIdModal.tsx';
+import FindPasswordModal from '@pages/common/components/FindPasswordModal.tsx';
 
-interface modalConfig {
-    title: string;
-    open: boolean;
-    width: CSSProperties['weight'];
-    height: CSSProperties['height'];
-    children: ReactNode;
-}
-
-const initModalConfig: modalConfig = {
+const initModalConfig: ModalConfig = {
     title: '',
     open: false,
     width: 100,
@@ -39,7 +34,7 @@ const LoginPage = () => {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const navigate = useNavigate();
-    const [modalConfig, setModalConfig] = useState<modalConfig>(initModalConfig);
+    const [modalConfig, setModalConfig] = useState<ModalConfig>(initModalConfig);
     const {
         control,
         handleSubmit,
@@ -65,23 +60,23 @@ const LoginPage = () => {
 
     /* Event */
     const onClickOpenFindIdModal = useCallback(() => {
-        const config: modalConfig = {
+        const config: ModalConfig = {
             title: 'ID 찾기',
             open: true,
             width: '50%',
-            height: '70%',
-            children: <></>,
+            height: '40%',
+            children: <FindIdModal />,
         };
         setModalConfig(config);
     }, []);
 
     const onClickOpenFindPasswordModal = useCallback(() => {
-        const config: modalConfig = {
+        const config: ModalConfig = {
             title: 'Password 찾기',
             open: true,
             width: '50%',
             height: '70%',
-            children: <></>,
+            children: <FindPasswordModal />,
         };
         setModalConfig(config);
     }, []);
