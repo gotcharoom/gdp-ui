@@ -1,38 +1,49 @@
-import { Box, Modal } from '@mui/material';
-import clsx from 'clsx';
-import { ReactNode } from 'react';
+import { IconButton, Modal, Paper } from '@mui/material';
+import { CSSProperties, ReactNode } from 'react';
 import '@styles/common/components/CommonModal.scss';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface CommonModalProp {
-    width: string | number;
-    height: string | number;
-    maxWidth?: string | number;
-    minWidth?: string | number;
-    maxHeight?: string | number;
-    minHeight?: string | number;
+    width: CSSProperties['width'];
+    height: CSSProperties['height'];
+    maxWidth?: CSSProperties['maxWidth'];
+    minWidth?: CSSProperties['minWidth'];
+    maxHeight?: CSSProperties['maxHeight'];
+    minHeight?: CSSProperties['minHeight'];
+
+    title: string;
     open: boolean;
     handleClose: () => void;
-    modalClassNames?: string[];
-    boxClassNames?: string[];
     children: ReactNode;
+    buttons?: ReactNode;
 }
 
 const CommonModal = (props: CommonModalProp) => {
     return (
-        <Modal
-            className={clsx('common-modal', props.modalClassNames ?? [])}
-            sx={{
-                width: props.width,
-                height: props.height,
-                maxWidth: props.maxWidth,
-                minWidth: props.minWidth,
-                maxHeight: props.maxHeight,
-                minHeight: props.minHeight,
-            }}
-            open={props.open}
-            onClose={props.handleClose}
-        >
-            <Box className={clsx('box', props.boxClassNames ?? [])}>{props.children}</Box>
+        <Modal className={'common-modal'} open={props.open} onClose={props.handleClose}>
+            <Paper
+                className={'common-modal__page'}
+                elevation={3}
+                sx={{
+                    width: props.width,
+                    height: props.height,
+                    maxWidth: props.maxWidth,
+                    minWidth: props.minWidth,
+                    maxHeight: props.maxHeight,
+                    minHeight: props.minHeight,
+                }}
+            >
+                <>
+                    <div className={'common-modal__page__title'}>
+                        {props.title}
+                        <IconButton size='small' className={'common-modal__page__title__close'} onClick={props.handleClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    </div>
+                    <div className={'common-modal__page__contents'}>{props.children}</div>
+                    {props?.buttons ?? <div className={'common-modal__page__buttons'}>{props.buttons}</div>}
+                </>
+            </Paper>
         </Modal>
     );
 };
