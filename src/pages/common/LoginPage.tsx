@@ -64,7 +64,7 @@ const LoginPage = () => {
             title: 'ID 찾기',
             open: true,
             width: '50%',
-            height: '40%',
+            height: '50%',
             children: <FindIdModal />,
         };
         setModalConfig(config);
@@ -75,7 +75,7 @@ const LoginPage = () => {
             title: 'Password 찾기',
             open: true,
             width: '50%',
-            height: '70%',
+            height: '60%',
             children: <FindPasswordModal />,
         };
         setModalConfig(config);
@@ -124,31 +124,25 @@ const LoginPage = () => {
         <>
             <div className={'login'}>
                 <CommonPage title={title} width={'600px'} height={'500px'}>
-                    <div className={'login__input-container'}>
-                        <ControlTextField
-                            className={'input-container__input'}
-                            control={control}
-                            field='id'
-                            errors={errors}
-                            variant='outlined'
-                            label={'아이디'}
-                        />
-                        <ControlTextField
-                            className={'input-container__input'}
-                            control={control}
-                            field='password'
-                            errors={errors}
-                            variant='outlined'
-                            label={'비밀번호'}
-                            type={'password'}
-                        />
-                    </div>
-                    <div className={'login__option'}>
-                        <ControlCheckbox control={control} field='rememberMe' />
-                        <Button className={'login__button'} variant='contained' onClick={handleSubmit(onSubmit)}>
-                            로그인
-                        </Button>
-                    </div>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <div className={'login__input-container'}>
+                            <ControlTextField control={control} field='id' errors={errors} variant='outlined' label={'아이디'} />
+                            <ControlTextField
+                                control={control}
+                                field='password'
+                                errors={errors}
+                                variant='outlined'
+                                label={'비밀번호'}
+                                type={'password'}
+                            />
+                        </div>
+                        <div className={'login__option'}>
+                            <ControlCheckbox control={control} field='rememberMe' />
+                            <Button className={'login__button'} variant='contained' type='submit'>
+                                로그인
+                            </Button>
+                        </div>
+                    </form>
                     <div className={'login__support'}>
                         <Button className={'support__button'} onClick={() => onClickOpenFindIdModal()}>
                             ID 찾기
