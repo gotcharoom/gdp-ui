@@ -22,7 +22,6 @@ import {
     MenuItem,
     Select,
     SelectChangeEvent,
-    debounce,
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -37,12 +36,15 @@ const initBoard: SampleNoticeDataType = {
     view: 10,
 };
 
+const itemsPerPage = 5; // 페이지당 게시판 갯수
+
 const NoticeBoard = () => {
     /* Hooks */
     const [notices, setNotices] = useState<SampleNoticeDataType[]>([initBoard]);
-    const [searchType, setSearchType] = useState('title');
-    const [searchSession, setSeactSession] = useState('');
-    const [filteredNotices, setFilteredNotices] = useState(notices);
+    const [searchType, setSearchType] = useState<string>('title');
+    const [searchSession, setSeactSession] = useState<string>(''); // 입력중인 검색어 상태
+    const [searchQuery, setSearchQuery] = useState<string>(''); // 검색 실행 시 적용될 검색어
+    const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
     const navigate = useNavigate();
     const noticeData: NewNotice = {
         search: '게시판',
@@ -54,33 +56,46 @@ const NoticeBoard = () => {
         return index < 3 ? 'red' : '';
     };
     const filterNotices = notices.filter((notice) => {
-        const lowerSearchSession = searchSession.toLocaleLowerCase();
-        if (!searchSession) return true;
+        const lowerSearchQuery = searchQuery.toLowerCase();
+        if (!searchQuery) return true;
 
         if (searchType === 'title') {
-            return notice.title.toLowerCase().includes(lowerSearchSession);
+            return notice.title.toLowerCase().includes(lowerSearchQuery);
         } else if (searchType === 'content') {
-            return notice.category.toLowerCase().includes(lowerSearchSession);
+            return notice.category.toLowerCase().includes(lowerSearchQuery);
         } else if (searchType === 'both') {
-            return notice.title.toLowerCase().includes(lowerSearchSession) || notice.category.toLowerCase().includes(lowerSearchSession);
+            return notice.title.toLowerCase().includes(lowerSearchQuery) || notice.category.toLowerCase().includes(lowerSearchQuery);
         }
         return false;
     });
+    const indexOfLastNotice = currentPage * itemsPerPage;
+    const indexOfFirstNoitce = indexOfLastNotice - itemsPerPage;
+    const currentNotices = filterNotices.slice(indexOfFirstNoitce, indexOfLastNotice);
     /* Event */
     const handleNoticeClick = (id: number) => () => {
         navigate(`/notice/${id}`);
     };
 
-    const handleSearchTypeChange = (event: SelectChangeEvent) => {
+    const handleSearchTypeChange = (event: SelectChangeEvent<string>) => {
         setSearchType(event.target.value);
     };
 
-    const handleSearchChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSeactSession(event.target.value);
-    }, 300);
+    };
 
     const handleSearch = () => {
-        setFilteredNotices(filterNotices);
+        setSearchQuery(searchSession);
+        setCurrentPage(1);
+    };
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            handleSearch();
+        }
+    };
+    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        setCurrentPage(value);
     };
 
     /* Lifecycle */
@@ -108,14 +123,9 @@ const NoticeBoard = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filterNotices.length > 0 ? (
-                            filterNotices.map((notice, index) => (
-                                <TableRow
-                                    onClick={() => handleNoticeClick(notice.id)}
-                                    hover
-                                    key={`row-${index}`}
-                                    sx={{ cursor: 'pointer' }}
-                                >
+                        {currentNotices.length > 0 ? (
+                            currentNotices.map((notice, index) => (
+                                <TableRow onClick={handleNoticeClick(notice.id)} hover key={`row-${index}`} sx={{ cursor: 'pointer' }}>
                                     <TableCell key={`category-${index}`} sx={{ color: isRed(index) }}>
                                         {notice.category}
                                     </TableCell>
@@ -138,7 +148,9 @@ const NoticeBoard = () => {
 
             <Stack spacing={2}>
                 <Pagination
-                    count={10}
+                    count={Math.ceil(filterNotices.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handlePageChange}
                     renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
                 />
             </Stack>
@@ -152,11 +164,12 @@ const NoticeBoard = () => {
                 <InputBase
                     sx={{ ml: 1, flex: 1 }}
                     placeholder='검색어를 입력해주세요'
-                    inputProps={{ 'aria-label': 'search google maps' }}
+                    value={searchSession}
                     onChange={handleSearchChange}
+                    onKeyDown={handleKeyDown}
                 />
-                <IconButton type='button' sx={{ p: '10px' }} aria-label='search'>
-                    <SearchIcon onClick={handleSearch} />
+                <IconButton type='button' sx={{ p: '10px' }} aria-label='search' onClick={handleSearch}>
+                    <SearchIcon />
                 </IconButton>
                 <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
             </Paper>

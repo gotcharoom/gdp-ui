@@ -6,7 +6,7 @@ import withSuspense from '@/common/utils/withSuspense.tsx';
 // Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
-const SampleNotice = lazy(() => import('@pages/notice/NoticeBoard'));
+const SampleNotice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
 const SampleNoticeComponent = withSuspense(SampleNotice);
 
 const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));

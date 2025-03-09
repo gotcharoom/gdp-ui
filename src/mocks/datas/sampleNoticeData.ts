@@ -48,6 +48,14 @@ const SampleNoticeData: SampleNoticeDataType[] = [
         view: 356,
         date: 'testdate5',
     },
+    {
+        id: 6,
+        category: 'test6',
+        title: 'testtitle6',
+        recommend: 46,
+        view: 3564,
+        date: 'testdate6',
+    },
 ];
 
 export { SampleNoticeData, type SampleNoticeDataType };
