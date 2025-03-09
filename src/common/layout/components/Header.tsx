@@ -59,7 +59,7 @@ const Header = (props: HeaderProps) => {
                 </div>
                 <div className={'header__nav__menu'}>
                     <IconButton className={'menu'} onClick={onClickMenu}>
-                        <span className='material-icons'>menu</span>
+                        <span className='material-symbols-outlined'>menu</span>
                     </IconButton>
                 </div>
             </div>
