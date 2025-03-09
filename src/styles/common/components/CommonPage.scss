@@ -10,17 +10,20 @@
 
   .common-page__title {
     width: 100%;
-    height: 5%;
+    height: $paper__header__size;
+    flex-shrink: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
+    box-sizing: border-box;
     font-weight: $title--font--weight;
   }
 
   .common-page__contents {
-    flex: 1;
+    flex-grow: 1;
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
     padding: $paper__content__height__padding $paper__content__width__padding--large;
   }
