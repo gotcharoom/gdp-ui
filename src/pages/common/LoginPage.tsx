@@ -90,7 +90,9 @@ const LoginPage = () => {
         setModalConfig(config);
     }, []);
 
-    const onClickSignUp = useCallback(() => {}, []);
+    const onClickSignUp = useCallback(() => {
+        navigate('agreement');
+    }, [navigate]);
 
     const onSubmit = useCallback(
         async (request: LoginRequestForm) => {
@@ -132,7 +134,7 @@ const LoginPage = () => {
     return (
         <>
             <div className={'login'}>
-                <CommonPage title={title} width={'600px'} height={'500px'}>
+                <CommonPage title={title} width={'500px'} height={'500px'}>
                     <form onSubmit={method.handleSubmit(onSubmit)}>
                         <div className={'login__input-container'}>
                             <ControlTextField

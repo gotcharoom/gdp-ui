@@ -6,9 +6,7 @@ interface CommonPageProp {
     width: CSSProperties['width'];
     height: CSSProperties['height'];
     maxWidth?: CSSProperties['maxWidth'];
-    minWidth?: CSSProperties['minWidth'];
     maxHeight?: CSSProperties['maxHeight'];
-    minHeight?: CSSProperties['minHeight'];
 
     title: string;
     children: ReactNode;
@@ -20,12 +18,12 @@ const CommonPage = (props: CommonPageProp) => {
             className={'common-page'}
             elevation={3}
             sx={{
-                width: props.width,
-                height: props.height,
+                // width: props.width,
+                // height: props.height,
+                minWidth: props.width,
+                minHeight: props.height,
                 maxWidth: props.maxWidth,
-                minWidth: props.minWidth,
                 maxHeight: props.maxHeight,
-                minHeight: props.minHeight,
             }}
         >
             <div className={'common-page__title'}>{props.title}</div>
