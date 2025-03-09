@@ -1,6 +1,17 @@
-import { useEffect, useContext, useState, useCallback, useMemo } from 'react';
+import { useEffect, useContext, useState, useCallback } from 'react';
 import { useBlocker, useNavigate } from 'react-router-dom';
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
+
+// 강제 로그아웃 플래그 (전역 변수로 설정)
+let forceLogout = false;
+
+export const allowForceLogout = () => {
+    forceLogout = true; // 네비게이션 가드가 차단하지 않도록 허용
+};
+
+export const preventForceLogout = () => {
+    forceLogout = false;
+};
 
 const useNavigationGuard = () => {
     /* Hooks */
@@ -10,38 +21,30 @@ const useNavigationGuard = () => {
 
     const hasDirtyForms = Object.values(dirtyForms).some(Boolean);
 
-    /* Privates */
-    const confirmMessage = useMemo(() => {
-        return '변경 사항이 저장되지 않았습니다. 정말 떠나시겠습니까?';
-    }, []);
-
     /* Events */
-    // 이동을 허용하는 `navigate` 함수
     const guardedNavigate = useCallback(
         (to: string) => {
-            if (isNavigationAllowed || !hasDirtyForms) {
+            if (isNavigationAllowed || !hasDirtyForms || forceLogout) {
                 setIsNavigationAllowed(true);
                 navigate(to);
                 setIsNavigationAllowed(false);
                 return;
             }
 
-            const confirmLeave = window.confirm(confirmMessage);
+            const confirmLeave = window.confirm('변경 사항이 저장되지 않았습니다. 정말 떠나시겠습니까?');
             if (confirmLeave) {
                 setIsNavigationAllowed(true);
                 navigate(to);
                 setIsNavigationAllowed(false);
             }
         },
-
-        [isNavigationAllowed, hasDirtyForms, confirmMessage, navigate],
+        [navigate, hasDirtyForms, isNavigationAllowed],
     );
 
-    /* Lifecycle */
-    // 뒤로가기, 새로고침 감지
+    // ✅ 뒤로가기, 새로고침 감지
     useEffect(() => {
         const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-            if (hasDirtyForms && !isNavigationAllowed) {
+            if (hasDirtyForms && !isNavigationAllowed && !forceLogout) {
                 event.preventDefault();
                 event.returnValue = '';
             }
@@ -53,11 +56,11 @@ const useNavigationGuard = () => {
         };
     }, [hasDirtyForms, isNavigationAllowed]);
 
-    // 라우트 이동 감지
+    // ✅ 라우트 이동 감지
     useBlocker(({ currentLocation, nextLocation }) => {
-        if (isNavigationAllowed) return false;
+        if (isNavigationAllowed || forceLogout) return false;
         if (hasDirtyForms && currentLocation.pathname !== nextLocation.pathname) {
-            return !window.confirm(confirmMessage);
+            return !window.confirm('변경 사항이 저장되지 않았습니다. 정말 떠나시겠습니까?');
         }
         return false;
     });

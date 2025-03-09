@@ -8,6 +8,7 @@ import { resetUser } from '@stores/slices/userSlice.ts';
 import { removeAuth } from '@stores/slices/authSlice.ts';
 import Provider from '@/common/constants/Provider.ts';
 import RememberMeRequestForm from '@/types/pages/login/RememberMeRequestForm.type.ts';
+import { allowForceLogout, preventForceLogout } from '@/common/hooks/useNavigationGuard.ts';
 
 const urls = {
     login: '/api/v1/auth/login',
@@ -30,7 +31,9 @@ const postLogoutRequest = async () => {
     store.dispatch(resetUser());
     store.dispatch(removeAuth());
 
+    allowForceLogout();
     window.location.href = '/login';
+    preventForceLogout();
 };
 
 const getLoginUserInfo = async (): Promise<UserState> => {
