@@ -19,7 +19,7 @@ const CommonLayout = () => {
 
     /* Privates */
 
-    /* Event */
+    /* Events */
 
     const onClickMenu = (isOpen: boolean) => {
         setOpen(isOpen);
@@ -28,7 +28,7 @@ const CommonLayout = () => {
         setOpen(isOpen);
     };
 
-    /* Lifecycle */
+    /* Lifecycles */
 
     return (
         <div className={'common-layout'}>

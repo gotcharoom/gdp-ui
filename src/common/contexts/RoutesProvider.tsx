@@ -1,12 +1,9 @@
+import { RoutesContext } from '@/common/contexts/RoutesContext.ts';
 import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import { ReactNode } from 'react';
-
-// Routes
 import UserRoutes from '@routes/user/UserRoutes.tsx';
 import AdminRoutes from '@routes/admin/AdminRoutes.tsx';
-import { RoutesContext } from '@/common/contexts/RoutesContext.ts';
+import { ReactNode } from 'react';
 
-// Custom Router 설정
 const routes: RouteObject[] = [...UserRoutes, ...AdminRoutes];
 
 const option = {

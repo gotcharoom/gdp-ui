@@ -2,7 +2,6 @@ import { Button } from '@mui/material';
 import '@styles/pages/common/LoginPage.scss';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { loginSchema } from '@/validations/login/loginSchema.ts';
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
@@ -19,6 +18,8 @@ import CommonModal from '@/common/components/CommonModal.tsx';
 import ModalConfig from '@/types/common/components/ModalConfig.type.ts';
 import FindIdModal from '@pages/common/components/FindIdModal.tsx';
 import FindPasswordModal from '@pages/common/components/FindPasswordModal.tsx';
+import FormName from '@/common/constants/FormName.ts';
+import { useForm } from 'react-hook-form';
 
 const initModalConfig: ModalConfig = {
     title: '',
@@ -35,12 +36,7 @@ const LoginPage = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const navigate = useNavigate();
     const [modalConfig, setModalConfig] = useState<ModalConfig>(initModalConfig);
-    const {
-        control,
-        handleSubmit,
-        getValues,
-        formState: { errors },
-    } = useForm<LoginRequestForm>({
+    const method = useForm<LoginRequestForm>({
         resolver: yupResolver(loginSchema),
         defaultValues: {
             id: '',
@@ -48,6 +44,17 @@ const LoginPage = () => {
             rememberMe: false,
         },
     });
+
+    // NavigationGuard 사용 시
+    // const { method } = useGlobalForm<LoginRequestForm>({
+    //     name: FormName.LOGIN,
+    //     resolver: yupResolver(loginSchema),
+    //     defaultValues: {
+    //         id: '',
+    //         password: '',
+    //         rememberMe: false,
+    //     },
+    // });
 
     /* Privates */
     const routeToRoot = useCallback(() => {
@@ -66,6 +73,7 @@ const LoginPage = () => {
             width: '50%',
             height: '50%',
             children: <FindIdModal />,
+            formName: FormName.FIND_ID,
         };
         setModalConfig(config);
     }, []);
@@ -77,6 +85,7 @@ const LoginPage = () => {
             width: '50%',
             height: '60%',
             children: <FindPasswordModal />,
+            formName: FormName.FIND_PASSWORD,
         };
         setModalConfig(config);
     }, []);
@@ -105,12 +114,12 @@ const LoginPage = () => {
 
     const onClickSocialLogin = useCallback(
         async (provider: Provider) => {
-            const isRememberMe = getValues().rememberMe;
+            const isRememberMe = method.getValues().rememberMe;
 
             await postRequestRememberMe(isRememberMe);
             window.location.href = requestSocialLoginUri(provider);
         },
-        [getValues],
+        [method],
     );
 
     /* Lifecycle */
@@ -124,20 +133,26 @@ const LoginPage = () => {
         <>
             <div className={'login'}>
                 <CommonPage title={title} width={'600px'} height={'500px'}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                    <form onSubmit={method.handleSubmit(onSubmit)}>
                         <div className={'login__input-container'}>
-                            <ControlTextField control={control} field='id' errors={errors} variant='outlined' label={'아이디'} />
                             <ControlTextField
-                                control={control}
+                                control={method.control}
+                                field='id'
+                                errors={method.formState.errors}
+                                variant='outlined'
+                                label={'아이디'}
+                            />
+                            <ControlTextField
+                                control={method.control}
                                 field='password'
-                                errors={errors}
+                                errors={method.formState.errors}
                                 variant='outlined'
                                 label={'비밀번호'}
                                 type={'password'}
                             />
                         </div>
                         <div className={'login__option'}>
-                            <ControlCheckbox control={control} field='rememberMe' />
+                            <ControlCheckbox control={method.control} field='rememberMe' />
                             <Button className={'login__button'} variant='contained' type='submit'>
                                 로그인
                             </Button>
@@ -196,6 +211,7 @@ const LoginPage = () => {
                 width={modalConfig.width}
                 height={modalConfig.height}
                 open={modalConfig.open}
+                formName={modalConfig?.formName}
                 handleClose={handleClose}
             >
                 {modalConfig.children}

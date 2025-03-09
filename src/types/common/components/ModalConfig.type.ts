@@ -1,4 +1,5 @@
 import { CSSProperties, ReactNode } from 'react';
+import FormName from '@/common/constants/FormName.ts';
 
 export default interface ModalConfig {
     width: CSSProperties['weight'];
@@ -12,4 +13,5 @@ export default interface ModalConfig {
     open: boolean;
     children: ReactNode;
     buttons?: ReactNode;
+    formName?: FormName;
 }
