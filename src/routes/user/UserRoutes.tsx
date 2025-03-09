@@ -6,14 +6,10 @@ import withSuspense from '@/common/utils/withSuspense.tsx';
 // Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
-<<<<<<< HEAD
 const SampleNotice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
 const SampleNoticeComponent = withSuspense(SampleNotice);
-
-const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
-const LoginComponent = withSuspense(LoginPage);
-=======
->>>>>>> e323892e8112665171b1cb9f49d7327b178c8db1
+const SampleNoticeDetail = lazy(() => import('@/pages/board/notice/NoticeDetailPage'));
+const SampleNoticeDetailComponent = withSuspense(SampleNoticeDetail);
 const ErrorPage = lazy(() => import('@pages/common/ErrorPage.tsx'));
 const ErrorPageComponent = withSuspense(ErrorPage);
 const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
@@ -93,7 +89,7 @@ const UserRoutes: RouteObject[] = [
                     },
                     {
                         path: ':id',
-                        element: <SampleNoticeComponent />,
+                        element: <SampleNoticeDetailComponent />,
                         handle: {
                             title: '공지사항',
                             icon: 'more-horizon',

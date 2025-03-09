@@ -34,6 +34,7 @@ const initBoard: SampleNoticeDataType = {
     recommend: 1,
     title: '',
     view: 10,
+    content: '',
 };
 
 const itemsPerPage = 5; // 페이지당 게시판 갯수
@@ -71,7 +72,7 @@ const NoticeBoard = () => {
     const indexOfLastNotice = currentPage * itemsPerPage;
     const indexOfFirstNoitce = indexOfLastNotice - itemsPerPage;
     const currentNotices = filterNotices.slice(indexOfFirstNoitce, indexOfLastNotice);
-    /* Event */
+    /* Events */
     const handleNoticeClick = (id: number) => () => {
         navigate(`/notice/${id}`);
     };

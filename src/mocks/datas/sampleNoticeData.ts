@@ -5,6 +5,7 @@ interface SampleNoticeDataType {
     recommend: number;
     view: number;
     date: string;
+    content: string;
 }
 
 const SampleNoticeData: SampleNoticeDataType[] = [
@@ -15,6 +16,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
         recommend: 100,
         view: 1000,
         date: 'testdate1',
+        content: '공지 내용입니다 이 서비스를 이용하면 필요한 공지들입니다.',
     },
     {
         id: 2,
@@ -23,6 +25,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
         recommend: 50,
         view: 500,
         date: 'testdate2',
+        content: '공지 내용입니다 이 서비스를 이용하면 필요한 공지들입니다.',
     },
     {
         id: 3,
@@ -31,6 +34,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
         recommend: 30,
         view: 300,
         date: 'testdate3',
+        content: '공지 내용입니다 이 서비스를 이용하면 필요한 공지들입니다.',
     },
     {
         id: 4,
@@ -39,6 +43,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
         recommend: 40,
         view: 400,
         date: 'testdate4',
+        content: '공지 내용입니다 이 서비스를 이용하면 필요한 공지들입니다.',
     },
     {
         id: 5,
@@ -47,6 +52,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
         recommend: 36,
         view: 356,
         date: 'testdate5',
+        content: '공지 내용입니다 이 서비스를 이용하면 필요한 공지들입니다.',
     },
     {
         id: 6,
@@ -55,6 +61,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
         recommend: 46,
         view: 3564,
         date: 'testdate6',
+        content: '공지 내용입니다 이 서비스를 이용하면 필요한 공지들입니다.',
     },
 ];
 
