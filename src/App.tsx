@@ -1,5 +1,6 @@
 import { RouterProvider } from 'react-router-dom';
-import CustomRouter, { RoutesProvider } from '@routes/CustomRouter.tsx';
+import CustomRouter, { RoutesProvider } from '@/common/contexts/RoutesProvider.tsx';
+import { GlobalFormProvider } from '@/common/contexts/GlobalFormProvider.tsx';
 
 // Styles
 import './styles/main.scss';
@@ -9,9 +10,11 @@ const App = () => {
     useAuth();
 
     return (
-        <RoutesProvider>
-            <RouterProvider router={CustomRouter} />
-        </RoutesProvider>
+        <GlobalFormProvider>
+            <RoutesProvider>
+                <RouterProvider router={CustomRouter} />
+            </RoutesProvider>
+        </GlobalFormProvider>
     );
 };
 
