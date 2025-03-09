@@ -43,7 +43,7 @@ const UserRoutes: RouteObject[] = [
                     {
                         path: 'agreement',
                         element: <AgreementComponent />,
-                        handle: { title: 'Agreement' },
+                        handle: { title: '약관 동의' },
                     },
                     {
                         path: 'sign-up',
