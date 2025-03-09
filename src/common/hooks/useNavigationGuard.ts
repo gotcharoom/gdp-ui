@@ -5,14 +5,6 @@ import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 // 강제 로그아웃 플래그 (전역 변수로 설정)
 let forceLogout = false;
 
-export const allowForceLogout = () => {
-    forceLogout = true; // 네비게이션 가드가 차단하지 않도록 허용
-};
-
-export const preventForceLogout = () => {
-    forceLogout = false;
-};
-
 const useNavigationGuard = () => {
     /* Hooks */
     const { dirtyForms } = useContext(GlobalFormContext);
@@ -69,3 +61,11 @@ const useNavigationGuard = () => {
 };
 
 export default useNavigationGuard;
+
+export const allowForceLogout = () => {
+    forceLogout = true; // 네비게이션 가드가 차단하지 않도록 허용
+};
+
+export const preventForceLogout = () => {
+    forceLogout = false;
+};
