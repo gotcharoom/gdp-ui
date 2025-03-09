@@ -6,6 +6,8 @@ import withSuspense from '@/common/utils/withSuspense.tsx';
 // Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
+const SampleEditorPage = lazy(() => import('@pages/sample/SampleEditorPage.tsx'));
+const SampleEditorPageComponent = withSuspense(SampleEditorPage);
 const ErrorPage = lazy(() => import('@pages/common/ErrorPage.tsx'));
 const ErrorPageComponent = withSuspense(ErrorPage);
 const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
@@ -25,7 +27,7 @@ const UserRoutes: RouteObject[] = [
             {
                 index: true,
                 element: <SampleUserMainComponent />,
-                handle: { title: 'Home1' },
+                handle: { title: 'HomeTest' },
             },
             {
                 path: 'error',
@@ -61,13 +63,18 @@ const UserRoutes: RouteObject[] = [
                         element: <SampleUserMainComponent />,
                         handle: {
                             title: 'Home1',
-                            icon: 'more-horizon',
+                            icon: 'more',
                         },
                     },
                     {
                         path: 'test',
                         element: <SampleUserMainComponent />,
                         handle: { title: 'Home3' },
+                    },
+                    {
+                        path: 'editor',
+                        element: <SampleEditorPageComponent />,
+                        handle: { title: 'Editor' },
                     },
                 ],
             },
