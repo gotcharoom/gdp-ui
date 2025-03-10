@@ -58,7 +58,7 @@ const LoginPage = () => {
 
     /* Privates */
     const routeToRoot = useCallback(() => {
-        navigate('/');
+        navigate('/', { replace: true });
     }, [navigate]);
 
     const handleClose = useCallback(() => {

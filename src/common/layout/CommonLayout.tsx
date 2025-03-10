@@ -6,10 +6,13 @@ import Snb from '@/common/layout/components/Snb.tsx';
 import Footer from '@/common/layout/components/Footer.tsx';
 
 import '@styles/layout/CommonLayout.scss';
-import { useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { ExtendedMatch } from '@/types/common/ExtendMatch.type.ts';
 
-const CommonLayout = () => {
+interface CommonLayoutProps {
+    children?: ReactNode;
+}
+const CommonLayout = (props: CommonLayoutProps) => {
     /* Hooks */
     const matches = useMatches() as ExtendedMatch[];
 
@@ -41,9 +44,7 @@ const CommonLayout = () => {
             <Header onClickMenu={onClickMenu} />
             <Snb isOpen={open} toggleDrawer={toggleDrawer} />
             <main className={'common-layout__main'}>
-                <div className='common-layout__main__content'>
-                    <Outlet context={{ title }} />
-                </div>
+                <div className='common-layout__main__content'>{props.children ? props.children : <Outlet context={{ title }} />}</div>
             </main>
             <Footer />
         </div>

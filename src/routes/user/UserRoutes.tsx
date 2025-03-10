@@ -26,17 +26,12 @@ const UserRoutes: RouteObject[] = [
         path: '/',
         element: <CommonLayout />,
         handle: { title: 'User Root' },
-        errorElement: <div>Need Change this</div>,
+        errorElement: <ErrorPageComponent />,
         children: [
             {
                 index: true,
                 element: <SampleUserMainComponent />,
                 handle: { title: 'HomeTest' },
-            },
-            {
-                path: 'error',
-                element: <ErrorPageComponent />,
-                handle: { title: 'Error' },
             },
             {
                 path: 'login',
