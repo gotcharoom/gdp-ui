@@ -1,31 +1,16 @@
 import { SampleNoticeDataType } from '@/mocks/datas/sampleNoticeData';
 import NewNotice from '@/types/pages/notice/NewNotice.type';
 import { getNoticeList } from '@apis/notice/notice';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //csss
-import {
-    Table,
-    TableContainer,
-    TableHead,
-    TableBody,
-    TableRow,
-    TableCell,
-    Pagination,
-    Stack,
-    PaginationItem,
-    Paper,
-    IconButton,
-    InputBase,
-    Divider,
-    MenuItem,
-    Select,
-    SelectChangeEvent,
-} from '@mui/material';
+import { Pagination, Stack, PaginationItem, SelectChangeEvent } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import SearchIcon from '@mui/icons-material/Search';
+
+import CommonNotice from '@/common/components/notice/CommonNotice';
+import CommonSearch from '@/common/components/notice/CommonSearch';
 
 const initBoard: SampleNoticeDataType = {
     category: '',
@@ -53,9 +38,7 @@ const NoticeBoard = () => {
     };
 
     /* Privates */
-    const isRed = (index: number) => {
-        return index < 3 ? 'red' : '';
-    };
+
     const filterNotices = notices.filter((notice) => {
         const lowerSearchQuery = searchQuery.toLowerCase();
         if (!searchQuery) return true;
@@ -69,13 +52,14 @@ const NoticeBoard = () => {
         }
         return false;
     });
-    const indexOfLastNotice = currentPage * itemsPerPage;
-    const indexOfFirstNoitce = indexOfLastNotice - itemsPerPage;
-    const currentNotices = filterNotices.slice(indexOfFirstNoitce, indexOfLastNotice);
+
     /* Events */
-    const handleNoticeClick = (id: number) => () => {
-        navigate(`/notice/${id}`);
-    };
+    const handleNoticeClick = useCallback(
+        (id: number) => {
+            navigate(`/notice/${id}`);
+        },
+        [navigate],
+    );
 
     const handleSearchTypeChange = (event: SelectChangeEvent<string>) => {
         setSearchType(event.target.value);
@@ -112,40 +96,7 @@ const NoticeBoard = () => {
     return (
         <div>
             <h1 style={{ fontSize: 50 }}>공지사항</h1>
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>카테고리</TableCell>
-                            <TableCell align='right'>제목</TableCell>
-                            <TableCell align='right'>추천</TableCell>
-                            <TableCell align='right'>조회</TableCell>
-                            <TableCell align='right'>날짜</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {currentNotices.length > 0 ? (
-                            currentNotices.map((notice, index) => (
-                                <TableRow onClick={handleNoticeClick(notice.id)} hover key={`row-${index}`} sx={{ cursor: 'pointer' }}>
-                                    <TableCell key={`category-${index}`} sx={{ color: isRed(index) }}>
-                                        {notice.category}
-                                    </TableCell>
-                                    <TableCell key={`title-${index}`}>{notice.title}</TableCell>
-                                    <TableCell key={`view-${index}`}>{notice.view}</TableCell>
-                                    <TableCell key={`recommend-${index}`}>{notice.recommend}</TableCell>
-                                    <TableCell key={`date-${index}`}>{notice.date}</TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={5} align='center'>
-                                    검색 결과가 없습니다.
-                                </TableCell>
-                            </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <CommonNotice notices={filterNotices} onNoticeClick={handleNoticeClick} itemsPerPage={itemsPerPage} currentPage={currentPage} />
 
             <Stack spacing={2}>
                 <Pagination
@@ -156,24 +107,14 @@ const NoticeBoard = () => {
                 />
             </Stack>
 
-            <Paper component='form' sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
-                <Select value={searchType} onChange={handleSearchTypeChange} label='제목'>
-                    <MenuItem value={'title'}>제목</MenuItem>
-                    <MenuItem value={'content'}>내용</MenuItem>
-                    <MenuItem value={'both'}>제목+내용</MenuItem>
-                </Select>
-                <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder='검색어를 입력해주세요'
-                    value={searchSession}
-                    onChange={handleSearchChange}
-                    onKeyDown={handleKeyDown}
-                />
-                <IconButton type='button' sx={{ p: '10px' }} aria-label='search' onClick={handleSearch}>
-                    <SearchIcon />
-                </IconButton>
-                <Divider sx={{ height: 28, m: 0.5 }} orientation='vertical' />
-            </Paper>
+            <CommonSearch
+                searchType={searchType}
+                searchQuery={searchQuery}
+                onKeyDown={handleKeyDown}
+                onSearch={handleSearch}
+                onSearchChange={handleSearchChange}
+                onSearchTypeChange={handleSearchTypeChange}
+            />
         </div>
     );
 };

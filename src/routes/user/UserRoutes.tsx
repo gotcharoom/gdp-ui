@@ -86,7 +86,7 @@ const UserRoutes: RouteObject[] = [
                         element: <SampleNoticeComponent />,
                         handle: {
                             title: '공지사항',
-                            icon: 'more-horizon',
+                            icon: 'more',
                         },
                     },
                     {
@@ -94,7 +94,7 @@ const UserRoutes: RouteObject[] = [
                         element: <SampleNoticeDetailComponent />,
                         handle: {
                             title: '공지사항',
-                            icon: 'more-horizon',
+                            icon: 'more',
                         },
                     },
                 ],
