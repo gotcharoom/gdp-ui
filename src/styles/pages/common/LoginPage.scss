@@ -1,5 +1,6 @@
 @use '../../global/variables' as *;
 @use '../../constants/loginConstants' as *;
+@use '../../constants/commonConstants' as *;
 
 .login {
   flex: 1;
@@ -22,7 +23,7 @@
     display: flex;
 
     .login__button {
-      height: $login__button_height;
+      height: $text-field__button__height;
     }
   }
 
@@ -110,7 +111,7 @@
 
   .social__container {
     width: 100%;
-    height: $login__button_height;
+    height: $text-field__button__height;
     margin-bottom: 2%;
     display: flex;
     flex-direction: row;

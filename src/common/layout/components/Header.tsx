@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { MouseEvent, useCallback, useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
-import { postLogoutRequest } from '@apis/login/login.ts';
+import { postLogoutRequest } from '@apis/auth/login.ts';
 
 interface HeaderProps {
     onClickMenu: (isOpen: boolean) => void;

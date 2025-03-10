@@ -34,9 +34,8 @@ const FindPasswordModal = () => {
             <div className={'find-password-modal__info'}>{message}</div>
             <ControlTextField
                 className={'find-password-modal__email'}
-                control={method.control}
+                method={method}
                 field='id'
-                errors={method.formState.errors}
                 variant='outlined'
                 label={'ID'}
                 alwaysLabelOnTop
@@ -44,9 +43,8 @@ const FindPasswordModal = () => {
             />
             <ControlTextField
                 className={'find-password-modal__email'}
-                control={method.control}
+                method={method}
                 field='email'
-                errors={method.formState.errors}
                 variant='outlined'
                 label={'Email'}
                 alwaysLabelOnTop

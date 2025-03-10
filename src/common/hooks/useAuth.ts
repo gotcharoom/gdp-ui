@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '@stores/slices/userSlice.ts';
-import { getLoginUserInfo, postTokenCheck } from '@apis/login/login.ts';
+import { getLoginUserInfo, postTokenCheck } from '@apis/auth/login.ts';
 import { RootState } from '@stores/store.ts';
 import { setAuth } from '@stores/slices/authSlice.ts';
 
