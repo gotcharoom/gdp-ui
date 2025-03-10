@@ -18,7 +18,7 @@
     .header__nav__logo {
       width: $header__logo--size;
       height: $header__logo--size;
-      padding-left: $header__logo--padding;
+      margin-left: $header__logo--margin;
 
       .logo {
         @extend .logo;
@@ -32,7 +32,7 @@
     .header__nav__menu {
       width: $header__menu--size;
       height: $header__menu--size;
-      padding-left: $header__menu--padding;
+      margin-left: $header__menu--margin;
 
       color: grey;
     }
@@ -50,7 +50,7 @@
     .header__social__discord {
       width: $header__social__discord--size;
       height: $header__social__discord--size;
-      padding-right: $header__social__discord--padding;
+      margin-right: $header__social__discord--margin;
     }
 
     .header__social__discord .discord {
@@ -64,13 +64,11 @@
     .header__social__account {
       width: $header__social__account--size;
       height: $header__social__account--size;
-      padding-right: $header__social__account--padding;
+      margin-right: $header__social__account--margin;
       display: flex;
     }
 
     .header__social__account .account {
-      object-fit: contain;
-
 
       .logo {
         border: 0.8px solid lightgrey;
