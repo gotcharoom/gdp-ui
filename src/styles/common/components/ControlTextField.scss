@@ -3,6 +3,6 @@
 
   //// 아래에 다른 요소가 있을 때만 적용
   &:has(+ *) {
-    padding-bottom: 1%;
+    margin-bottom: 1%;
   }
 }
