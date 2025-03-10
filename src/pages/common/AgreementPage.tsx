@@ -54,7 +54,7 @@ const AgreementPage = () => {
             <CommonPage width={'100%'} height={'100%'} title={title}>
                 <form onSubmit={method.handleSubmit(onSubmit)}>
                     <div className={'agreement-page__terms-container'}>
-                        <ControlCheckbox control={method.control} field='hasAcceptedGdpTerms' label={'GDP 이용약관'} />
+                        <ControlCheckbox control={method.control} field='hasAcceptedGdpTerms' label={'GDP 이용약관 동의'} />
                         <Box className={'agreement-page__container__box'}>
                             <GdpTerms />
                         </Box>
