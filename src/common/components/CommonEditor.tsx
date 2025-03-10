@@ -46,14 +46,14 @@ const CommonEditor = (props: CommonEditorProps) => {
 
     /* Lifecycles */
     useEffect(() => {
-        setFormDirty();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.text]);
-
-    useEffect(() => {
         setInitText(props.text);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        setFormDirty();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [initText, props.text]);
 
     return (
         <div className={'common-editor'}>
