@@ -2,7 +2,7 @@ import { TextField } from '@mui/material';
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { FieldErrors } from 'react-hook-form';
 import { TextFieldVariants } from '@mui/material/TextField/TextField';
-import { ReactNode, useEffect, useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import * as React from 'react';
 import clsx from 'clsx';
 import '@styles/common/components/ControlTextField.scss';
