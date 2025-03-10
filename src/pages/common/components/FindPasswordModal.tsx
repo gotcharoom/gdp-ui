@@ -39,6 +39,8 @@ const FindPasswordModal = () => {
                 errors={method.formState.errors}
                 variant='outlined'
                 label={'ID'}
+                alwaysLabelOnTop
+                required
             />
             <ControlTextField
                 className={'find-password-modal__email'}
@@ -47,6 +49,8 @@ const FindPasswordModal = () => {
                 errors={method.formState.errors}
                 variant='outlined'
                 label={'Email'}
+                alwaysLabelOnTop
+                required
             />
             <Button className={'find-password-modal__button__submit'} variant='contained' onClick={method.handleSubmit(onSubmit)}>
                 발송

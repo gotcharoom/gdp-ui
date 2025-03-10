@@ -143,6 +143,7 @@ const LoginPage = () => {
                                 errors={method.formState.errors}
                                 variant='outlined'
                                 label={'아이디'}
+                                alwaysLabelOnTop
                             />
                             <ControlTextField
                                 control={method.control}
@@ -151,6 +152,7 @@ const LoginPage = () => {
                                 variant='outlined'
                                 label={'비밀번호'}
                                 type={'password'}
+                                alwaysLabelOnTop
                             />
                         </div>
                         <div className={'login__option'}>
