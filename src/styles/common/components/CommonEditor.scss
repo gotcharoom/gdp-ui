@@ -1,7 +1,14 @@
+@use '../../constants/commonConstants' as *;
+
 .common-editor {
-  padding: 20px;
-  border: 1px solid #cacad6;
-  max-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  padding: $editor__padding;
+  border: $editor__border__size solid #cacad6;
+  height: calc($editor__toolbar__height + $editor__contents__height);
+
+  .tiptap {
+    height: calc($editor__contents__height - $editor__padding - ( $editor__border__size * 2));
+    overflow-y: auto;
+    .ProseMirror {
+    }
+  }
 }

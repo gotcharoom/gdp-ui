@@ -2,7 +2,7 @@
 .toolbar {
   flex: 1;
   min-width: $editor__min__width;
-  height: $toolbar__height;
+  height: $editor__toolbar__height;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -23,7 +23,7 @@
 
   .toolbar__divider {
     width: 1px;
-    height: $toolbar__divider__height;
+    height: $editor__toolbar__divider__height;
     background-color: $editor__common__color;
   }
 }
@@ -40,7 +40,7 @@
     }
 
     &.active {
-      background-color: $toolbar__active__color
+      background-color: $editor__toolbar__active__color
     }
   }
 }
