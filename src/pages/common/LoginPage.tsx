@@ -5,7 +5,7 @@ import { loginSchema } from '@/validations/login/loginSchema.ts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
-import { postLoginRequest, postRequestRememberMe, requestSocialLoginUri } from '@apis/login/login.ts';
+import { postLoginRequest, postRequestRememberMe, requestSocialLoginUri } from '@apis/auth/login.ts';
 import { useCallback, useEffect, useState } from 'react';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
@@ -137,20 +137,14 @@ const LoginPage = () => {
                 <CommonPage title={title} width={'500px'} height={'500px'}>
                     <form onSubmit={method.handleSubmit(onSubmit)}>
                         <div className={'login__input-container'}>
+                            <ControlTextField method={method} field='id' variant='outlined' label={'아이디'} alwaysLabelOnTop />
                             <ControlTextField
-                                control={method.control}
-                                field='id'
-                                errors={method.formState.errors}
-                                variant='outlined'
-                                label={'아이디'}
-                            />
-                            <ControlTextField
-                                control={method.control}
+                                method={method}
                                 field='password'
-                                errors={method.formState.errors}
                                 variant='outlined'
                                 label={'비밀번호'}
                                 type={'password'}
+                                alwaysLabelOnTop
                             />
                         </div>
                         <div className={'login__option'}>

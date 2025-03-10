@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
-import { postLogoutRequest, postRefreshToken } from '@apis/login/login.ts';
+import { postLogoutRequest, postRefreshToken } from '@apis/auth/login.ts';
 import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 

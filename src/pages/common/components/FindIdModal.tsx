@@ -35,11 +35,12 @@ const FindIdModal = () => {
             <div className={'find-id-modal__info'}>{message}</div>
             <ControlTextField
                 className={'find-id-modal__email'}
-                control={method.control}
+                method={method}
                 field='email'
-                errors={method.formState.errors}
                 variant='outlined'
                 label={'Email'}
+                alwaysLabelOnTop
+                required
             />
             <Button className={'find-id-modal__button__submit'} variant='contained' onClick={method.handleSubmit(onSubmit)}>
                 발송

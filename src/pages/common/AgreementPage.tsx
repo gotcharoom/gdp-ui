@@ -1,7 +1,5 @@
 import CommonPage from '@/common/components/CommonPage.tsx';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-
-import '@styles/pages/common/AgreementPage.scss';
 import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
 import ControlCheckbox from '@/common/components/ControlCheckbox.tsx';
 import { useForm } from 'react-hook-form';
@@ -9,8 +7,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { agreementSchema } from '@/validations/login/agreementSchema.ts';
 import AgreementForm from '@/types/pages/login/AgreementForm.type.ts';
 import * as React from 'react';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback } from 'react';
 import GdpTerms from '@pages/common/components/GdpTerms.tsx';
+
+import '@styles/pages/common/AgreementPage.scss';
 
 const AgreementPage = () => {
     /* Hooks */
@@ -54,7 +54,7 @@ const AgreementPage = () => {
             <CommonPage width={'100%'} height={'100%'} title={title}>
                 <form onSubmit={method.handleSubmit(onSubmit)}>
                     <div className={'agreement-page__terms-container'}>
-                        <ControlCheckbox control={method.control} field='hasAcceptedGdpTerms' label={'GDP 이용약관'} />
+                        <ControlCheckbox control={method.control} field='hasAcceptedGdpTerms' label={'GDP 이용약관 동의'} />
                         <Box className={'agreement-page__container__box'}>
                             <GdpTerms />
                         </Box>
