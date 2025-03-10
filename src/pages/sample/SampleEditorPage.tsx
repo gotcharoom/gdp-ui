@@ -1,8 +1,8 @@
 import CommonPage from '@/common/components/CommonPage.tsx';
 import { useState } from 'react';
-import CommonEditor from '@/common/components/tiptap/CommonEditor.tsx';
+import CommonEditor from '@/common/components/CommonEditor.tsx';
 
-import '@styles/common/components/tiptap/CommonEditor.scss';
+import '@styles/common/components/CommonEditor.scss';
 import useNavigationGuard from '@/common/hooks/useNavigationGuard.ts';
 
 const SampleEditorPage = () => {

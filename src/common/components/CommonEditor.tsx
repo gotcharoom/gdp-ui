@@ -4,7 +4,7 @@ import { Link } from '@tiptap/extension-link';
 import { Markdown } from 'tiptap-markdown';
 import Toolbar from '@/common/components/tiptap/Toolbar.tsx';
 
-import '@styles/common/components/tiptap/CommonEditor.scss';
+import '@styles/common/components/CommonEditor.scss';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 import FormName from '@/common/constants/FormName.ts';
