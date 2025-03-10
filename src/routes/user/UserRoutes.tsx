@@ -10,6 +10,8 @@ const SampleNotice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
 const SampleNoticeComponent = withSuspense(SampleNotice);
 const SampleNoticeDetail = lazy(() => import('@/pages/board/notice/NoticeDetailPage'));
 const SampleNoticeDetailComponent = withSuspense(SampleNoticeDetail);
+const SampleEditorPage = lazy(() => import('@pages/sample/SampleEditorPage.tsx'));
+const SampleEditorPageComponent = withSuspense(SampleEditorPage);
 const ErrorPage = lazy(() => import('@pages/common/ErrorPage.tsx'));
 const ErrorPageComponent = withSuspense(ErrorPage);
 const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
@@ -29,7 +31,7 @@ const UserRoutes: RouteObject[] = [
             {
                 index: true,
                 element: <SampleUserMainComponent />,
-                handle: { title: 'Home1' },
+                handle: { title: 'HomeTest' },
             },
             {
                 path: 'error',
@@ -47,7 +49,7 @@ const UserRoutes: RouteObject[] = [
                     {
                         path: 'agreement',
                         element: <AgreementComponent />,
-                        handle: { title: 'Agreement' },
+                        handle: { title: '약관 동의' },
                     },
                     {
                         path: 'sign-up',
@@ -65,13 +67,18 @@ const UserRoutes: RouteObject[] = [
                         element: <SampleUserMainComponent />,
                         handle: {
                             title: 'Home1',
-                            icon: 'more-horizon',
+                            icon: 'more',
                         },
                     },
                     {
                         path: 'test',
                         element: <SampleUserMainComponent />,
                         handle: { title: 'Home3' },
+                    },
+                    {
+                        path: 'editor',
+                        element: <SampleEditorPageComponent />,
+                        handle: { title: 'Editor' },
                     },
                 ],
             },

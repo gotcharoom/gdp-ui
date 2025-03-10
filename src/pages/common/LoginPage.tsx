@@ -154,7 +154,7 @@ const LoginPage = () => {
                             />
                         </div>
                         <div className={'login__option'}>
-                            <ControlCheckbox control={method.control} field='rememberMe' />
+                            <ControlCheckbox control={method.control} field='rememberMe' label={'Remember Me'} />
                             <Button className={'login__button'} variant='contained' type='submit'>
                                 로그인
                             </Button>
