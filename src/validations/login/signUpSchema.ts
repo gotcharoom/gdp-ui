@@ -11,8 +11,14 @@ export const signUpSchema = yup
             .required(),
         password: yup.string().required(),
         passwordConfirm: yup.string().required(),
-        email: yup.string().required(),
-        nickname: yup.string().required(),
+        email: yup
+            .string()
+            .test('check-duplicate', '중복된 ID 입니다', (value) => checkDuplicate(value, 'email'))
+            .required(),
+        nickname: yup
+            .string()
+            .test('check-duplicate', '중복된 ID 입니다', (value) => checkDuplicate(value, 'nickname'))
+            .required(),
     })
     .required();
 

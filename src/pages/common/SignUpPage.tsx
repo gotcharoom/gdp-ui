@@ -67,6 +67,7 @@ const SignUpPage = () => {
                         <ControlTextField
                             method={method}
                             field='password'
+                            successHelpText={successMessage}
                             variant='outlined'
                             label={'비밀번호'}
                             type={'password'}
@@ -77,6 +78,7 @@ const SignUpPage = () => {
                         <ControlTextField
                             method={method}
                             field='passwordConfirm'
+                            successHelpText={successMessage}
                             variant='outlined'
                             label={'비밀번호 확인'}
                             type={'password'}
@@ -89,6 +91,7 @@ const SignUpPage = () => {
                         <ControlTextField
                             method={method}
                             field='nickname'
+                            successHelpText={successMessage}
                             variant='outlined'
                             label={'닉네임'}
                             alwaysLabelOnTop
@@ -100,6 +103,7 @@ const SignUpPage = () => {
                         <ControlTextField
                             method={method}
                             field='email'
+                            successHelpText={successMessage}
                             variant='outlined'
                             label={'Email'}
                             alwaysLabelOnTop
