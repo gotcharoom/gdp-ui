@@ -33,7 +33,8 @@
       width: $header__menu--size;
       height: $header__menu--size;
       margin-left: $header__menu--margin;
-
+      display: flex;
+      align-items: center;
       color: grey;
     }
 
