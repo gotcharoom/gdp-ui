@@ -3,23 +3,47 @@
 
 .sign-up-page {
   flex:1;
-  height: 100%;
   display: flex;
 
-  .sign-up-page__input-container {
+  form {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sign-up-page__input__section {
     flex: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: $input-container__gap;
-    margin-bottom: 1%;
+    flex-direction: column;
 
-    //.input-container__button {
-    //  display: flex;
-    //  align-items: end;
-    //  font-size: $text-field__button__font-size;
-    //
-    //  margin-bottom: calc($text-field__input__helpText__size + ($text-field__input__height--medium / 2) - ($text-field__button__font-size /2)) ;
-    //}
+    .input__section__input-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: $input-container__gap;
+      margin-bottom: 1%;
+
+      //.input-container__button {
+      //  display: flex;
+      //  align-items: end;
+      //  font-size: $text-field__button__font-size;
+      //
+      //  margin-bottom: calc($text-field__input__helpText__size + ($text-field__input__height--medium / 2) - ($text-field__button__font-size /2)) ;
+      //}
+    }
+  }
+
+
+  .sign-up-page__button-section {
+    height: $button-section__height;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: $button-section__button__gap;
+
+    .button-section__button {
+
+    }
   }
 }

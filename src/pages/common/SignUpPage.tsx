@@ -11,6 +11,7 @@ import ControlTextField from '@/common/components/ControlTextField.tsx';
 
 import '@styles/pages/common/SignUpPage.scss';
 import { Button } from '@mui/material';
+import { postSignUp } from '@apis/auth/signUp.ts';
 
 const SignUpPage = () => {
     /* Hooks */
@@ -36,7 +37,13 @@ const SignUpPage = () => {
     }, []);
 
     /* Events */
-    const onSubmit = useCallback(() => {}, []);
+    const onSubmit = useCallback(async (form: SignUpRequestForm) => {
+        await postSignUp(form);
+    }, []);
+
+    const onClickCancel = useCallback(() => {
+        navigate('/login');
+    }, [navigate]);
 
     /* Lifecycle */
 
@@ -51,70 +58,77 @@ const SignUpPage = () => {
         <div className={'sign-up-page'}>
             <CommonPage width={'100%'} height={'100%'} title={'회원 가입'}>
                 <form onSubmit={method.handleSubmit(onSubmit)}>
-                    <div className={'sign-up-page__input-container'}>
-                        <ControlTextField
-                            method={method}
-                            field='id'
-                            successHelpText={successMessage}
-                            variant='outlined'
-                            label={'아이디'}
-                            alwaysLabelOnTop
-                            required
-                            checkImmediately
-                        />
+                    <div className={'sign-up-page__input__section'}>
+                        <div className={'input__section__input-container'}>
+                            <ControlTextField
+                                method={method}
+                                field='id'
+                                successHelpText={successMessage}
+                                variant='outlined'
+                                label={'아이디'}
+                                alwaysLabelOnTop
+                                required
+                                checkImmediately
+                            />
+                        </div>
+                        <div className={'input__section__input-container'}>
+                            <ControlTextField
+                                method={method}
+                                field='password'
+                                successHelpText={successMessage}
+                                variant='outlined'
+                                label={'비밀번호'}
+                                type={'password'}
+                                alwaysLabelOnTop
+                                required
+                                checkImmediately
+                            />
+                            <ControlTextField
+                                method={method}
+                                field='passwordConfirm'
+                                successHelpText={successMessage}
+                                variant='outlined'
+                                label={'비밀번호 확인'}
+                                type={'password'}
+                                alwaysLabelOnTop
+                                required
+                                checkImmediately
+                            />
+                        </div>
+                        <div className={'input__section__input-container'}>
+                            <ControlTextField
+                                method={method}
+                                field='nickname'
+                                successHelpText={successMessage}
+                                variant='outlined'
+                                label={'닉네임'}
+                                alwaysLabelOnTop
+                                required
+                                checkImmediately
+                            />
+                        </div>
+                        <div className={'input__section__input-container'}>
+                            <ControlTextField
+                                method={method}
+                                field='email'
+                                successHelpText={successMessage}
+                                variant='outlined'
+                                label={'Email'}
+                                alwaysLabelOnTop
+                                defaultHelpText={'Email은 계정 정보를 찾을 때 사용됩니다'}
+                                required
+                                checkImmediately
+                            />
+                        </div>
                     </div>
-                    <div className={'sign-up-page__input-container'}>
-                        <ControlTextField
-                            method={method}
-                            field='password'
-                            successHelpText={successMessage}
-                            variant='outlined'
-                            label={'비밀번호'}
-                            type={'password'}
-                            alwaysLabelOnTop
-                            required
-                            checkImmediately
-                        />
-                        <ControlTextField
-                            method={method}
-                            field='passwordConfirm'
-                            successHelpText={successMessage}
-                            variant='outlined'
-                            label={'비밀번호 확인'}
-                            type={'password'}
-                            alwaysLabelOnTop
-                            required
-                            checkImmediately
-                        />
+                    <div className={'sign-up-page__button-section'}>
+                        <Button className={'button-section__button'} variant='contained' type='submit'>
+                            가입
+                        </Button>
+                        <Button className={'button-section__button'} variant='outlined' onClick={onClickCancel}>
+                            취소
+                        </Button>
                     </div>
-                    <div className={'sign-up-page__input-container'}>
-                        <ControlTextField
-                            method={method}
-                            field='nickname'
-                            successHelpText={successMessage}
-                            variant='outlined'
-                            label={'닉네임'}
-                            alwaysLabelOnTop
-                            required
-                            checkImmediately
-                        />
-                    </div>
-                    <div className={'sign-up-page__input-container'}>
-                        <ControlTextField
-                            method={method}
-                            field='email'
-                            successHelpText={successMessage}
-                            variant='outlined'
-                            label={'Email'}
-                            alwaysLabelOnTop
-                            defaultHelpText={'Email은 계정 정보를 찾을 때 사용됩니다'}
-                            required
-                            checkImmediately
-                        />
-                    </div>
-                    <Button className={'login__button'} variant='contained' type='submit'>
-                        로그인
-                    </Button>
                 </form>
             </CommonPage>
         </div>
