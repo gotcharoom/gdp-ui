@@ -3,11 +3,13 @@ import { RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
 import withSuspense from '@/common/utils/withSuspense.tsx';
 
-// Components
+// Sample Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
 const SampleEditorPage = lazy(() => import('@pages/sample/SampleEditorPage.tsx'));
 const SampleEditorPageComponent = withSuspense(SampleEditorPage);
+
+// Common Components
 const ErrorPage = lazy(() => import('@pages/common/ErrorPage.tsx'));
 const ErrorPageComponent = withSuspense(ErrorPage);
 const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
@@ -16,6 +18,8 @@ const AgreementPage = lazy(() => import('@pages/common/AgreementPage.tsx'));
 const AgreementComponent = withSuspense(AgreementPage);
 const SignUpPage = lazy(() => import('@pages/common/SignUpPage.tsx'));
 const SignUpComponent = withSuspense(SignUpPage);
+
+// Components
 
 const UserRoutes: RouteObject[] = [
     {
@@ -27,7 +31,23 @@ const UserRoutes: RouteObject[] = [
             {
                 index: true,
                 element: <SampleUserMainComponent />,
-                handle: { title: 'HomeTest' },
+                handle: { title: 'Sample Main' },
+            },
+            {
+                path: 'sample',
+                handle: { title: 'Sample' },
+                children: [
+                    {
+                        index: true,
+                        element: <SampleUserMainComponent />,
+                        handle: { title: 'Sample Page' },
+                    },
+                    {
+                        path: 'editor',
+                        element: <SampleEditorPageComponent />,
+                        handle: { title: 'Sample Editor' },
+                    },
+                ],
             },
             {
                 path: 'login',
@@ -45,31 +65,7 @@ const UserRoutes: RouteObject[] = [
                     {
                         path: 'sign-up',
                         element: <SignUpComponent />,
-                        handle: { title: 'Sign Up' },
-                    },
-                ],
-            },
-            {
-                path: 'test',
-                handle: { title: 'Home2' },
-                children: [
-                    {
-                        index: true,
-                        element: <SampleUserMainComponent />,
-                        handle: {
-                            title: 'Home1',
-                            icon: 'more',
-                        },
-                    },
-                    {
-                        path: 'test',
-                        element: <SampleUserMainComponent />,
-                        handle: { title: 'Home3' },
-                    },
-                    {
-                        path: 'editor',
-                        element: <SampleEditorPageComponent />,
-                        handle: { title: 'Editor' },
+                        handle: { title: '회원 가입' },
                     },
                 ],
             },

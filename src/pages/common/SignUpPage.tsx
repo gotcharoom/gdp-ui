@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useNavigationGuard from '@/common/hooks/useNavigationGuard.ts';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
@@ -15,6 +15,7 @@ import { postSignUp } from '@apis/auth/signUp.ts';
 
 const SignUpPage = () => {
     /* Hooks */
+    const { title } = useOutletContext<{ title: string }>();
     const location = useLocation();
     const navigate = useNavigate();
     const { method } = useGlobalForm<SignUpRequestForm>({
@@ -56,7 +57,7 @@ const SignUpPage = () => {
 
     return (
         <div className={'sign-up-page'}>
-            <CommonPage width={'100%'} height={'100%'} title={'회원 가입'}>
+            <CommonPage width={'100%'} height={'100%'} title={title}>
                 <form onSubmit={method.handleSubmit(onSubmit)}>
                     <div className={'sign-up-page__input__section'}>
                         <div className={'input__section__input-container'}>
