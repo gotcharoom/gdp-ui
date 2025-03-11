@@ -8,6 +8,8 @@
 //     duplicateCheckNickName: 'test',
 // };
 
+import SignUpRequestForm from '@/types/pages/login/SignUpRequestForm.ts';
+
 const getDuplicateCheckId = async (value: string) => {
     // return await getData<ApiResponse<unknown>>(urls.duplicateCheckId, { params: data });
     return value == 'aaaaaaa';
@@ -23,4 +25,9 @@ const getDuplicateCheckNickname = async (value: string) => {
     return value == 'aaaaaaa';
 };
 
-export { getDuplicateCheckId, getDuplicateCheckEmail, getDuplicateCheckNickname };
+const postSignUp = async (data: SignUpRequestForm) => {
+    // try-catch
+    // return await postData<ApiResponse<unknown>>(urls.duplicateCheckId, { params: data });
+};
+
+export { getDuplicateCheckId, getDuplicateCheckEmail, getDuplicateCheckNickname, postSignUp };
