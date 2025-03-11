@@ -5,12 +5,13 @@ const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
     const exceptionList: string[] = ['login', 'error'];
 
     return routes
-        .filter((route) => route.path !== undefined || route.index) // ✅ index도 포함
+        .filter((route) => route.path !== undefined || route.index) // index도 포함
         .filter((route) => !route.path?.includes(':'))
         .filter((route) => !exceptionList.includes(route.path as string))
+        .filter((route) => !(basePath === '' && route.index)) // 최상위 `/`의 children 내 index 제거
         .flatMap((route) => {
             const fullPath = route.index
-                ? basePath // ✅ index 라우트는 부모의 경로 사용
+                ? basePath // index 라우트는 부모의 경로 사용
                 : `${basePath}/${route.path ?? ''}`.replace('//', '/').replace(/\/+$/g, '');
 
             const title = route.handle?.title || 'Untitled';
