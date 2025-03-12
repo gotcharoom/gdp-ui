@@ -1,3 +1,4 @@
+/* CommonPage */
 $paper__padding: 1.5rem;
 $paper__header__size: 20px;
 
@@ -5,11 +6,19 @@ $paper__content__height__padding: 1.5rem;
 $paper__content__width__padding--large: 5%;
 $paper__content__width__padding--small: 1%;
 
+/* ControlTextField */
 $text-field__input__height--small: 40px;
 $text-field__input__height--medium: 56px;
+$text-field__button__height: 40px;
+$text-field__button__font-size: 14px;
+$text-field__input__helpText__size: 19.91px;
 
+/* CommonEditor */
+$editor__padding: 20px;
+$editor__border__size: 1px;
 $editor__min__width: 600px;
 $editor__common__color: #cccc;
-$toolbar__height: 32px;
-$toolbar__divider__height: 24px;
-$toolbar__active__color: #e7e7e7;
+$editor__toolbar__height: 32px;
+$editor__contents__height: 400px;
+$editor__toolbar__divider__height: 24px;
+$editor__toolbar__active__color: #e7e7e7;
