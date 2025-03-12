@@ -17,7 +17,13 @@ const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
             const title = route.handle?.title || 'Untitled';
             const icon = route.handle?.icon || 'apps';
 
-            const children = route.children ? extractMenuItems(route.children, fullPath) : [];
+            // 자식 메뉴 처리
+            let children = route.children ? extractMenuItems(route.children, fullPath) : [];
+
+            // 하위 children에 index만 있는 경우, 상위 메뉴를 클릭하면 index로 이동
+            if (children.length === 1 && children[0].path === fullPath) {
+                children = [];
+            }
 
             return { path: fullPath, title, icon, children } as MenuItem;
         });
