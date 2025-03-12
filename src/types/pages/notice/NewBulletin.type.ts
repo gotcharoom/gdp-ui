@@ -1,6 +1,6 @@
 interface NewBulletin {
     search: string;
-    pagePerItems: string;
+    pagePerItems: number;
 }
 
 export default NewBulletin;

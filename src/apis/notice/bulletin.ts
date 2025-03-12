@@ -1,6 +1,5 @@
 import { getData } from '@/common/utils/axiosUtils';
 import { SampleBulletinDataType } from '@/mocks/datas/sampleBulletinData';
-
 import NewBulletin from '@/types/pages/notice/NewBulletin.type';
 
 const urls = {

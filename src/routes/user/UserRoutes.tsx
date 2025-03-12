@@ -1,5 +1,5 @@
 import CommonLayout from '@/common/layout/CommonLayout.tsx';
-import { RouteObject } from 'react-router-dom';
+import { Outlet, RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
 import withSuspense from '@/common/utils/withSuspense.tsx';
 
@@ -10,6 +10,10 @@ const SampleNotice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
 const SampleNoticeComponent = withSuspense(SampleNotice);
 const SampleNoticeDetail = lazy(() => import('@/pages/board/notice/NoticeDetailPage'));
 const SampleNoticeDetailComponent = withSuspense(SampleNoticeDetail);
+const SampleBulletin = lazy(() => import('@pages/board/bulletin/BulletinBoard'));
+const SampleBulletinComponent = withSuspense(SampleBulletin);
+const SampleBulletinDetail = lazy(() => import('@/pages/board/bulletin/BulletinDetailPage'));
+const SampleBulletinDetailComponent = withSuspense(SampleBulletinDetail);
 const SampleEditorPage = lazy(() => import('@pages/sample/SampleEditorPage.tsx'));
 const SampleEditorPageComponent = withSuspense(SampleEditorPage);
 
@@ -74,24 +78,49 @@ const UserRoutes: RouteObject[] = [
                 ],
             },
             {
-                path: 'notice',
+                path: 'board',
                 handle: { title: '게시판' },
                 children: [
                     {
-                        index: true,
-                        element: <SampleNoticeComponent />,
+                        path: 'notice',
+                        element: <Outlet />,
                         handle: {
                             title: '공지사항',
                             icon: 'more',
                         },
+                        children: [
+                            { index: true, element: <SampleNoticeComponent /> },
+
+                            {
+                                path: ':id',
+                                element: <SampleNoticeDetailComponent />,
+                                handle: {
+                                    title: '공지사항',
+                                    icon: 'more',
+                                },
+                            },
+                        ],
                     },
+
                     {
-                        path: ':id',
-                        element: <SampleNoticeDetailComponent />,
+                        path: 'bulletin',
+                        element: <Outlet />,
                         handle: {
-                            title: '공지사항',
+                            title: '자유게시판',
                             icon: 'more',
                         },
+                        children: [
+                            { index: true, element: <SampleBulletinComponent /> },
+
+                            {
+                                path: ':id',
+                                element: <SampleBulletinDetailComponent />,
+                                handle: {
+                                    title: '자유게시판',
+                                    icon: 'more',
+                                },
+                            },
+                        ],
                     },
                 ],
             },

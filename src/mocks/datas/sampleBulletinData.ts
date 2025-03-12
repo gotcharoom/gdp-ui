@@ -10,7 +10,7 @@ interface SampleBulletinDataType {
 
 const SampleBulletinData: SampleBulletinDataType[] = [
     {
-        id: 1,
+        id: 11,
         category: 'test1',
         title: 'testtitle1',
         recommend: 100,
@@ -19,7 +19,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
     },
     {
-        id: 2,
+        id: 12,
         category: 'test2',
         title: 'testtitle2',
         recommend: 50,
@@ -28,7 +28,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
     },
     {
-        id: 3,
+        id: 13,
         category: 'test3',
         title: 'testtitle3',
         recommend: 30,
@@ -37,7 +37,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
     },
     {
-        id: 4,
+        id: 14,
         category: 'test4',
         title: 'testtitle4',
         recommend: 40,
@@ -46,7 +46,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
     },
     {
-        id: 5,
+        id: 15,
         category: 'test5',
         title: 'testtitle5',
         recommend: 36,
@@ -55,7 +55,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
     },
     {
-        id: 6,
+        id: 16,
         category: 'test6',
         title: 'testtitle6',
         recommend: 46,
