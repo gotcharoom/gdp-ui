@@ -1,7 +1,9 @@
 import CommonLayout from '@/common/layout/CommonLayout.tsx';
-import { RouteObject } from 'react-router-dom';
+import { Outlet, RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
 import withSuspense from '@/common/utils/withSuspense.tsx';
+import { RoutesContext } from '@/common/contexts/RoutesContext.ts';
+import CommonChildrenLayout from '@/common/layout/CommonChildrenLayout.tsx';
 
 // Sample Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
@@ -41,6 +43,23 @@ const UserRoutes: RouteObject[] = [
                         index: true,
                         element: <SampleUserMainComponent />,
                         handle: { title: 'Sample Page' },
+                    },
+                    {
+                        path: 'test',
+                        element: <CommonChildrenLayout />,
+                        handle: { title: 'Sample Detail Test' },
+                        children: [
+                            {
+                                index: true,
+                                element: <SampleEditorPageComponent />,
+                                handle: { title: 'List' },
+                            },
+                            {
+                                path: ':id',
+                                element: <SampleEditorPageComponent />,
+                                handle: { title: 'Detail' },
+                            },
+                        ],
                     },
                     {
                         path: 'editor',
