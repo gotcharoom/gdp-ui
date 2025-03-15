@@ -46,6 +46,11 @@ const Header = (props: HeaderProps) => {
         await postLogoutRequest();
     }, [closeUserMenu]);
 
+    const onClickUserInfo = useCallback(async () => {
+        closeUserMenu();
+        navigate('/user/info');
+    }, [closeUserMenu, navigate]);
+
     /* Lifecycle */
     useLayoutEffect(() => {
         setIsLogin(isAuthenticated);
@@ -85,6 +90,7 @@ const Header = (props: HeaderProps) => {
                                     'aria-labelledby': 'basic-button',
                                 }}
                             >
+                                <MenuItem onClick={onClickUserInfo}>내 정보</MenuItem>
                                 <MenuItem onClick={onClickLogout}>로그아웃</MenuItem>
                             </Menu>
                         </>

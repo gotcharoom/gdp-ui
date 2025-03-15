@@ -27,6 +27,7 @@ const getDuplicateCheckNickname = async (value: string) => {
 
 const postSignUp = async (data: SignUpRequestForm) => {
     // try-catch
+    console.log(data);
     // return await postData<ApiResponse<unknown>>(urls.duplicateCheckId, { params: data });
 };
 

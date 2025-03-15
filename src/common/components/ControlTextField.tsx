@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import '@styles/common/components/ControlTextField.scss';
 
 interface ControlTextFieldProps<T extends FieldValues, V extends TextFieldVariants> {
+    className?: string;
     handleChange?: () => void;
     checkImmediately?: boolean;
 
@@ -113,7 +114,7 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
             control={control}
             render={({ field: { onChange, value } }) => (
                 <TextField
-                    className={clsx('control-text-field', successClass, additionalClassNames)}
+                    className={clsx(props.className, 'control-text-field', successClass, additionalClassNames)}
                     slotProps={{
                         inputLabel: {
                             shrink: !!props.alwaysLabelOnTop,

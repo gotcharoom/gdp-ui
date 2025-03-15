@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { agreementSchema } from '@/validations/login/agreementSchema.ts';
 import AgreementForm from '@/types/pages/login/AgreementForm.type.ts';
-import * as React from 'react';
 import { useCallback } from 'react';
 import GdpTerms from '@pages/common/components/GdpTerms.tsx';
 

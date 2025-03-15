@@ -1,8 +1,7 @@
 import CommonLayout from '@/common/layout/CommonLayout.tsx';
-import { Outlet, RouteObject } from 'react-router-dom';
+import { RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
 import withSuspense from '@/common/utils/withSuspense.tsx';
-import { RoutesContext } from '@/common/contexts/RoutesContext.ts';
 import CommonChildrenLayout from '@/common/layout/CommonChildrenLayout.tsx';
 
 // Sample Components
@@ -20,6 +19,8 @@ const AgreementPage = lazy(() => import('@pages/common/AgreementPage.tsx'));
 const AgreementComponent = withSuspense(AgreementPage);
 const SignUpPage = lazy(() => import('@pages/common/SignUpPage.tsx'));
 const SignUpComponent = withSuspense(SignUpPage);
+const UserInfoPage = lazy(() => import('@pages/common/UserInfoPage.tsx'));
+const UserInfoPageComponent = withSuspense(UserInfoPage);
 
 // Components
 
@@ -85,6 +86,16 @@ const UserRoutes: RouteObject[] = [
                         path: 'sign-up',
                         element: <SignUpComponent />,
                         handle: { title: '회원 가입' },
+                    },
+                ],
+            },
+            {
+                path: 'user',
+                children: [
+                    {
+                        path: 'info',
+                        element: <UserInfoPageComponent />,
+                        handle: { title: '내 정보' },
                     },
                 ],
             },
