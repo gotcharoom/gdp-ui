@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 import { getDuplicateCheckEmail, getDuplicateCheckId, getDuplicateCheckNickname } from '@apis/auth/signUp.ts';
-import SignUpRequestForm from '@/types/pages/login/SignUpRequestForm.ts';
 
 export const signUpSchema = yup
     .object({
@@ -28,6 +27,7 @@ const apis = {
     nickname: (value: string) => getDuplicateCheckNickname(value),
 };
 
-const checkDuplicate = async (value: string | undefined, fieldName: keyof SignUpRequestForm) => {
+const checkDuplicate = async (value: string | undefined, fieldName: keyof typeof apis) => {
+    if (!value) return true;
     return await apis[fieldName](value);
 };

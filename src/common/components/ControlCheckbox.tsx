@@ -23,7 +23,7 @@ const ControlCheckbox = <T extends FieldValues = FieldValues>(props: ControlChec
             control={props.control}
             render={({ field: { value, onChange } }) => (
                 <FormControlLabel
-                    control={<Checkbox field={props.field} checked={value} onChange={(e) => onChangeRememberMe(e, onChange)} />}
+                    control={<Checkbox checked={value} onChange={(e) => onChangeRememberMe(e, onChange)} />}
                     label={props.label}
                 />
             )}

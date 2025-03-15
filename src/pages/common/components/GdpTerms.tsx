@@ -1,4 +1,3 @@
-import * as React from 'react';
 import '@styles/pages/common/AgreementPage.scss';
 
 const GdpTerms = () => {

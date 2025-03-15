@@ -7,4 +7,9 @@ interface GlobalFormContextType {
     deleteDirty: (id: string) => void;
 }
 
-export const GlobalFormContext = createContext<GlobalFormContextType | null>(null);
+export const GlobalFormContext = createContext<GlobalFormContextType>({
+    dirtyForms: {},
+    setDirty: () => {},
+    isDirty: () => false,
+    deleteDirty: () => {},
+});
