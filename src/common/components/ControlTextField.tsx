@@ -16,7 +16,6 @@ interface ControlTextFieldProps<T extends FieldValues, V extends TextFieldVarian
     field: Path<T>;
 
     // TextField Props
-    additionalClassNames?: string[];
     size?: 'small' | 'medium';
     label?: string;
     variant?: V;
@@ -47,8 +46,6 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
     const [helpText, setHelpText] = useState<string | ReactNode>(props.defaultHelpText || ' ');
 
     /* Privates */
-    const additionalClassNames = useMemo(() => props.additionalClassNames ?? [], [props.additionalClassNames]);
-
     const isReadOnly = useMemo(() => {
         return !!props.readOnly;
     }, [props.readOnly]);
@@ -123,7 +120,7 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
             control={control}
             render={({ field: { onChange, value } }) => (
                 <TextField
-                    className={clsx(props.className || '', 'control-text-field', readOnlyClass, successClass, additionalClassNames)}
+                    className={clsx('control-text-field', readOnlyClass, successClass, props.className || '')}
                     slotProps={{
                         inputLabel: {
                             shrink: !!props.alwaysLabelOnTop,
