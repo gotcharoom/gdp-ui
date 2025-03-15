@@ -25,6 +25,7 @@ interface ControlTextFieldProps<T extends FieldValues, V extends TextFieldVarian
     successHelpText?: string;
     alwaysLabelOnTop?: boolean;
     required?: boolean;
+    readOnly?: boolean;
 }
 
 const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFieldVariants = 'outlined'>(
@@ -47,6 +48,14 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
 
     /* Privates */
     const additionalClassNames = useMemo(() => props.additionalClassNames ?? [], [props.additionalClassNames]);
+
+    const isReadOnly = useMemo(() => {
+        return !!props.readOnly;
+    }, [props.readOnly]);
+
+    const readOnlyClass = useMemo(() => {
+        return isReadOnly ? 'control-text-field--read-only' : '';
+    }, [isReadOnly]);
 
     const hasShowSuccessMessage = useMemo(() => {
         return !errors[props.field]?.message && fieldValue?.trim() && props.successHelpText;
@@ -114,10 +123,13 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
             control={control}
             render={({ field: { onChange, value } }) => (
                 <TextField
-                    className={clsx(props.className, 'control-text-field', successClass, additionalClassNames)}
+                    className={clsx(props.className || '', 'control-text-field', readOnlyClass, successClass, additionalClassNames)}
                     slotProps={{
                         inputLabel: {
                             shrink: !!props.alwaysLabelOnTop,
+                        },
+                        input: {
+                            readOnly: !!props.readOnly,
                         },
                     }}
                     size={props.size ?? 'medium'}
