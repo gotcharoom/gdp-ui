@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
 import { postLoginRequest, postRequestRememberMe, requestSocialLoginUri } from '@apis/auth/login.ts';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
@@ -14,20 +14,12 @@ import { setAuth } from '@stores/slices/authSlice.ts';
 import Provider from '@/common/constants/Provider.ts';
 import ControlCheckbox from '@/common/components/ControlCheckbox.tsx';
 import CommonPage from '@/common/components/CommonPage.tsx';
-import CommonModal from '@/common/components/CommonModal.tsx';
-import ModalConfig from '@/types/common/components/ModalConfig.type.ts';
 import FindIdModal from '@pages/common/components/FindIdModal.tsx';
 import FindPasswordModal from '@pages/common/components/FindPasswordModal.tsx';
 import FormName from '@/common/constants/FormName.ts';
 import { useForm } from 'react-hook-form';
-
-const initModalConfig: ModalConfig = {
-    title: '',
-    open: false,
-    width: 100,
-    height: 100,
-    children: <></>,
-};
+import { useModal } from '@/common/hooks/useModal.ts';
+import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 
 const LoginPage = () => {
     /* Hooks */
@@ -35,7 +27,7 @@ const LoginPage = () => {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const navigate = useNavigate();
-    const [modalConfig, setModalConfig] = useState<ModalConfig>(initModalConfig);
+    const { openModal } = useModal();
     const method = useForm<LoginRequestForm>({
         resolver: yupResolver(loginSchema),
         defaultValues: {
@@ -45,50 +37,35 @@ const LoginPage = () => {
         },
     });
 
-    // NavigationGuard 사용 시
-    // const { method } = useGlobalForm<LoginRequestForm>({
-    //     name: FormName.LOGIN,
-    //     resolver: yupResolver(loginSchema),
-    //     defaultValues: {
-    //         id: '',
-    //         password: '',
-    //         rememberMe: false,
-    //     },
-    // });
-
     /* Privates */
     const routeToRoot = useCallback(() => {
         navigate('/', { replace: true });
     }, [navigate]);
 
-    const handleClose = useCallback(() => {
-        setModalConfig(initModalConfig);
-    }, []);
-
     /* Event */
     const onClickOpenFindIdModal = useCallback(() => {
-        const config: ModalConfig = {
+        const config: CommonModalProps = {
             title: 'ID 찾기',
             open: true,
             width: '50%',
             height: '50%',
-            children: <FindIdModal />,
+            contents: <FindIdModal />,
             formName: FormName.FIND_ID,
         };
-        setModalConfig(config);
-    }, []);
+        openModal(config);
+    }, [openModal]);
 
     const onClickOpenFindPasswordModal = useCallback(() => {
-        const config: ModalConfig = {
+        const config: CommonModalProps = {
             title: 'Password 찾기',
             open: true,
             width: '50%',
             height: '60%',
-            children: <FindPasswordModal />,
+            contents: <FindPasswordModal />,
             formName: FormName.FIND_PASSWORD,
         };
-        setModalConfig(config);
-    }, []);
+        openModal(config);
+    }, [openModal]);
 
     const onClickSignUp = useCallback(() => {
         navigate('agreement');
@@ -202,16 +179,6 @@ const LoginPage = () => {
                     </div>
                 </CommonPage>
             </div>
-            <CommonModal
-                title={modalConfig.title}
-                width={modalConfig.width}
-                height={modalConfig.height}
-                open={modalConfig.open}
-                formName={modalConfig?.formName}
-                handleClose={handleClose}
-            >
-                {modalConfig.children}
-            </CommonModal>
         </>
     );
 };

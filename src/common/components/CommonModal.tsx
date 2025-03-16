@@ -1,39 +1,29 @@
 import { IconButton, Modal, Paper } from '@mui/material';
-import { CSSProperties, ReactNode, useContext } from 'react';
+import { useCallback, useContext } from 'react';
 import '@styles/common/components/CommonModal.scss';
 import CloseIcon from '@mui/icons-material/Close';
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
-import FormName from '@/common/constants/FormName.ts';
-
-interface CommonModalProps {
-    width: CSSProperties['width'];
-    height: CSSProperties['height'];
-    maxWidth?: CSSProperties['maxWidth'];
-    minWidth?: CSSProperties['minWidth'];
-    maxHeight?: CSSProperties['maxHeight'];
-    minHeight?: CSSProperties['minHeight'];
-
-    title: string;
-    open: boolean;
-    handleClose: () => void;
-    children: ReactNode;
-    buttons?: ReactNode;
-    formName?: FormName;
-}
+import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
+import { useModal } from '@/common/hooks/useModal.ts';
 
 const CommonModal = (props: CommonModalProps) => {
-    const { isDirty } = useContext(GlobalFormContext); // ✅ 글로벌 dirty 상태 확인
+    const { isDirty } = useContext(GlobalFormContext); // 글로벌 dirty 상태 확인
+    const { openConfirmModal, closeModal } = useModal();
 
-    const handleBeforeClose = () => {
-        console.log(props.formName);
+    const handleBeforeClose = useCallback(async () => {
         if (props.formName && isDirty(props.formName)) {
-            const confirmClose = window.confirm('변경 사항이 저장되지 않았습니다. 정말 닫으시겠습니까?');
-            if (!confirmClose) {
-                return;
-            }
+            const confirmClose = await openConfirmModal({
+                width: props.width,
+                height: props.height,
+                title: '변경 사항이 저장되지 않았습니다.',
+                contents: '정말 닫으시겠습니까?',
+            });
+
+            if (!confirmClose) return;
         }
-        props.handleClose();
-    };
+
+        closeModal();
+    }, [props.formName, props.width, props.height, isDirty, closeModal, openConfirmModal]);
 
     return (
         <Modal className={'common-modal'} open={props.open} onClose={handleBeforeClose}>
@@ -56,7 +46,7 @@ const CommonModal = (props: CommonModalProps) => {
                             <CloseIcon />
                         </IconButton>
                     </div>
-                    <div className={'common-modal__page__contents'}>{props.children}</div>
+                    <div className={'common-modal__page__contents'}>{props.contents}</div>
                     {props?.buttons && <div className={'common-modal__page__buttons'}>{props.buttons}</div>}
                 </>
             </Paper>

@@ -1,54 +1,90 @@
-import { useEffect, useContext, useState, useCallback } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useBlocker, useNavigate } from 'react-router-dom';
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
+import { useModal } from '@/common/hooks/useModal.ts';
 
-// 강제 로그아웃 플래그 (전역 변수로 설정)
+// 강제 로그아웃 플래그 (전역 변수)
 let forceLogout = false;
+
+const modalSize = {
+    width: '400px',
+    height: '200px',
+};
 
 const useNavigationGuard = () => {
     /* Hooks */
     const { setIsActiveNavigationGuard, dirtyForms } = useContext(GlobalFormContext);
     const navigate = useNavigate();
+    const { openConfirmModal } = useModal();
     const [isNavigationAllowed, setIsNavigationAllowed] = useState(false);
+    const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
+    const isModalOpen = useRef(false); // 모달 중복 실행 방지
 
     const hasDirtyForms = Object.values(dirtyForms).some(Boolean);
 
-    /* Events */
+    /* Privates */
+    // 직접 이동을 처리하는 함수
     const guardedNavigate = useCallback(
-        (to: string) => {
+        async (to: string) => {
             if (isNavigationAllowed || !hasDirtyForms || forceLogout) {
                 setIsNavigationAllowed(true);
                 navigate(to);
-                setIsNavigationAllowed(false);
                 return;
             }
-
-            const confirmLeave = window.confirm('변경 사항이 저장되지 않았습니다. 정말 떠나시겠습니까?');
-            if (confirmLeave) {
-                setIsNavigationAllowed(true);
-                navigate(to);
-                setIsNavigationAllowed(false);
-            }
+            console.log('페이지 이동 대기 중:', to);
+            setPendingNavigation(to);
         },
-        [navigate, hasDirtyForms, isNavigationAllowed],
+        [isNavigationAllowed, hasDirtyForms, navigate],
     );
-
     /* Lifecycles */
+    // 네비게이션 가드 활성화
     useEffect(() => {
         setIsActiveNavigationGuard(true);
-
         return () => {
             setIsActiveNavigationGuard(false);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [setIsActiveNavigationGuard]);
 
-    // ✅ 뒤로가기, 새로고침 감지
+    // 뒤로가기 감지 및 모달 실행
+    useEffect(() => {
+        const handlePopState = async () => {
+            if (hasDirtyForms && !isNavigationAllowed && !forceLogout && !isModalOpen.current) {
+                isModalOpen.current = true;
+                window.history.pushState(null, '', window.location.pathname);
+
+                console.log('뒤로 가기 감지됨, 모달 실행');
+                const confirmLeave = await openConfirmModal({
+                    width: modalSize.width,
+                    height: modalSize.height,
+                    title: '변경 사항이 저장되지 않았습니다.',
+                    contents: '정말 떠나시겠습니까?',
+                });
+
+                console.log('모달 응답:', confirmLeave);
+
+                if (confirmLeave) {
+                    setIsNavigationAllowed(true);
+                    setTimeout(() => {
+                        window.history.back();
+                    }, 100);
+                }
+
+                isModalOpen.current = false;
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [hasDirtyForms, isNavigationAllowed, openConfirmModal]);
+
     useEffect(() => {
         const handleBeforeUnload = (event: BeforeUnloadEvent) => {
             if (hasDirtyForms && !isNavigationAllowed && !forceLogout) {
+                console.log('새로고침 감지됨, 기본 confirm 실행');
                 event.preventDefault();
-                event.returnValue = '';
+                event.returnValue = ''; // 브라우저 기본 confirm 실행
             }
         };
 
@@ -58,11 +94,40 @@ const useNavigationGuard = () => {
         };
     }, [hasDirtyForms, isNavigationAllowed]);
 
-    // ✅ 라우트 이동 감지
+    useEffect(() => {
+        if (pendingNavigation && !isModalOpen.current) {
+            (async () => {
+                isModalOpen.current = true;
+                console.log('페이지 이동 모달 실행', pendingNavigation);
+
+                const confirmLeave = await openConfirmModal({
+                    width: modalSize.width,
+                    height: modalSize.height,
+                    title: '변경 사항이 저장되지 않았습니다.',
+                    contents: '정말 떠나시겠습니까?',
+                });
+
+                console.log('이동 응답:', confirmLeave);
+
+                if (confirmLeave) {
+                    setIsNavigationAllowed(true);
+                    setTimeout(() => {
+                        navigate(pendingNavigation);
+                    }, 100);
+                }
+
+                setPendingNavigation(null);
+                isModalOpen.current = false;
+            })();
+        }
+    }, [pendingNavigation, navigate, openConfirmModal]);
+
     useBlocker(({ currentLocation, nextLocation }) => {
         if (isNavigationAllowed || forceLogout) return false;
         if (hasDirtyForms && currentLocation.pathname !== nextLocation.pathname) {
-            return !window.confirm('변경 사항이 저장되지 않았습니다. 정말 떠나시겠습니까?');
+            console.log('useBlocker 감지됨, 이동 차단 후 모달 실행', nextLocation.pathname);
+            setPendingNavigation(nextLocation.pathname);
+            return true;
         }
         return false;
     });
@@ -73,7 +138,7 @@ const useNavigationGuard = () => {
 export default useNavigationGuard;
 
 export const allowForceLogout = () => {
-    forceLogout = true; // 네비게이션 가드가 차단하지 않도록 허용
+    forceLogout = true;
 };
 
 export const preventForceLogout = () => {
