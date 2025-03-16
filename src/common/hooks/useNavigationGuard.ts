@@ -7,7 +7,7 @@ let forceLogout = false;
 
 const useNavigationGuard = () => {
     /* Hooks */
-    const { dirtyForms } = useContext(GlobalFormContext);
+    const { setIsActiveNavigationGuard, dirtyForms } = useContext(GlobalFormContext);
     const navigate = useNavigate();
     const [isNavigationAllowed, setIsNavigationAllowed] = useState(false);
 
@@ -32,6 +32,16 @@ const useNavigationGuard = () => {
         },
         [navigate, hasDirtyForms, isNavigationAllowed],
     );
+
+    /* Lifecycles */
+    useEffect(() => {
+        setIsActiveNavigationGuard(true);
+
+        return () => {
+            setIsActiveNavigationGuard(false);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // ✅ 뒤로가기, 새로고침 감지
     useEffect(() => {

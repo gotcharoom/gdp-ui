@@ -13,7 +13,7 @@ import { postFindId } from '@apis/auth/findMail.ts';
 const FindIdModal = () => {
     /* Hooks */
     const [message, setMessage] = useState<string>('가입하신 아이디 정보는 이메일로 발신됩니다');
-    const { method } = useGlobalForm<FindIdForm>({
+    const method = useGlobalForm<FindIdForm>({
         name: FormName.FIND_ID,
         resolver: yupResolver(findIdSchema),
         defaultValues: {

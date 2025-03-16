@@ -138,6 +138,7 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
                     error={!!errors[props.field]}
                     helperText={helpText}
                     required={!!props.required}
+                    autoComplete={props.field}
                 />
             )}
         />

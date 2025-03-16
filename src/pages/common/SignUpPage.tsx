@@ -18,7 +18,7 @@ const SignUpPage = () => {
     const { title } = useOutletContext<{ title: string }>();
     const location = useLocation();
     const navigate = useNavigate();
-    const { method } = useGlobalForm<SignUpRequestForm>({
+    const method = useGlobalForm<SignUpRequestForm>({
         name: FormName.SIGN_UP,
         resolver: yupResolver(signUpSchema),
         defaultValues: {
