@@ -1,8 +1,11 @@
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 import { ReactNode, useState } from 'react';
+import PageMode from '@/common/constants/PageMode.ts';
 
 export const GlobalFormProvider = ({ children }: { children: ReactNode }) => {
     const [dirtyForms, setDirtyForms] = useState<Record<string, boolean>>({});
+    const [pageMode, setPageMode] = useState<PageMode>(PageMode.READ);
+    const [isActiveNavigationGuard, setIsActiveNavigationGuard] = useState(false);
 
     const setDirty = (id: string, isDirty: boolean) => {
         setDirtyForms((prev) => ({ ...prev, [id]: isDirty }));
@@ -18,5 +21,20 @@ export const GlobalFormProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
-    return <GlobalFormContext.Provider value={{ dirtyForms, isDirty, setDirty, deleteDirty }}>{children}</GlobalFormContext.Provider>;
+    return (
+        <GlobalFormContext.Provider
+            value={{
+                dirtyForms,
+                isDirty,
+                setDirty,
+                deleteDirty,
+                pageMode,
+                setPageMode,
+                isActiveNavigationGuard,
+                setIsActiveNavigationGuard,
+            }}
+        >
+            {children}
+        </GlobalFormContext.Provider>
+    );
 };

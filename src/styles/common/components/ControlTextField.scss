@@ -11,6 +11,12 @@
   }
 }
 
+.control-text-field--read-only {
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
+}
+
 .control-text-field__helpText--success {
 
   .MuiFormHelperText-root {

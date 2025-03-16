@@ -13,7 +13,7 @@ import { postGenerateTempPassword } from '@apis/auth/findMail.ts';
 const FindPasswordModal = () => {
     /* Hooks */
     const [message, setMessage] = useState<string>('임시 패스워드는 이메일로 발신됩니다');
-    const { method } = useGlobalForm<FindPasswordForm>({
+    const method = useGlobalForm<FindPasswordForm>({
         name: FormName.FIND_PASSWORD,
         resolver: yupResolver(findPasswordSchema),
         defaultValues: {

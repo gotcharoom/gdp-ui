@@ -20,9 +20,16 @@
   }
 
   .common-page__contents {
-    flex-grow: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    height: 100%;
     padding: $paper__content__height__padding $paper__content__width__padding--large;
+
+    form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
   }
 }

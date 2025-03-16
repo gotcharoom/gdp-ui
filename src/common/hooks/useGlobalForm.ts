@@ -26,5 +26,5 @@ export const useGlobalForm = <T extends object>(props: GlobalFormProps<T>) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return { method };
+    return method;
 };
