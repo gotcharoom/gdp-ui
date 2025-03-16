@@ -5,7 +5,7 @@ import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 
 const urls = {
     findId: '/api/v1/mail/find/id',
-    generateTempPassword: '/api/v1/mail/generate/temp-passowrd',
+    generateTempPassword: '/api/v1/mail/generate/temp-password',
 };
 
 const postFindId = async (data: FindIdForm) => {
