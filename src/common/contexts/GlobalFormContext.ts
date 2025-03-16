@@ -11,7 +11,10 @@ interface GlobalFormContextType {
     setPageMode: (mode: PageMode) => void;
 
     isActiveNavigationGuard: boolean;
-    setIsActiveNavigationGuard: (isAcrive: boolean) => void;
+    setIsActiveNavigationGuard: (isActive: boolean) => void;
+
+    isNavigationAllowed: boolean;
+    setIsNavigationAllowed: (isAllowed: boolean) => void;
 }
 
 export const GlobalFormContext = createContext<GlobalFormContextType>({
@@ -23,4 +26,6 @@ export const GlobalFormContext = createContext<GlobalFormContextType>({
     setPageMode: () => {},
     isActiveNavigationGuard: false,
     setIsActiveNavigationGuard: () => {},
+    isNavigationAllowed: false,
+    setIsNavigationAllowed: () => {},
 });

@@ -9,26 +9,45 @@
 // };
 
 import SignUpRequestForm from '@/types/pages/login/SignUpRequestForm.ts';
+import { getData, postData } from '@/common/utils/axiosUtils.ts';
+import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 
-const getDuplicateCheckId = async (value: string) => {
-    // return await getData<ApiResponse<unknown>>(urls.duplicateCheckId, { params: data });
-    return value == 'aaaaaaa';
+const urls = {
+    duplicateCheckId: '/api/v1/user/check/duplicate/id',
+    duplicateCheckNickname: '/api/v1/user/check/duplicate/nickname',
+    duplicateCheckEmail: '/api/v1/user/check/duplicate/email',
+    signUp: '/api/v1/user/sign-up',
 };
 
-const getDuplicateCheckEmail = async (value: string) => {
-    // return await getData<ApiResponse<unknown>>(urls.duplicateCheckId, { params: data });
-    return value == 'aaaaaaa';
+const getDuplicateCheckId = async (value: string): Promise<boolean> => {
+    const params = {
+        id: value,
+    };
+
+    const { data } = await getData<boolean>(urls.duplicateCheckId, { params });
+    return data;
 };
 
-const getDuplicateCheckNickname = async (value: string) => {
-    // return await getData<ApiResponse<unknown>>(urls.duplicateCheckId, { params: data });
-    return value == 'aaaaaaa';
+const getDuplicateCheckNickname = async (value: string): Promise<boolean> => {
+    const params = {
+        nickname: value,
+    };
+    const { data } = await getData<boolean>(urls.duplicateCheckNickname, { params });
+    return data;
 };
 
-const postSignUp = async (data: SignUpRequestForm) => {
-    // try-catch
-    console.log(data);
-    // return await postData<ApiResponse<unknown>>(urls.duplicateCheckId, { params: data });
+const getDuplicateCheckEmail = async (value: string): Promise<boolean> => {
+    const params = {
+        email: value,
+    };
+
+    const { data } = await getData<boolean>(urls.duplicateCheckEmail, { params });
+    return data;
 };
 
-export { getDuplicateCheckId, getDuplicateCheckEmail, getDuplicateCheckNickname, postSignUp };
+const postSignUp = async (form: SignUpRequestForm): Promise<boolean> => {
+    const { data } = await postData<boolean>(urls.signUp, form);
+    return data;
+};
+
+export { getDuplicateCheckId, getDuplicateCheckNickname, getDuplicateCheckEmail, postSignUp };

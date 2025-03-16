@@ -13,10 +13,9 @@ const modalSize = {
 
 const useNavigationGuard = () => {
     /* Hooks */
-    const { setIsActiveNavigationGuard, dirtyForms } = useContext(GlobalFormContext);
+    const { setIsActiveNavigationGuard, dirtyForms, isNavigationAllowed, setIsNavigationAllowed } = useContext(GlobalFormContext);
     const navigate = useNavigate();
     const { openConfirmModal } = useModal();
-    const [isNavigationAllowed, setIsNavigationAllowed] = useState(false);
     const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
     const isModalOpen = useRef(false); // 모달 중복 실행 방지
 
@@ -31,11 +30,13 @@ const useNavigationGuard = () => {
                 navigate(to);
                 return;
             }
-            console.log('페이지 이동 대기 중:', to);
-            setPendingNavigation(to);
+
+            setIsNavigationAllowed(true);
+            navigate(to);
         },
-        [isNavigationAllowed, hasDirtyForms, navigate],
+        [isNavigationAllowed, hasDirtyForms, setIsNavigationAllowed, navigate],
     );
+
     /* Lifecycles */
     // 네비게이션 가드 활성화
     useEffect(() => {
@@ -77,7 +78,7 @@ const useNavigationGuard = () => {
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
-    }, [hasDirtyForms, isNavigationAllowed, openConfirmModal]);
+    }, [hasDirtyForms, isNavigationAllowed, openConfirmModal, setIsNavigationAllowed]);
 
     useEffect(() => {
         const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -120,19 +121,24 @@ const useNavigationGuard = () => {
                 isModalOpen.current = false;
             })();
         }
-    }, [pendingNavigation, navigate, openConfirmModal]);
+    }, [pendingNavigation, navigate, openConfirmModal, setIsNavigationAllowed]);
 
     useBlocker(({ currentLocation, nextLocation }) => {
-        if (isNavigationAllowed || forceLogout) return false;
+        if (isNavigationAllowed || forceLogout) {
+            console.log('네비게이션 허용됨:', nextLocation.pathname);
+            return false;
+        }
+
         if (hasDirtyForms && currentLocation.pathname !== nextLocation.pathname) {
-            console.log('useBlocker 감지됨, 이동 차단 후 모달 실행', nextLocation.pathname);
+            console.log('이동 차단 후 모달 실행:', nextLocation.pathname);
             setPendingNavigation(nextLocation.pathname);
             return true;
         }
+
         return false;
     });
 
-    return { navigate: guardedNavigate };
+    return { sudoNavigate: guardedNavigate };
 };
 
 export default useNavigationGuard;

@@ -3,9 +3,17 @@ import { ReactNode, useState } from 'react';
 import PageMode from '@/common/constants/PageMode.ts';
 
 export const GlobalFormProvider = ({ children }: { children: ReactNode }) => {
+    // Form에서 변경사항이 있는지 여부
     const [dirtyForms, setDirtyForms] = useState<Record<string, boolean>>({});
+
+    // 현재 PageMode
     const [pageMode, setPageMode] = useState<PageMode>(PageMode.READ);
+
+    // 현재 NavigationGuard 사용중인지 여부
     const [isActiveNavigationGuard, setIsActiveNavigationGuard] = useState(false);
+
+    // NavigationGuard 상태에서 이동이 허용되는지 상태
+    const [isNavigationAllowed, setIsNavigationAllowed] = useState(false);
 
     const setDirty = (id: string, isDirty: boolean) => {
         setDirtyForms((prev) => ({ ...prev, [id]: isDirty }));
@@ -32,6 +40,8 @@ export const GlobalFormProvider = ({ children }: { children: ReactNode }) => {
                 setPageMode,
                 isActiveNavigationGuard,
                 setIsActiveNavigationGuard,
+                isNavigationAllowed,
+                setIsNavigationAllowed,
             }}
         >
             {children}
