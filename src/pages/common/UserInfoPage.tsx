@@ -49,8 +49,8 @@ const UserInfoPage = () => {
         [setPageMode],
     );
 
-    const onClickCancel = useCallback(() => {
-        const isChanged = onChangeMode(PageMode.READ);
+    const onClickCancel = useCallback(async () => {
+        const isChanged = await onChangeMode(PageMode.READ);
         if (isChanged) method.reset();
     }, [method, onChangeMode]);
 
