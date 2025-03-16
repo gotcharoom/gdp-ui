@@ -10,7 +10,6 @@
 
 import SignUpRequestForm from '@/types/pages/login/SignUpRequestForm.ts';
 import { getData, postData } from '@/common/utils/axiosUtils.ts';
-import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 
 const urls = {
     duplicateCheckId: '/api/v1/user/check/duplicate/id',
