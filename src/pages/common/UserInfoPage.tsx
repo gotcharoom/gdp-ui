@@ -1,6 +1,6 @@
 import CommonPage from '@/common/components/CommonPage.tsx';
 import { useOutletContext } from 'react-router-dom';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, InputLabel } from '@mui/material';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
@@ -13,23 +13,27 @@ import { userInfoSchema } from '@/validations/userInfo/userInfoSchema.ts';
 import UserInfoForm from '@/types/pages/login/UserInfoForm.ts';
 import useNavigationGuard from '@/common/hooks/useNavigationGuard.ts';
 import usePageMode from '@/common/hooks/usePageMode.ts';
+import { getUserDetails } from '@apis/auth/userInfo.ts';
+
+const initData: UserInfoForm = {
+    id: '',
+    prevPassword: '',
+    newPassword: '',
+    newPasswordConfirm: '',
+    email: '',
+    nickname: '',
+};
 
 const UserInfoPage = () => {
     /* Hooks */
     const { title } = useOutletContext<{ title: string }>();
     const { pageMode, setPageMode } = usePageMode();
+    const [userData, setUserData] = useState<UserInfoForm>(initData);
 
     const method = useGlobalForm<UserInfoForm>({
         name: FormName.SIGN_UP,
         resolver: yupResolver(userInfoSchema),
-        defaultValues: {
-            id: '',
-            prevPassword: '',
-            newPassword: '',
-            newPasswordConfirm: '',
-            email: '',
-            nickname: '',
-        },
+        defaultValues: userData,
     });
 
     useNavigationGuard();
@@ -39,7 +43,15 @@ const UserInfoPage = () => {
         return pageMode == PageMode.READ;
     }, [pageMode]);
 
-    const getUserInfo = useCallback(async () => {}, []);
+    const getUserInfo = useCallback(async () => {
+        try {
+            const data = await getUserDetails();
+            setUserData(data);
+        } catch (e) {
+            console.log(e);
+            setUserData(initData);
+        }
+    }, []);
 
     /* Events */
     const onChangeMode = useCallback(
@@ -51,15 +63,16 @@ const UserInfoPage = () => {
 
     const onClickCancel = useCallback(async () => {
         const isChanged = await onChangeMode(PageMode.READ);
-        if (isChanged) method.reset();
-    }, [method, onChangeMode]);
+        if (isChanged) method.reset(userData);
+    }, [userData, method, onChangeMode]);
 
     const onSubmit = useCallback(() => {}, []);
 
     /* Lifecycles */
     useEffect(() => {
         void getUserInfo();
-    }, [getUserInfo]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={'user-info-page'}>
@@ -123,6 +136,28 @@ const UserInfoPage = () => {
                                     />
                                 </div>
                             </>
+                        )}
+                        {pageMode == PageMode.READ && (
+                            <div className={'input-section__input-container'}>
+                                <InputLabel className={'input-container__label'}>변경 비밀번호 확인</InputLabel>
+                                <ControlTextField
+                                    className={'input-container__text-field'}
+                                    method={method}
+                                    field={'newPasswordConfirm'}
+                                    readOnly={isReadOnly}
+                                />
+                            </div>
+                        )}
+                        {pageMode == PageMode.MODIFY && (
+                            <div className={'input-section__input-container'}>
+                                <InputLabel className={'input-container__label'}>변경 비밀번호 확인</InputLabel>
+                                <ControlTextField
+                                    className={'input-container__text-field'}
+                                    method={method}
+                                    field={'newPasswordConfirm'}
+                                    readOnly={isReadOnly}
+                                />
+                            </div>
                         )}
                     </div>
                     <div className={'user-info-page__button-section'}>

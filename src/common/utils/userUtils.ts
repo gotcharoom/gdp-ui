@@ -8,7 +8,8 @@ const apis = {
 
 const checkDuplicate = async (value: string | undefined, fieldName: keyof typeof apis) => {
     if (!value) return true;
-    return await apis[fieldName](value);
+    const data = await apis[fieldName](value);
+    return !data;
 };
 
 export { checkDuplicate };

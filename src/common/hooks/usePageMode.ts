@@ -4,14 +4,14 @@ import PageMode from '@/common/constants/PageMode.ts';
 import { useModal } from '@/common/hooks/useModal.ts';
 
 const usePageMode = () => {
-    const { pageMode, setPageMode, dirtyForms, isActiveNavigationGuard } = useContext(GlobalFormContext);
+    const { pageMode, setPageMode, dirtyForms, isActiveNavigationGuard, isNavigationAllowed } = useContext(GlobalFormContext);
     const { openConfirmModal } = useModal();
 
     const hasDirtyForms = Object.values(dirtyForms).some(Boolean);
 
     const setPageModeWithGuard = useCallback(
         async (mode: PageMode) => {
-            if (!isActiveNavigationGuard || pageMode === mode) {
+            if (!isActiveNavigationGuard || isNavigationAllowed || pageMode === mode) {
                 setPageMode(mode);
                 return true;
             }
