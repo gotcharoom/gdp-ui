@@ -34,10 +34,14 @@ const usePageMode = () => {
             setPageMode(mode);
             return true;
         },
-        [hasDirtyForms, isActiveNavigationGuard, openConfirmModal, pageMode, setPageMode],
+        [hasDirtyForms, isActiveNavigationGuard, isNavigationAllowed, openConfirmModal, pageMode, setPageMode],
     );
 
-    return { pageMode, setPageMode: setPageModeWithGuard };
+    const resetPageMode = useCallback(() => {
+        setPageMode(PageMode.READ);
+    }, [setPageMode]);
+
+    return { pageMode, setPageMode: setPageModeWithGuard, resetPageMode };
 };
 
 export default usePageMode;

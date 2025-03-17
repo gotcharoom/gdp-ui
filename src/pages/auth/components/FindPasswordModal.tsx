@@ -1,10 +1,10 @@
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import { Button } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
-import FindPasswordForm from '@/types/pages/login/components/FindPasswordForm.type.ts';
-import { findPasswordSchema } from '@/validations/login/components/findPasswordSchema.ts';
+import FindPasswordForm from '@/types/pages/auth/components/FindPasswordForm.type.ts';
+import { findPasswordSchema } from '@/validations/auth/components/findPasswordSchema.ts';
 
-import '@styles/pages/common/components/FindPasswordModal.scss';
+import '@styles/pages/auth/components/FindPasswordModal.scss';
 import { useCallback, useState } from 'react';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
 import FormName from '@/common/constants/FormName.ts';

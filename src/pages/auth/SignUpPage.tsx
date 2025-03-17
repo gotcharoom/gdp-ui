@@ -4,12 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import useNavigationGuard from '@/common/hooks/useNavigationGuard.ts';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
 import FormName from '@/common/constants/FormName.ts';
-import { signUpSchema } from '@/validations/login/signUpSchema.ts';
-import SignUpRequestForm from '@/types/pages/login/SignUpRequestForm.ts';
+import { signUpSchema } from '@/validations/auth/signUpSchema.ts';
+import SignUpRequestForm from '@/types/pages/auth/SignUpRequestForm.ts';
 import CommonPage from '@/common/components/CommonPage.tsx';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 
-import '@styles/pages/common/SignUpPage.scss';
+import '@styles/pages/auth/SignUpPage.scss';
 import { Button } from '@mui/material';
 import { postSignUp } from '@apis/auth/signUp.ts';
 

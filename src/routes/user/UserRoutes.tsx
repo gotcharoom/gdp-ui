@@ -13,14 +13,16 @@ const SampleEditorPageComponent = withSuspense(SampleEditorPage);
 // Common Components
 const ErrorPage = lazy(() => import('@pages/common/ErrorPage.tsx'));
 const ErrorPageComponent = withSuspense(ErrorPage);
-const LoginPage = lazy(() => import('@pages/common/LoginPage.tsx'));
+const LoginPage = lazy(() => import('@pages/auth/LoginPage.tsx'));
 const LoginComponent = withSuspense(LoginPage);
-const AgreementPage = lazy(() => import('@pages/common/AgreementPage.tsx'));
+const AgreementPage = lazy(() => import('@pages/auth/AgreementPage.tsx'));
 const AgreementComponent = withSuspense(AgreementPage);
-const SignUpPage = lazy(() => import('@pages/common/SignUpPage.tsx'));
+const SignUpPage = lazy(() => import('@pages/auth/SignUpPage.tsx'));
 const SignUpComponent = withSuspense(SignUpPage);
-const UserInfoPage = lazy(() => import('@pages/common/UserInfoPage.tsx'));
+const UserInfoPage = lazy(() => import('@pages/auth/UserInfoPage.tsx'));
 const UserInfoPageComponent = withSuspense(UserInfoPage);
+const ChangePasswordPage = lazy(() => import('@pages/auth/ChangePasswordPage.tsx'));
+const ChangePasswordPageComponent = withSuspense(ChangePasswordPage);
 
 // Components
 
@@ -96,6 +98,11 @@ const UserRoutes: RouteObject[] = [
                         path: 'info',
                         element: <UserInfoPageComponent />,
                         handle: { title: '내 정보' },
+                    },
+                    {
+                        path: 'change-password',
+                        element: <ChangePasswordPageComponent />,
+                        handle: { title: '비밀번호 변경' },
                     },
                 ],
             },

@@ -8,9 +8,6 @@ export const userInfoSchema = yup
             .min(6)
             .test('check-duplicate', '중복된 ID 입니다', (value) => checkDuplicate(value, 'id'))
             .required(),
-        prevPassword: yup.string().required(),
-        newPassword: yup.string().required(),
-        newPasswordConfirm: yup.string().required(),
         email: yup
             .string()
             .test('check-duplicate', '중복된 Email 입니다', (value) => checkDuplicate(value, 'email'))
