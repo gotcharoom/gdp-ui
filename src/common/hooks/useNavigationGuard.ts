@@ -6,7 +6,7 @@ import { useModal } from '@/common/hooks/useModal.ts';
 // 강제 로그아웃 플래그 (전역 변수)
 let forceLogout = false;
 
-const modalSize = {
+const confirmModalSize = {
     width: '400px',
     height: '200px',
 };
@@ -55,8 +55,8 @@ const useNavigationGuard = () => {
 
                 console.log('뒤로 가기 감지됨, 모달 실행');
                 const confirmLeave = await openConfirmModal({
-                    width: modalSize.width,
-                    height: modalSize.height,
+                    width: confirmModalSize.width,
+                    height: confirmModalSize.height,
                     title: '변경 사항이 저장되지 않았습니다.',
                     contents: '정말 떠나시겠습니까?',
                 });
@@ -102,8 +102,8 @@ const useNavigationGuard = () => {
                 console.log('페이지 이동 모달 실행', pendingNavigation);
 
                 const confirmLeave = await openConfirmModal({
-                    width: modalSize.width,
-                    height: modalSize.height,
+                    width: confirmModalSize.width,
+                    height: confirmModalSize.height,
                     title: '변경 사항이 저장되지 않았습니다.',
                     contents: '정말 떠나시겠습니까?',
                 });
