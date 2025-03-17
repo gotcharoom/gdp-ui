@@ -48,16 +48,17 @@ const usePageMode = () => {
 
     /* Lifecycles */
     useEffect(() => {
+        setPageMode(PageMode.READ);
+
         if (isFirstRender.current) {
             isFirstRender.current = false;
             return;
         }
 
-        setPageMode(PageMode.READ);
-
         return () => {
             setPageMode(null);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return { pageMode, setPageMode: setPageModeWithGuard, resetPageMode };
