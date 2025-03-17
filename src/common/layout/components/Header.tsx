@@ -55,6 +55,11 @@ const Header = (props: HeaderProps) => {
         navigate('/user/info');
     }, [closeUserMenu, navigate]);
 
+    const onClickChangePassword = useCallback(async () => {
+        closeUserMenu();
+        navigate('/user/change-password');
+    }, [closeUserMenu, navigate]);
+
     /* Lifecycle */
     useLayoutEffect(() => {
         setIsLogin(isAuthenticated);
@@ -109,6 +114,7 @@ const Header = (props: HeaderProps) => {
                                 }}
                             >
                                 <MenuItem onClick={onClickUserInfo}>내 정보</MenuItem>
+                                <MenuItem onClick={onClickChangePassword}>비밀번호 변경</MenuItem>
                                 <MenuItem onClick={onClickLogout}>로그아웃</MenuItem>
                             </Menu>
                         </>

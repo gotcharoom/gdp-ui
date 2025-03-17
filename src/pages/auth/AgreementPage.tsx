@@ -4,12 +4,12 @@ import { Box, Button, Checkbox, FormControlLabel } from '@mui/material';
 import ControlCheckbox from '@/common/components/ControlCheckbox.tsx';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { agreementSchema } from '@/validations/login/agreementSchema.ts';
-import AgreementForm from '@/types/pages/login/AgreementForm.type.ts';
+import { agreementSchema } from '@/validations/auth/agreementSchema.ts';
+import AgreementForm from '@/types/pages/auth/AgreementForm.type.ts';
 import { useCallback } from 'react';
-import GdpTerms from '@pages/common/components/GdpTerms.tsx';
+import GdpTerms from '@pages/auth/components/GdpTerms.tsx';
 
-import '@styles/pages/common/AgreementPage.scss';
+import '@styles/pages/auth/AgreementPage.scss';
 
 const AgreementPage = () => {
     /* Hooks */

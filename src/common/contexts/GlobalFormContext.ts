@@ -7,8 +7,8 @@ interface GlobalFormContextType {
     isDirty: (id: string) => boolean;
     deleteDirty: (id: string) => void;
 
-    pageMode: PageMode;
-    setPageMode: (mode: PageMode) => void;
+    pageMode: PageMode | null;
+    setPageMode: (mode: PageMode | null) => void;
 
     isActiveNavigationGuard: boolean;
     setIsActiveNavigationGuard: (isActive: boolean) => void;
@@ -22,7 +22,7 @@ export const GlobalFormContext = createContext<GlobalFormContextType>({
     setDirty: () => {},
     isDirty: () => false,
     deleteDirty: () => {},
-    pageMode: PageMode.READ,
+    pageMode: null,
     setPageMode: () => {},
     isActiveNavigationGuard: false,
     setIsActiveNavigationGuard: () => {},

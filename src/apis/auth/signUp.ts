@@ -8,7 +8,7 @@
 //     duplicateCheckNickName: 'test',
 // };
 
-import SignUpRequestForm from '@/types/pages/login/SignUpRequestForm.ts';
+import SignUpRequestForm from '@/types/pages/auth/SignUpRequestForm.ts';
 import { getData, postData } from '@/common/utils/axiosUtils.ts';
 
 const urls = {

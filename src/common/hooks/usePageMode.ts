@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 import PageMode from '@/common/constants/PageMode.ts';
 import { useModal } from '@/common/hooks/useModal.ts';
@@ -9,9 +9,11 @@ const confirmModalSize = {
 };
 
 const usePageMode = () => {
+    /* Hooks */
     const { pageMode, setPageMode, dirtyForms, isActiveNavigationGuard, isNavigationAllowed } = useContext(GlobalFormContext);
     const { openConfirmModal } = useModal();
 
+    /* Privates */
     const hasDirtyForms = Object.values(dirtyForms).some(Boolean);
 
     const setPageModeWithGuard = useCallback(
@@ -34,10 +36,25 @@ const usePageMode = () => {
             setPageMode(mode);
             return true;
         },
-        [hasDirtyForms, isActiveNavigationGuard, openConfirmModal, pageMode, setPageMode],
+        [hasDirtyForms, isActiveNavigationGuard, isNavigationAllowed, openConfirmModal, pageMode, setPageMode],
     );
 
-    return { pageMode, setPageMode: setPageModeWithGuard };
+    /* Events */
+
+    const resetPageMode = useCallback(() => {
+        setPageMode(PageMode.READ);
+    }, [setPageMode]);
+
+    /* Lifecycles */
+    useEffect(() => {
+        setPageMode(PageMode.READ);
+
+        return () => {
+            setPageMode(null);
+        };
+    }, []);
+
+    return { pageMode, setPageMode: setPageModeWithGuard, resetPageMode };
 };
 
 export default usePageMode;
