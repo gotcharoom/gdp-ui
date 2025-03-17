@@ -1,7 +1,7 @@
 import '@styles/layout/components/Header.scss';
 import { Avatar, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { MouseEvent, useCallback, useLayoutEffect, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 import { postLogoutRequest } from '@apis/auth/login.ts';
@@ -47,12 +47,7 @@ const Header = (props: HeaderProps) => {
     const onClickLogout = useCallback(async () => {
         closeUserMenu();
         await postLogoutRequest();
-        const logoutAlert: AlertConfigProps = {
-            severity: 'success',
-            contents: '로그아웃했습니다',
-        };
-        openAlert(logoutAlert);
-    }, [closeUserMenu, openAlert]);
+    }, [closeUserMenu]);
 
     const onClickUserInfo = useCallback(async () => {
         closeUserMenu();
@@ -63,6 +58,20 @@ const Header = (props: HeaderProps) => {
     useLayoutEffect(() => {
         setIsLogin(isAuthenticated);
     }, [isAuthenticated]);
+
+    // Logout 메세지 처리
+    useEffect(() => {
+        const isLogout = sessionStorage.getItem('isLogout');
+
+        if (isLogout === 'true') {
+            const logoutAlert: AlertConfigProps = {
+                severity: 'success',
+                contents: '로그아웃했습니다',
+            };
+            openAlert(logoutAlert);
+            sessionStorage.removeItem('isLogout');
+        }
+    }, []);
 
     return (
         <div className={'header'}>
