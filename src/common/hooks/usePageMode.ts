@@ -3,6 +3,11 @@ import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 import PageMode from '@/common/constants/PageMode.ts';
 import { useModal } from '@/common/hooks/useModal.ts';
 
+const confirmModalSize = {
+    width: '400px',
+    height: '200px',
+};
+
 const usePageMode = () => {
     const { pageMode, setPageMode, dirtyForms, isActiveNavigationGuard, isNavigationAllowed } = useContext(GlobalFormContext);
     const { openConfirmModal } = useModal();
@@ -18,8 +23,8 @@ const usePageMode = () => {
 
             if (pageMode !== PageMode.READ && mode === PageMode.READ && hasDirtyForms) {
                 const confirmLeave = await openConfirmModal({
-                    width: '400px',
-                    height: '200px',
+                    width: confirmModalSize.width,
+                    height: confirmModalSize.height,
                     title: '변경 사항이 저장되지 않았습니다.',
                     contents: '정말 떠나시겠습니까?',
                 });

@@ -6,6 +6,11 @@ import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import { useModal } from '@/common/hooks/useModal.ts';
 
+const confirmModalSize = {
+    width: '400px',
+    height: '200px',
+};
+
 const CommonModal = (props: CommonModalProps) => {
     const { isDirty } = useContext(GlobalFormContext); // 글로벌 dirty 상태 확인
     const { openConfirmModal, closeModal } = useModal();
@@ -13,8 +18,8 @@ const CommonModal = (props: CommonModalProps) => {
     const handleBeforeClose = useCallback(async () => {
         if (props.formName && isDirty(props.formName)) {
             const confirmClose = await openConfirmModal({
-                width: props.width,
-                height: props.height,
+                width: confirmModalSize.width,
+                height: confirmModalSize.height,
                 title: '변경 사항이 저장되지 않았습니다.',
                 contents: '정말 닫으시겠습니까?',
             });
