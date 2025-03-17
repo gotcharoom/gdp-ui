@@ -40,11 +40,13 @@ const useAuth = () => {
 
     useEffect(() => {
         void checkToken();
-    }, [checkToken]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         void fetchUserData();
-    }, [fetchUserData]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 };
 
 export default useAuth;
