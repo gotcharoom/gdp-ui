@@ -10,4 +10,5 @@ export interface MenuItem {
     icon: string;
     handle: MenuHandle;
     children: MenuItem[];
+    redirectPath: string;
 }
