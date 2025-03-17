@@ -39,7 +39,7 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
         trigger,
     } = props.method;
 
-    const { pageMode, setPageMode } = useContext(GlobalFormContext);
+    const { pageMode } = useContext(GlobalFormContext);
 
     const fieldValue = useWatch({ control, name: props.field });
 

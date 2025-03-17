@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useRef } from 'react';
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 import PageMode from '@/common/constants/PageMode.ts';
 import { useModal } from '@/common/hooks/useModal.ts';
@@ -12,6 +12,7 @@ const usePageMode = () => {
     /* Hooks */
     const { pageMode, setPageMode, dirtyForms, isActiveNavigationGuard, isNavigationAllowed } = useContext(GlobalFormContext);
     const { openConfirmModal } = useModal();
+    const isFirstRender = useRef(true);
 
     /* Privates */
     const hasDirtyForms = Object.values(dirtyForms).some(Boolean);
@@ -47,6 +48,11 @@ const usePageMode = () => {
 
     /* Lifecycles */
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
         setPageMode(PageMode.READ);
 
         return () => {
