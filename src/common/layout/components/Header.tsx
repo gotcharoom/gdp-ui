@@ -7,6 +7,7 @@ import { RootState } from '@stores/store.ts';
 import { postLogoutRequest } from '@apis/auth/login.ts';
 import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
 import { useAlert } from '@/common/hooks/useAlert.ts';
+import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
 
 interface HeaderProps {
     onClickMenu: (isOpen: boolean) => void;
@@ -61,7 +62,7 @@ const Header = (props: HeaderProps) => {
 
     // Logout 메세지 처리
     useEffect(() => {
-        const isLogout = sessionStorage.getItem('isLogout');
+        const isLogout = sessionStorage.getItem(SessionStorageKey.IS_LOGOUT);
 
         if (isLogout === 'true') {
             const logoutAlert: AlertConfigProps = {
@@ -69,7 +70,7 @@ const Header = (props: HeaderProps) => {
                 contents: '로그아웃했습니다',
             };
             openAlert(logoutAlert);
-            sessionStorage.removeItem('isLogout');
+            sessionStorage.removeItem(SessionStorageKey.IS_LOGOUT);
         }
     }, []);
 
