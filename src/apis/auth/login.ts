@@ -1,4 +1,3 @@
-// import * as axios from '@/common/utils/axiosInstance.ts';
 import LoginRequestForm from '@/types/pages/auth/LoginRequestForm.type.ts';
 import UserState from '@/types/pages/auth/UserState.type.ts';
 import { getData, postData } from '@/common/utils/axiosUtils.ts';
