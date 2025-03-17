@@ -15,6 +15,7 @@ const apis = {
 };
 
 const checkDuplicate = async (value: string | undefined, fieldName: keyof typeof apis) => {
+    if (!value) return false;
     const data = await apis[fieldName](value);
     return !data;
 };
@@ -27,6 +28,7 @@ const loginUserApis = {
 };
 
 const checkLoginUserDuplicate = async (value: string | undefined, fieldName: keyof typeof apis) => {
+    if (!value) return false;
     const data = await loginUserApis[fieldName](value);
     return !data;
 };

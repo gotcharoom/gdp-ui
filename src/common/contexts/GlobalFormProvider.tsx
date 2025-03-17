@@ -7,7 +7,7 @@ export const GlobalFormProvider = ({ children }: { children: ReactNode }) => {
     const [dirtyForms, setDirtyForms] = useState<Record<string, boolean>>({});
 
     // 현재 PageMode
-    const [pageMode, setPageMode] = useState<PageMode>(null);
+    const [pageMode, setPageMode] = useState<PageMode | null>(null);
 
     // 현재 NavigationGuard 사용중인지 여부
     const [isActiveNavigationGuard, setIsActiveNavigationGuard] = useState(false);
