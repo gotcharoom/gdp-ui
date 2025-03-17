@@ -129,10 +129,6 @@ const UserInfoPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => {
-        console.log(pageMode);
-    }, [pageMode]);
-
     return (
         <div className={'user-info-page'}>
             <CommonPage width={'100%'} height={'100%'} title={title}>
