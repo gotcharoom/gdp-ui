@@ -7,7 +7,6 @@ import { Button } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
 import FormName from '@/common/constants/FormName.ts';
-import useNavigationGuard from '@/common/hooks/useNavigationGuard.ts';
 import { postFindId } from '@apis/auth/findMail.ts';
 
 const FindIdModal = () => {
@@ -20,8 +19,6 @@ const FindIdModal = () => {
             email: '',
         },
     });
-
-    useNavigationGuard();
 
     /* Events */
     const onSubmit = useCallback(async (form: FindIdForm) => {
