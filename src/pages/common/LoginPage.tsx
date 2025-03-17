@@ -20,6 +20,8 @@ import FormName from '@/common/constants/FormName.ts';
 import { useForm } from 'react-hook-form';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
+import { useAlert } from '@/common/hooks/useAlert.ts';
+import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
 
 const LoginPage = () => {
     /* Hooks */
@@ -28,6 +30,7 @@ const LoginPage = () => {
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
     const navigate = useNavigate();
     const { openModal } = useModal();
+    const { openAlert } = useAlert();
     const method = useForm<LoginRequestForm>({
         resolver: yupResolver(loginSchema),
         defaultValues: {
@@ -80,15 +83,33 @@ const LoginPage = () => {
 
                 if (response.code === ResponseCode.SUCCESS.code) {
                     dispatch(setAuth());
+
+                    const successAlert: AlertConfigProps = {
+                        severity: 'success',
+                        contents: '로그인하였습니다',
+                    };
+                    openAlert(successAlert);
                     routeToRoot();
+                } else {
+                    const failAlert: AlertConfigProps = {
+                        severity: 'error',
+                        contents: '로그인 정보가 잘못됐습니다',
+                    };
+                    openAlert(failAlert);
                 }
             } catch (e) {
                 await postRequestRememberMe(false);
                 console.error('Login Error:', e);
+
+                const errorAlert: AlertConfigProps = {
+                    severity: 'error',
+                    contents: '로그인시 오류가 발생했습니다',
+                };
+                openAlert(errorAlert);
                 throw e;
             }
         },
-        [dispatch, routeToRoot],
+        [dispatch, openAlert, routeToRoot],
     );
 
     const onClickSocialLogin = useCallback(

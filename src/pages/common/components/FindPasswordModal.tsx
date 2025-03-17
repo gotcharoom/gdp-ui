@@ -24,6 +24,8 @@ const FindPasswordModal = () => {
 
     /* Event */
     const onSubmit = useCallback(async (form: FindPasswordForm) => {
+        setMessage('메일 발송중입니다...');
+
         const { data } = await postGenerateTempPassword(form);
         if (!data) {
             setMessage('해당 이메일로 등록된 계정 정보를 찾을 수 없습니다');

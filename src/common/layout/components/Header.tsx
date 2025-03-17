@@ -5,6 +5,8 @@ import { MouseEvent, useCallback, useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 import { postLogoutRequest } from '@apis/auth/login.ts';
+import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
+import { useAlert } from '@/common/hooks/useAlert.ts';
 
 interface HeaderProps {
     onClickMenu: (isOpen: boolean) => void;
@@ -18,6 +20,7 @@ const Header = (props: HeaderProps) => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const { openAlert } = useAlert();
 
     /* Privates */
     const closeUserMenu = useCallback(() => {
@@ -44,7 +47,12 @@ const Header = (props: HeaderProps) => {
     const onClickLogout = useCallback(async () => {
         closeUserMenu();
         await postLogoutRequest();
-    }, [closeUserMenu]);
+        const logoutAlert: AlertConfigProps = {
+            severity: 'success',
+            contents: '로그아웃했습니다',
+        };
+        openAlert(logoutAlert);
+    }, [closeUserMenu, openAlert]);
 
     const onClickUserInfo = useCallback(async () => {
         closeUserMenu();
