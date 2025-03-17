@@ -101,7 +101,7 @@ const UserRoutes: RouteObject[] = [
             },
             {
                 path: 'board',
-                handle: { title: '게시판' },
+                handle: { title: '게시판', showMenu: true },
                 children: [
                     {
                         path: 'notice',
@@ -109,6 +109,7 @@ const UserRoutes: RouteObject[] = [
                         handle: {
                             title: '공지사항',
                             icon: 'more',
+                            showMenu: true,
                         },
                         children: [
                             { index: true, element: <NoticeComponent /> },
@@ -130,9 +131,10 @@ const UserRoutes: RouteObject[] = [
                         handle: {
                             title: '자유게시판',
                             icon: 'more',
+                            showMenu: true,
                         },
                         children: [
-                            { index: true, element: <BulletinComponent /> },
+                            { index: true, element: <BulletinComponent />, handle: { showMenu: true } },
 
                             {
                                 path: ':id',
@@ -151,6 +153,10 @@ const UserRoutes: RouteObject[] = [
                                 },
                             },
                         ],
+                    },
+                ],
+            },
+            {
                 path: 'user',
                 children: [
                     {

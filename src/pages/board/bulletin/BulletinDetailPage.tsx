@@ -2,13 +2,13 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SampleBulletinDataType } from '@/mocks/datas/sampleBulletinData';
 import { getBulleinList } from '@/apis/notice/bulletin';
+import NewBulletin from '@/types/pages/notice/NewBulletin.type';
+import CommonReply from '@/common/components/notice/CommonReply';
 //Css
 import { Paper, Typography, Button, Divider, CircularProgress, IconButton, TextField } from '@mui/material';
 import CommonPage from '@/common/components/CommonPage';
 import { ThumbDown, ThumbUp } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import NewBulletin from '@/types/pages/notice/NewBulletin.type';
-import CommonReply from '@/common/components/notice/CommonReply';
 
 const BulletinDetailPage = () => {
     //Hooks
@@ -26,6 +26,18 @@ const BulletinDetailPage = () => {
         setBulletins((prevBulletins) =>
             prevBulletins.map((bulletin) =>
                 bulletin.id === Number(id) ? { ...bulletin, comments: [...bulletin.comments, newComment] } : bulletin,
+            ),
+        );
+    };
+    const removeComment = (userId: number, commentIndex: number) => {
+        setBulletins((prevBulletins) =>
+            prevBulletins.map((bulletin) =>
+                bulletin.id === userId
+                    ? {
+                          ...bulletin,
+                          comments: bulletin.comments.filter((_, index) => index !== commentIndex),
+                      }
+                    : bulletin,
             ),
         );
     };
@@ -90,7 +102,12 @@ const BulletinDetailPage = () => {
                     <ThumbDown />
                     {down}
                 </IconButton>
-                <CommonReply comments={bulletin.comments} addComment={addComment} />
+                <CommonReply
+                    comments={bulletin.comments ?? []}
+                    addComment={addComment}
+                    removeComment={removeComment}
+                    userId={bulletin?.id}
+                />
             </Paper>
         </CommonPage>
     );

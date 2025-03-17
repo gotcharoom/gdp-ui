@@ -1,24 +1,27 @@
 import { useState, ChangeEvent } from 'react';
-import { TextField, Button, Stack, Typography } from '@mui/material';
+import { TextField, Button, Stack, Typography, IconButton } from '@mui/material';
+import { HighlightOff } from '@mui/icons-material';
 
 interface Comment {
-    user: string;
-    reply: string;
+    user?: string;
+    reply?: string;
 }
 
 interface CommonReplyProps {
     comments: Comment[]; // 댓글 리스트
     addComment: (newComment: Comment) => void; // 새로운 댓글 추가 함수
+    removeComment: (postId: number, commentIndex: number) => void;
+    userId?: number;
 }
 
-const CommonReply = ({ comments, addComment }: CommonReplyProps) => {
+const CommonReply = ({ comments, addComment, removeComment }: CommonReplyProps) => {
     //Hooks
     const [newComment, setNewComment] = useState<string>('');
     const [showAll, setShowAll] = useState<boolean>(false);
     const commentsToShow = 10;
 
     /* Privates */
-
+    const visibleComments = showAll ? comments : comments.slice(0, commentsToShow);
     /* Events */
     const handleSubmit = () => {
         if (newComment.trim() !== '') {
@@ -29,8 +32,11 @@ const CommonReply = ({ comments, addComment }: CommonReplyProps) => {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setNewComment(event.target.value);
     };
-
-    const visibleComments = showAll ? comments : comments.slice(0, commentsToShow);
+    const handleDelete = (userId: number, commentIndex: number) => {
+        if (userId !== undefined) {
+            removeComment(userId, commentIndex);
+        }
+    };
     /* Lifecycle */
 
     return (
@@ -57,6 +63,9 @@ const CommonReply = ({ comments, addComment }: CommonReplyProps) => {
                             <strong>{comment.user}</strong>
                         </Typography>
                         <Typography variant='body1'>{comment.reply}</Typography>
+                        <IconButton onClick={handleDelete} size='small'>
+                            <HighlightOff fontSize='small' />
+                        </IconButton>
                     </div>
                 ))}
             </Stack>

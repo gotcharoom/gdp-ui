@@ -7,6 +7,7 @@ interface SampleBulletinDataType {
     date: string;
     content: string;
     comments: { user: string; reply: string }[];
+    commnetsIndex: number;
 }
 
 const SampleBulletinData: SampleBulletinDataType[] = [
@@ -23,7 +24,12 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 user: '찰리',
                 reply: '이거 재밌네요',
             },
+            {
+                user: '릴리',
+                reply: '이거 존나 재미없네요',
+            },
         ],
+        commnetsIndex: 1,
     },
     {
         id: 12,
@@ -39,6 +45,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 reply: '이거 참 재밌네요',
             },
         ],
+        commnetsIndex: 2,
     },
     {
         id: 13,
@@ -54,6 +61,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 reply: '이거 너무 재밌네요',
             },
         ],
+        commnetsIndex: 3,
     },
     {
         id: 14,
@@ -69,6 +77,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 reply: '이거 쉽고 재밌네요',
             },
         ],
+        commnetsIndex: 4,
     },
     {
         id: 15,
@@ -84,6 +93,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 reply: '이거 진짜 재밌네요',
             },
         ],
+        commnetsIndex: 5,
     },
     {
         id: 16,
@@ -99,6 +109,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 reply: '이거 겁나 재밌네요',
             },
         ],
+        commnetsIndex: 6,
     },
 ];
 
