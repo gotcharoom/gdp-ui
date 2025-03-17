@@ -28,27 +28,27 @@ const UserRoutes: RouteObject[] = [
     {
         path: '/',
         element: <CommonLayout />,
-        handle: { title: 'User Root' },
+        handle: { title: 'User Root', showMenu: true },
         errorElement: <ErrorPageComponent />,
         children: [
             {
                 index: true,
                 element: <SampleUserMainComponent />,
-                handle: { title: 'Sample Main' },
+                handle: { title: 'Sample Main', showMenu: true },
             },
             {
                 path: 'sample',
-                handle: { title: 'Sample' },
+                handle: { title: 'Sample', showMenu: true },
                 children: [
                     {
                         index: true,
                         element: <SampleUserMainComponent />,
-                        handle: { title: 'Sample Page' },
+                        handle: { title: 'Sample Page', showMenu: true },
                     },
                     {
                         path: 'test',
                         element: <CommonChildrenLayout />,
-                        handle: { title: 'Sample Detail Test' },
+                        handle: { title: 'Sample Detail Test', showMenu: true },
                         children: [
                             {
                                 index: true,
@@ -58,14 +58,14 @@ const UserRoutes: RouteObject[] = [
                             {
                                 path: ':id',
                                 element: <SampleEditorPageComponent />,
-                                handle: { title: 'Detail' },
+                                handle: { title: 'Detail', showMenu: false },
                             },
                         ],
                     },
                     {
                         path: 'editor',
                         element: <SampleEditorPageComponent />,
-                        handle: { title: 'Sample Editor' },
+                        handle: { title: 'Sample Editor', showMenu: false },
                     },
                 ],
             },
