@@ -49,6 +49,10 @@ const UserInfoPage = () => {
         return pageMode == PageMode.READ;
     }, [pageMode]);
 
+    const successMessage = useMemo(() => {
+        return '사용 가능합니다';
+    }, []);
+
     const getUserInfo = useCallback(async () => {
         try {
             const data = await getUserDetails();
@@ -68,8 +72,10 @@ const UserInfoPage = () => {
 
     /* Events */
     const onChangeMode = useCallback(
-        (mode: PageMode) => {
-            return setPageMode(mode);
+        async (mode: PageMode) => {
+            const isChanged = await setPageMode(mode);
+            if (isChanged && mode === PageMode.READ) method.reset(userData);
+            return isChanged;
         },
         [setPageMode],
     );
@@ -123,6 +129,10 @@ const UserInfoPage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        console.log(pageMode);
+    }, [pageMode]);
+
     return (
         <div className={'user-info-page'}>
             <CommonPage width={'100%'} height={'100%'} title={title}>
@@ -139,6 +149,8 @@ const UserInfoPage = () => {
                                 method={method}
                                 field={'email'}
                                 readOnly={isReadOnly}
+                                successHelpText={successMessage}
+                                checkImmediately
                             />
                         </div>
                         <div className={'input-section__input-container'}>
@@ -148,6 +160,8 @@ const UserInfoPage = () => {
                                 method={method}
                                 field={'nickname'}
                                 readOnly={isReadOnly}
+                                successHelpText={successMessage}
+                                checkImmediately
                             />
                         </div>
                         {pageMode == PageMode.READ && (
@@ -157,7 +171,7 @@ const UserInfoPage = () => {
                                     <ControlTextField
                                         className={'input-container__text-field'}
                                         method={method}
-                                        field={'newPasswordConfirm'}
+                                        field={'id'}
                                         readOnly={isReadOnly}
                                     />
                                 </div>
@@ -166,7 +180,7 @@ const UserInfoPage = () => {
                                     <ControlTextField
                                         className={'input-container__text-field'}
                                         method={method}
-                                        field={'newPasswordConfirm'}
+                                        field={'id'}
                                         readOnly={isReadOnly}
                                     />
                                 </div>
