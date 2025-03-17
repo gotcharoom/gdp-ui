@@ -30,10 +30,10 @@ const postLogoutRequest = async () => {
     await postData(urls.logout);
     store.dispatch(resetUser());
     store.dispatch(removeAuth());
-
     allowForceLogout();
     window.location.href = '/login';
     preventForceLogout();
+    sessionStorage.setItem('isLogout', 'true');
 };
 
 const getLoginUserInfo = async (): Promise<UserState> => {

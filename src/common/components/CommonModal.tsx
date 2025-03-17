@@ -12,11 +12,11 @@ const confirmModalSize = {
 };
 
 const CommonModal = (props: CommonModalProps) => {
-    const { isDirty } = useContext(GlobalFormContext); // 글로벌 dirty 상태 확인
+    const { isDirty, isActiveNavigationGuard } = useContext(GlobalFormContext); // 글로벌 dirty 상태 확인
     const { openConfirmModal, closeModal } = useModal();
 
     const handleBeforeClose = useCallback(async () => {
-        if (props.formName && isDirty(props.formName)) {
+        if (props.formName && isActiveNavigationGuard && isDirty(props.formName)) {
             const confirmClose = await openConfirmModal({
                 width: confirmModalSize.width,
                 height: confirmModalSize.height,
@@ -28,7 +28,7 @@ const CommonModal = (props: CommonModalProps) => {
         }
 
         closeModal();
-    }, [props.formName, props.width, props.height, isDirty, closeModal, openConfirmModal]);
+    }, [props.formName, isDirty, closeModal, openConfirmModal]);
 
     return (
         <Modal className={'common-modal'} open={props.open} onClose={handleBeforeClose}>
