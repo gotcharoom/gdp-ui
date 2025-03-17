@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CommonPage from '@/common/components/CommonPage';
 
 const itemsPerPage = 5; // 페이지당 게시판 갯수
 
@@ -71,7 +72,7 @@ const BulletinBoard = () => {
         setCurrentPage(value);
     };
     const handleWrite = () => {
-        navigate('/board/write');
+        navigate('/board/bulletin/write');
     };
 
     /*Lifecycle*/
@@ -89,35 +90,36 @@ const BulletinBoard = () => {
         fetchAndSetNotice();
     }, []);
     return (
-        <div>
-            <h1 style={{ fontSize: 50 }}>자유게시판</h1>
-            <CommonNotice
-                notices={filterBulletins}
-                onNoticeClick={handleNoticeClick}
-                itemsPerPage={itemsPerPage}
-                currentPage={currentPage}
-            />
-
-            <Stack spacing={2}>
-                <Pagination
-                    count={Math.ceil(filterBulletins.length / itemsPerPage)}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+        <CommonPage width={'100%'} height={'100%'} title={'자유게시판'}>
+            <div>
+                <CommonNotice
+                    notices={filterBulletins}
+                    onNoticeClick={handleNoticeClick}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
                 />
-            </Stack>
-            <Button variant='contained' onClick={handleWrite}>
-                작성하기
-            </Button>
-            <CommonSearch
-                searchType={searchType}
-                searchQuery={searchQuery}
-                onKeyDown={handleKeyDown}
-                onSearch={handleSearch}
-                onSearchChange={handleSearchChange}
-                onSearchTypeChange={handleSearchTypeChange}
-            />
-        </div>
+
+                <Stack spacing={2}>
+                    <Pagination
+                        count={Math.ceil(filterBulletins.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+                    />
+                </Stack>
+                <Button variant='contained' onClick={handleWrite}>
+                    작성하기
+                </Button>
+                <CommonSearch
+                    searchType={searchType}
+                    searchQuery={searchQuery}
+                    onKeyDown={handleKeyDown}
+                    onSearch={handleSearch}
+                    onSearchChange={handleSearchChange}
+                    onSearchTypeChange={handleSearchTypeChange}
+                />
+            </div>
+        </CommonPage>
     );
 };
 

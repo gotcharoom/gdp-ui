@@ -6,6 +6,7 @@ interface SampleBulletinDataType {
     view: number;
     date: string;
     content: string;
+    comments: { user: string; reply: string }[];
 }
 
 const SampleBulletinData: SampleBulletinDataType[] = [
@@ -17,6 +18,12 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         view: 1000,
         date: 'testdate1',
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
+        comments: [
+            {
+                user: '찰리',
+                reply: '이거 재밌네요',
+            },
+        ],
     },
     {
         id: 12,
@@ -26,6 +33,12 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         view: 500,
         date: 'testdate2',
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
+        comments: [
+            {
+                user: '빌리',
+                reply: '이거 참 재밌네요',
+            },
+        ],
     },
     {
         id: 13,
@@ -35,6 +48,12 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         view: 300,
         date: 'testdate3',
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
+        comments: [
+            {
+                user: '길리',
+                reply: '이거 너무 재밌네요',
+            },
+        ],
     },
     {
         id: 14,
@@ -44,6 +63,12 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         view: 400,
         date: 'testdate4',
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
+        comments: [
+            {
+                user: '쉬리',
+                reply: '이거 쉽고 재밌네요',
+            },
+        ],
     },
     {
         id: 15,
@@ -53,6 +78,12 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         view: 356,
         date: 'testdate5',
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
+        comments: [
+            {
+                user: '아리',
+                reply: '이거 진짜 재밌네요',
+            },
+        ],
     },
     {
         id: 16,
@@ -62,6 +93,12 @@ const SampleBulletinData: SampleBulletinDataType[] = [
         view: 3564,
         date: 'testdate6',
         content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
+        comments: [
+            {
+                user: '고리',
+                reply: '이거 겁나 재밌네요',
+            },
+        ],
     },
 ];
 

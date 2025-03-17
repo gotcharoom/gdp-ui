@@ -10,6 +10,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CommonNotice from '@/common/components/notice/CommonNotice';
 import CommonSearch from '@/common/components/notice/CommonSearch';
+import CommonPage from '@/common/components/CommonPage';
 
 const initBoard: SampleNoticeDataType = {
     category: '',
@@ -38,7 +39,7 @@ const NoticeBoard = () => {
 
     /* Privates */
 
-    const filterNotices = notices.filter((notice) => {
+    const filterNotices = (notices || []).filter((notice) => {
         const lowerSearchQuery = searchQuery.toLowerCase();
         if (!searchQuery) return true;
 
@@ -93,28 +94,34 @@ const NoticeBoard = () => {
     }, []);
 
     return (
-        <div>
-            <h1 style={{ fontSize: 50 }}>공지사항</h1>
-            <CommonNotice notices={filterNotices} onNoticeClick={handleNoticeClick} itemsPerPage={itemsPerPage} currentPage={currentPage} />
-
-            <Stack spacing={2}>
-                <Pagination
-                    count={Math.ceil(filterNotices.length / itemsPerPage)}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+        <CommonPage width={'100%'} height={'100%'} title={'공지사항'}>
+            <div>
+                <CommonNotice
+                    notices={filterNotices}
+                    onNoticeClick={handleNoticeClick}
+                    itemsPerPage={itemsPerPage}
+                    currentPage={currentPage}
                 />
-            </Stack>
 
-            <CommonSearch
-                searchType={searchType}
-                searchQuery={searchQuery}
-                onKeyDown={handleKeyDown}
-                onSearch={handleSearch}
-                onSearchChange={handleSearchChange}
-                onSearchTypeChange={handleSearchTypeChange}
-            />
-        </div>
+                <Stack spacing={2}>
+                    <Pagination
+                        count={Math.ceil(filterNotices.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+                    />
+                </Stack>
+
+                <CommonSearch
+                    searchType={searchType}
+                    searchQuery={searchQuery}
+                    onKeyDown={handleKeyDown}
+                    onSearch={handleSearch}
+                    onSearchChange={handleSearchChange}
+                    onSearchTypeChange={handleSearchTypeChange}
+                />
+            </div>
+        </CommonPage>
     );
 };
 

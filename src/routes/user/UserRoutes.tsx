@@ -8,14 +8,6 @@ import CommonChildrenLayout from '@/common/layout/CommonChildrenLayout.tsx';
 // Sample Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
 const SampleUserMainComponent = withSuspense(SampleUserMain);
-const SampleNotice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
-const SampleNoticeComponent = withSuspense(SampleNotice);
-const SampleNoticeDetail = lazy(() => import('@/pages/board/notice/NoticeDetailPage'));
-const SampleNoticeDetailComponent = withSuspense(SampleNoticeDetail);
-const SampleBulletin = lazy(() => import('@pages/board/bulletin/BulletinBoard'));
-const SampleBulletinComponent = withSuspense(SampleBulletin);
-const SampleBulletinDetail = lazy(() => import('@/pages/board/bulletin/BulletinDetailPage'));
-const SampleBulletinDetailComponent = withSuspense(SampleBulletinDetail);
 const SampleEditorPage = lazy(() => import('@pages/sample/SampleEditorPage.tsx'));
 const SampleEditorPageComponent = withSuspense(SampleEditorPage);
 
@@ -30,6 +22,16 @@ const SignUpPage = lazy(() => import('@pages/common/SignUpPage.tsx'));
 const SignUpComponent = withSuspense(SignUpPage);
 
 // Components
+const Notice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
+const NoticeComponent = withSuspense(Notice);
+const NoticeDetail = lazy(() => import('@/pages/board/notice/NoticeDetailPage'));
+const NoticeDetailComponent = withSuspense(NoticeDetail);
+const Bulletin = lazy(() => import('@pages/board/bulletin/BulletinBoard'));
+const BulletinComponent = withSuspense(Bulletin);
+const BulletinDetail = lazy(() => import('@/pages/board/bulletin/BulletinDetailPage'));
+const BulletinDetailComponent = withSuspense(BulletinDetail);
+const BulletinWrtie = lazy(() => import('@pages/board/bulletin/BulletinBoardWrite'));
+const BulletinWriteComponent = withSuspense(BulletinWrtie);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -102,17 +104,17 @@ const UserRoutes: RouteObject[] = [
                 children: [
                     {
                         path: 'notice',
-                        element: <Outlet />,
+                        element: <CommonChildrenLayout />,
                         handle: {
                             title: '공지사항',
                             icon: 'more',
                         },
                         children: [
-                            { index: true, element: <SampleNoticeComponent /> },
+                            { index: true, element: <NoticeComponent /> },
 
                             {
                                 path: ':id',
-                                element: <SampleNoticeDetailComponent />,
+                                element: <NoticeDetailComponent />,
                                 handle: {
                                     title: '공지사항',
                                     icon: 'more',
@@ -123,19 +125,27 @@ const UserRoutes: RouteObject[] = [
 
                     {
                         path: 'bulletin',
-                        element: <Outlet />,
+                        element: <CommonChildrenLayout />,
                         handle: {
                             title: '자유게시판',
                             icon: 'more',
                         },
                         children: [
-                            { index: true, element: <SampleBulletinComponent /> },
+                            { index: true, element: <BulletinComponent /> },
 
                             {
                                 path: ':id',
-                                element: <SampleBulletinDetailComponent />,
+                                element: <BulletinDetailComponent />,
                                 handle: {
                                     title: '자유게시판',
+                                    icon: 'more',
+                                },
+                            },
+                            {
+                                path: 'write',
+                                element: <BulletinWriteComponent />,
+                                handle: {
+                                    title: '작성페이지',
                                     icon: 'more',
                                 },
                             },
