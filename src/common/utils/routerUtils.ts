@@ -2,7 +2,7 @@ import { RouteObject } from 'react-router-dom';
 import { MenuItem } from '@/types/layout/components/menuItem.type.ts';
 
 const extractMenuItems = (routes: RouteObject[], basePath = ''): MenuItem[] => {
-    const exceptionList: string[] = ['login', 'error'];
+    const exceptionList: string[] = ['login', 'error', 'user'];
 
     return routes
         .filter((route) => route.path !== undefined || route.index) // index도 포함

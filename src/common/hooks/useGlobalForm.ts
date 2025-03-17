@@ -3,11 +3,11 @@ import { useContext, useEffect } from 'react';
 import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 import FormName from '@/common/constants/FormName.ts';
 
-interface GlobalFormProps<T extends Record<string, unknown>> extends UseFormProps<T> {
+interface GlobalFormProps<T extends object> extends UseFormProps<T> {
     name: FormName;
 }
 
-export const useGlobalForm = <T extends Record<string, unknown>>(props: GlobalFormProps<T>) => {
+export const useGlobalForm = <T extends object>(props: GlobalFormProps<T>) => {
     const { setDirty, deleteDirty } = useContext(GlobalFormContext);
     const method = useForm<T>(props);
     const name = props.name;
@@ -26,5 +26,5 @@ export const useGlobalForm = <T extends Record<string, unknown>>(props: GlobalFo
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return { method };
+    return method;
 };

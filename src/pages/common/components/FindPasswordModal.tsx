@@ -8,11 +8,12 @@ import '@styles/pages/common/components/FindPasswordModal.scss';
 import { useCallback, useState } from 'react';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
 import FormName from '@/common/constants/FormName.ts';
+import { postGenerateTempPassword } from '@apis/auth/findMail.ts';
 
 const FindPasswordModal = () => {
     /* Hooks */
     const [message, setMessage] = useState<string>('임시 패스워드는 이메일로 발신됩니다');
-    const { method } = useGlobalForm<FindPasswordForm>({
+    const method = useGlobalForm<FindPasswordForm>({
         name: FormName.FIND_PASSWORD,
         resolver: yupResolver(findPasswordSchema),
         defaultValues: {
@@ -22,10 +23,14 @@ const FindPasswordModal = () => {
     });
 
     /* Event */
-    const onSubmit = useCallback((form: FindPasswordForm) => {
-        const test = false;
-        if (!test) {
-            setMessage('해당 계정 정보를 찾을 수 없습니다');
+    const onSubmit = useCallback(async (form: FindPasswordForm) => {
+        setMessage('메일 발송중입니다...');
+
+        const { data } = await postGenerateTempPassword(form);
+        if (!data) {
+            setMessage('해당 이메일로 등록된 계정 정보를 찾을 수 없습니다');
+        } else {
+            setMessage('해당 이메일로 임시 비밀번호가 발송되었습니다');
         }
     }, []);
 

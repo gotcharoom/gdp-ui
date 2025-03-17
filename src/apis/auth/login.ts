@@ -9,6 +9,7 @@ import { removeAuth } from '@stores/slices/authSlice.ts';
 import Provider from '@/common/constants/Provider.ts';
 import RememberMeRequestForm from '@/types/pages/login/RememberMeRequestForm.type.ts';
 import { allowForceLogout, preventForceLogout } from '@/common/hooks/useNavigationGuard.ts';
+import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
 
 const urls = {
     login: '/api/v1/auth/login',
@@ -30,10 +31,10 @@ const postLogoutRequest = async () => {
     await postData(urls.logout);
     store.dispatch(resetUser());
     store.dispatch(removeAuth());
-
     allowForceLogout();
     window.location.href = '/login';
     preventForceLogout();
+    sessionStorage.setItem(SessionStorageKey.IS_LOGOUT, 'true');
 };
 
 const getLoginUserInfo = async (): Promise<UserState> => {

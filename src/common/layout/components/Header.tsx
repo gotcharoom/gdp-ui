@@ -1,10 +1,13 @@
 import '@styles/layout/components/Header.scss';
 import { Avatar, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { MouseEvent, useCallback, useLayoutEffect, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 import { postLogoutRequest } from '@apis/auth/login.ts';
+import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
+import { useAlert } from '@/common/hooks/useAlert.ts';
+import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
 
 interface HeaderProps {
     onClickMenu: (isOpen: boolean) => void;
@@ -18,6 +21,7 @@ const Header = (props: HeaderProps) => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const { openAlert } = useAlert();
 
     /* Privates */
     const closeUserMenu = useCallback(() => {
@@ -46,10 +50,29 @@ const Header = (props: HeaderProps) => {
         await postLogoutRequest();
     }, [closeUserMenu]);
 
+    const onClickUserInfo = useCallback(async () => {
+        closeUserMenu();
+        navigate('/user/info');
+    }, [closeUserMenu, navigate]);
+
     /* Lifecycle */
     useLayoutEffect(() => {
         setIsLogin(isAuthenticated);
     }, [isAuthenticated]);
+
+    // Logout 메세지 처리
+    useEffect(() => {
+        const isLogout = sessionStorage.getItem(SessionStorageKey.IS_LOGOUT);
+
+        if (isLogout === 'true') {
+            const logoutAlert: AlertConfigProps = {
+                severity: 'success',
+                contents: '로그아웃했습니다',
+            };
+            openAlert(logoutAlert);
+            sessionStorage.removeItem(SessionStorageKey.IS_LOGOUT);
+        }
+    }, []);
 
     return (
         <div className={'header'}>
@@ -85,6 +108,7 @@ const Header = (props: HeaderProps) => {
                                     'aria-labelledby': 'basic-button',
                                 }}
                             >
+                                <MenuItem onClick={onClickUserInfo}>내 정보</MenuItem>
                                 <MenuItem onClick={onClickLogout}>로그아웃</MenuItem>
                             </Menu>
                         </>

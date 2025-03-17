@@ -36,11 +36,11 @@
 
 
   .sign-up-page__button-section {
-    height: $button-section__height;
+    height: $paper__button-section__height;
     display: flex;
     justify-content: end;
     align-items: center;
-    gap: $button-section__button__gap;
+    gap: $paper__button-section__button__gap;
 
     .button-section__button {
 

@@ -9,7 +9,7 @@ import { Button } from '@mui/material';
 const ErrorPage = () => {
     /* Hooks */
     const [errorMessage, setErrorMessage] = useState<string>();
-    const error = useRouteError();
+    const error = useRouteError() as { status?: number };
     const navigate = useNavigate();
 
     /* Privates */
@@ -27,7 +27,7 @@ const ErrorPage = () => {
     /* Lifecycles */
 
     useEffect(() => {
-        const status: number = error?.status;
+        const status: number = error?.status ?? 500;
         let message: string = '에러가 발생했습니다';
         switch (status) {
             case 400:

@@ -6,5 +6,6 @@ export const loginSchema = yup
     .object({
         id: yup.string().min(1, messages.min('id', 1)).required(),
         password: yup.string().required(),
+        rememberMe: yup.boolean().default(false).required(),
     })
     .required();

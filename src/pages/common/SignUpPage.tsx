@@ -18,7 +18,7 @@ const SignUpPage = () => {
     const { title } = useOutletContext<{ title: string }>();
     const location = useLocation();
     const navigate = useNavigate();
-    const { method } = useGlobalForm<SignUpRequestForm>({
+    const method = useGlobalForm<SignUpRequestForm>({
         name: FormName.SIGN_UP,
         resolver: yupResolver(signUpSchema),
         defaultValues: {
@@ -27,10 +27,11 @@ const SignUpPage = () => {
             passwordConfirm: '',
             email: '',
             nickname: '',
+            name: '',
         },
     });
 
-    useNavigationGuard();
+    const { sudoNavigate } = useNavigationGuard();
 
     /* Privates */
     const successMessage = useMemo(() => {
@@ -38,9 +39,23 @@ const SignUpPage = () => {
     }, []);
 
     /* Events */
-    const onSubmit = useCallback(async (form: SignUpRequestForm) => {
-        await postSignUp(form);
-    }, []);
+    const onSubmit = useCallback(
+        async (form: SignUpRequestForm) => {
+            try {
+                const isRegistered = await postSignUp(form);
+
+                if (!isRegistered) {
+                    throw new Error();
+                }
+
+                await sudoNavigate('/login');
+            } catch (e) {
+                console.log(e);
+                // TODO. [TR-YOO] 실패 메세지 띄우기
+            }
+        },
+        [sudoNavigate],
+    );
 
     const onClickCancel = useCallback(() => {
         navigate('/login');
@@ -91,6 +106,18 @@ const SignUpPage = () => {
                                 variant='outlined'
                                 label={'비밀번호 확인'}
                                 type={'password'}
+                                alwaysLabelOnTop
+                                required
+                                checkImmediately
+                            />
+                        </div>
+                        <div className={'input__section__input-container'}>
+                            <ControlTextField
+                                method={method}
+                                field='name'
+                                successHelpText={successMessage}
+                                variant='outlined'
+                                label={'이름'}
                                 alwaysLabelOnTop
                                 required
                                 checkImmediately

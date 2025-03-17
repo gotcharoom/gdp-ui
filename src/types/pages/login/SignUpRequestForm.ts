@@ -4,4 +4,5 @@ export default interface SignUpRequestForm {
     passwordConfirm: string;
     email: string;
     nickname: string;
+    name: string;
 }
