@@ -1,13 +1,12 @@
-// import * as axios from '@/common/utils/axiosInstance.ts';
-import LoginRequestForm from '@/types/pages/login/LoginRequestForm.type.ts';
-import UserState from '@/types/pages/login/UserState.type.ts';
+import LoginRequestForm from '@/types/pages/auth/LoginRequestForm.type.ts';
+import UserState from '@/types/pages/auth/UserState.type.ts';
 import { getData, postData } from '@/common/utils/axiosUtils.ts';
 import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import { store } from '@stores/store.ts';
 import { resetUser } from '@stores/slices/userSlice.ts';
 import { removeAuth } from '@stores/slices/authSlice.ts';
 import Provider from '@/common/constants/Provider.ts';
-import RememberMeRequestForm from '@/types/pages/login/RememberMeRequestForm.type.ts';
+import RememberMeRequestForm from '@/types/pages/auth/RememberMeRequestForm.type.ts';
 import { allowForceLogout, preventForceLogout } from '@/common/hooks/useNavigationGuard.ts';
 import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
 

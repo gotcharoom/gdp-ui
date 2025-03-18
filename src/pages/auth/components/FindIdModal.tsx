@@ -1,8 +1,8 @@
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import { yupResolver } from '@hookform/resolvers/yup';
-import FindIdForm from '@/types/pages/login/components/FindIdForm.type.ts';
-import { findIdSchema } from '@/validations/login/components/findIdSchema.ts';
-import '@styles/pages/common/components/FindIdModal.scss';
+import FindIdForm from '@/types/pages/auth/components/FindIdForm.type.ts';
+import { findIdSchema } from '@/validations/auth/components/findIdSchema.ts';
+import '@styles/pages/auth/components/FindIdModal.scss';
 import { Button } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';

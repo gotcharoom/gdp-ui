@@ -1,4 +1,4 @@
-import '@styles/pages/common/AgreementPage.scss';
+import '@styles/pages/auth/AgreementPage.scss';
 
 const GdpTerms = () => {
     return (

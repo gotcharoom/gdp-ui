@@ -1,8 +1,8 @@
 export default interface UserInfoForm {
     id: string;
-    prevPassword: string;
-    newPassword: string;
-    newPasswordConfirm: string;
     email: string;
     nickname: string;
+    name: string;
+    platforms: Record<string, string>;
+    socials: Record<string, string>;
 }

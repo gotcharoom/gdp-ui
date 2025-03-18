@@ -1,14 +1,20 @@
-import { getData } from '@/common/utils/axiosUtils.ts';
-import UserInfoForm from '@/types/pages/login/UserInfoForm.ts';
+import { getData, putData } from '@/common/utils/axiosUtils.ts';
+import { UserInfoResponse } from '@/types/apis/auth/UserInfoResponse.type.ts';
+import UserInfoForm from '@/types/pages/auth/UserInfoForm.ts';
 
 const urls = {
-    userDetails: '/api/v1/....',
+    getUserDetails: '/api/v1/user/details',
+    putUserDetails: '/api/v1/user/details',
 };
 
-const getUserDetails = async (): Promise<UserInfoForm> => {
-    const { data } = await getData<UserInfoForm>(urls.userDetails);
+const getUserDetails = async (): Promise<UserInfoResponse> => {
+    const { data } = await getData<UserInfoResponse>(urls.getUserDetails);
 
     return data;
 };
 
-export { getUserDetails };
+const putUserDetails = async (data: UserInfoForm) => {
+    return await putData<void>(urls.getUserDetails, data);
+};
+
+export { getUserDetails, putUserDetails };

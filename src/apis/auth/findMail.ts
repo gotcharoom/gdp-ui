@@ -1,5 +1,5 @@
-import FindIdForm from '@/types/pages/login/components/FindIdForm.type.ts';
-import FindPasswordForm from '@/types/pages/login/components/FindPasswordForm.type.ts';
+import FindIdForm from '@/types/pages/auth/components/FindIdForm.type.ts';
+import FindPasswordForm from '@/types/pages/auth/components/FindPasswordForm.type.ts';
 import { postData } from '@/common/utils/axiosUtils.ts';
 import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 

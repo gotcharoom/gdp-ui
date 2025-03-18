@@ -1,10 +1,12 @@
 import { TextField } from '@mui/material';
 import { Controller, FieldValues, Path, UseFormReturn, useWatch } from 'react-hook-form';
 import { TextFieldVariants } from '@mui/material/TextField/TextField';
-import { ChangeEvent, ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import * as React from 'react';
+import { ChangeEvent, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import '@styles/common/components/ControlTextField.scss';
+import PageMode from '@/common/constants/PageMode.ts';
+import { GlobalFormContext } from '@/common/contexts/GlobalFormContext.ts';
 
 interface ControlTextFieldProps<T extends FieldValues, V extends TextFieldVariants> {
     className?: string;
@@ -36,6 +38,8 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
         formState: { errors },
         trigger,
     } = props.method;
+
+    const { pageMode } = useContext(GlobalFormContext);
 
     const fieldValue = useWatch({ control, name: props.field });
 
@@ -93,6 +97,10 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
             return;
         }
 
+        if (pageMode == PageMode.READ) {
+            return;
+        }
+
         if (isFirstRender) {
             setIsFirstRender(false); // 첫 렌더링 이후에만 유효성 검사 실행
             return;
@@ -113,6 +121,13 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
         return () => clearTimeout(timeout);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fieldValue]);
+
+    // reset 시 기본 helpText로 초기화
+    useEffect(() => {
+        if (!props.method.formState.isDirty) {
+            setHelpText(props.defaultHelpText || ' ');
+        }
+    }, [props.method.formState.isDirty]);
 
     return (
         <Controller
