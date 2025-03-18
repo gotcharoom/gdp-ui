@@ -2,8 +2,8 @@ import { createContext, CSSProperties, ReactNode } from 'react';
 
 interface ModalBaseProps {
     // CSS
-    width: CSSProperties['width'];
-    height: CSSProperties['height'];
+    width?: CSSProperties['width'];
+    height?: CSSProperties['height'];
     maxWidth?: CSSProperties['maxWidth'];
     minWidth?: CSSProperties['minWidth'];
     maxHeight?: CSSProperties['maxHeight'];

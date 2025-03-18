@@ -3,8 +3,8 @@ import { CSSProperties } from 'react';
 import '@styles/common/components/CommonConfirmModal.scss';
 
 interface CommonConfirmModalProps {
-    width: CSSProperties['width'];
-    height: CSSProperties['height'];
+    width?: CSSProperties['width'];
+    height?: CSSProperties['height'];
     maxWidth?: CSSProperties['maxWidth'];
     minWidth?: CSSProperties['minWidth'];
     maxHeight?: CSSProperties['maxHeight'];
