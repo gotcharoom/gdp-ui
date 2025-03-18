@@ -1,22 +1,31 @@
 import Cropper, { Area } from 'react-easy-crop';
-import { useCallback, useState } from 'react';
-import { Point } from 'react-easy-crop/types';
+import { useCallback, useEffect, useState } from 'react';
 
 import '@styles/common/components/CommonCopper.scss';
 import { IconButton, Tooltip } from '@mui/material';
-import PageMode from '@/common/constants/PageMode.ts';
 
 interface CommonCropperProps {
     width: number; // 가로 비율
     height: number; // 세로 비율
     image: string; // 이미지
+    initialArea: Area | null; // area 비율;
     cropShape: 'rect' | 'round';
-    onCropComplete: (area: Area) => void;
+    onCropComplete: (area: Area, pixelArea: Area) => void;
     clear: () => void;
+}
+
+interface Point {
+    x: number;
+    y: number;
 }
 
 const CommonCropper = (props: CommonCropperProps) => {
     /* Hooks */
+    const [initialCroppedArea, setInitialCroppedArea] = useState<Area | undefined>(undefined);
+    const [cropSize] = useState({
+        width: props.width,
+        height: props.height,
+    });
     const [crop, setCrop] = useState<Point>({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
 
@@ -36,6 +45,13 @@ const CommonCropper = (props: CommonCropperProps) => {
     }, [props]);
 
     /* Lifecycles */
+    useEffect(() => {
+        if (props.initialArea) {
+            setInitialCroppedArea(props.initialArea);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={'common-cropper'}>
@@ -61,7 +77,8 @@ const CommonCropper = (props: CommonCropperProps) => {
                 crop={crop}
                 zoom={zoom}
                 onCropComplete={props.onCropComplete}
-                cropSize={{ width: props.width, height: props.height }}
+                cropSize={cropSize}
+                initialCroppedAreaPixels={initialCroppedArea as Area}
             />
         </div>
     );

@@ -1,5 +1,5 @@
 import { Area } from 'react-easy-crop';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import CommonCropper from '@/common/components/CommonCropper.tsx';
 import CommonDropzone from '@/common/components/CommonDropzone.tsx';
 import { Button } from '@mui/material';
@@ -7,13 +7,16 @@ import { Button } from '@mui/material';
 import '@styles/pages/auth/components/ProfileAvatarModal.scss';
 
 interface ProfileAvatarModalProps {
+    image: string | null;
+    area: Area | null;
     close: () => void;
+    save: (image: string | null, area: Area | null) => void;
 }
 
 const ProfileAvatarModal = (props: ProfileAvatarModalProps) => {
     /* Hooks */
-    const [image, setImage] = useState<string>(null);
-    const [area, setArea] = useState<Area>(null);
+    const [image, setImage] = useState<string | null>(null);
+    const [area, setArea] = useState<Area | null>(null);
 
     /* Privates */
     const clearImage = useCallback(() => {
@@ -22,27 +25,40 @@ const ProfileAvatarModal = (props: ProfileAvatarModalProps) => {
 
     /* Events */
 
-    const onCropComplete = useCallback((area: Area) => {
-        setArea(area);
+    const onCropComplete = useCallback((area: Area, pixelArea: Area) => {
+        console.log('percentage Area : ', area);
+        console.log('pixel Area : ', pixelArea);
+        setArea(pixelArea);
     }, []);
 
     const onChangeImage = (uploadedImage: File) => {
         setImage(URL.createObjectURL(uploadedImage));
     };
 
+    const onClickSave = useCallback(() => {
+        props.save(image, area);
+    }, [area, image, props]);
+
     const onClickCancel = useCallback(() => {
         props.close();
     }, [props]);
 
     /* Lifecycles */
+    useEffect(() => {
+        setImage(props.image);
+        setArea(props.area);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={'profile-avatar-modal'}>
             <div className={'profile-avatar-modal__image-section'}>
                 {image ? (
                     <CommonCropper
-                        width={250}
-                        height={250}
+                        width={150}
+                        height={150}
+                        initialArea={area}
                         image={image}
                         cropShape={'round'}
                         onCropComplete={onCropComplete}
@@ -53,7 +69,7 @@ const ProfileAvatarModal = (props: ProfileAvatarModalProps) => {
                 )}
             </div>
             <div className={'profile-avatar-modal__button-section'}>
-                <Button className={'button-section__button'} variant='contained' type={'submit'}>
+                <Button className={'button-section__button'} variant='contained' onClick={onClickSave}>
                     저장
                 </Button>
 

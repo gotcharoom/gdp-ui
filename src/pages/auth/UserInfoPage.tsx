@@ -21,6 +21,8 @@ import '@styles/pages/auth/UserInfoPage.scss';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
+import getCroppedImg from '@/common/utils/getCroppedImg.ts';
+import { Area } from 'react-easy-crop';
 
 const initData: UserInfoForm = {
     id: '',
@@ -39,6 +41,9 @@ const UserInfoPage = () => {
     const [userData, setUserData] = useState<UserInfoForm>(initData);
     const { openAlert } = useAlert();
     const { openModal, closeModal } = useModal();
+    const [image, setImage] = useState<string | null>(null);
+    const [area, setArea] = useState<Area | null>(null);
+    const [croppedImage, setCroppedImage] = useState<string | undefined>(undefined);
 
     const method = useGlobalForm<UserInfoForm>({
         name: FormName.SIGN_UP,
@@ -81,6 +86,35 @@ const UserInfoPage = () => {
             setUserData(initData);
         }
     }, [method]);
+
+    const saveImages = useCallback(
+        async (targetImage: string | null, targetArea: Area | null) => {
+            setImage(targetImage);
+            setArea(targetArea);
+
+            if (!targetImage) {
+                setCroppedImage(undefined);
+                closeModal();
+                return;
+            }
+
+            if (!targetArea) {
+                setCroppedImage(targetImage);
+                closeModal();
+                return;
+            }
+            try {
+                const croppedImg = await getCroppedImg(targetImage, targetArea);
+                setCroppedImage(croppedImg);
+            } catch (error) {
+                console.error('Error cropping image:', error);
+                setCroppedImage(targetImage);
+            }
+
+            closeModal();
+        },
+        [closeModal],
+    );
 
     /* Events */
     const onChangeMode = useCallback(
@@ -131,17 +165,19 @@ const UserInfoPage = () => {
             return;
         }
 
+        console.log('area : ', area);
+
         const config: CommonModalProps = {
             title: 'Avatar 변경',
             open: true,
             width: '700px',
             height: '500px',
-            contents: <ProfileAvatarModal close={onCloseModal} />,
+            contents: <ProfileAvatarModal close={onCloseModal} save={saveImages} image={image} area={area} />,
             formName: FormName.FIND_ID,
         };
 
         openModal(config);
-    }, [openModal, pageMode]);
+    }, [area, image, onCloseModal, openModal, pageMode, saveImages]);
 
     /* Lifecycles */
     useEffect(() => {
@@ -203,6 +239,7 @@ const UserInfoPage = () => {
                                 disableFocusListener={pageMode === PageMode.READ}
                             >
                                 <Avatar
+                                    src={croppedImage}
                                     className={profileClass}
                                     sx={{
                                         width: '100%',
