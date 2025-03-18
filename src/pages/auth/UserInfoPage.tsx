@@ -1,7 +1,7 @@
 import CommonPage from '@/common/components/CommonPage.tsx';
 import { useOutletContext } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, InputLabel } from '@mui/material';
+import { Avatar, Button, InputLabel, Tooltip } from '@mui/material';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
 import FormName from '@/common/constants/FormName.ts';
@@ -18,6 +18,10 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 
 import '@styles/pages/auth/UserInfoPage.scss';
+import { useModal } from '@/common/hooks/useModal.ts';
+import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
+import FindIdModal from '@pages/auth/components/FindIdModal.tsx';
+import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
 
 const initData: UserInfoForm = {
     id: '',
@@ -35,6 +39,7 @@ const UserInfoPage = () => {
     const { pageMode, setPageMode, resetPageMode } = usePageMode();
     const [userData, setUserData] = useState<UserInfoForm>(initData);
     const { openAlert } = useAlert();
+    const { openModal } = useModal();
 
     const method = useGlobalForm<UserInfoForm>({
         name: FormName.SIGN_UP,
@@ -52,6 +57,14 @@ const UserInfoPage = () => {
     const successMessage = useMemo(() => {
         return '사용 가능합니다';
     }, []);
+
+    const profileClass = useMemo(() => {
+        if (pageMode == PageMode.MODIFY) {
+            return 'avatar_section__avatar--modify';
+        }
+
+        return 'avatar_section__avatar--read';
+    }, [pageMode]);
 
     const getUserInfo = useCallback(async () => {
         try {
@@ -77,7 +90,7 @@ const UserInfoPage = () => {
             if (isChanged && mode === PageMode.READ) method.reset(userData);
             return isChanged;
         },
-        [setPageMode],
+        [method, setPageMode, userData],
     );
 
     const onClickCancel = useCallback(async () => {
@@ -110,6 +123,23 @@ const UserInfoPage = () => {
         [getUserInfo, openAlert, resetPageMode],
     );
 
+    const onClickChangeAvatar = useCallback(() => {
+        if (pageMode !== PageMode.MODIFY) {
+            return;
+        }
+
+        const config: CommonModalProps = {
+            title: 'Avatar 변경',
+            open: true,
+            width: '600px',
+            height: '400px',
+            contents: <ProfileAvatarModal />,
+            formName: FormName.FIND_ID,
+        };
+
+        openModal(config);
+    }, [openModal, pageMode]);
+
     /* Lifecycles */
     useEffect(() => {
         if (!isAuthenticated) {
@@ -133,35 +163,57 @@ const UserInfoPage = () => {
         <div className={'user-info-page'}>
             <CommonPage width={'100%'} height={'100%'} title={title}>
                 <form onSubmit={method.handleSubmit(onSubmit)}>
-                    <div className={'user-info-page__input-section'}>
-                        <div className={'input-section__input-container'}>
-                            <InputLabel className={'input-container__label'}>ID</InputLabel>
-                            <ControlTextField className={'input-container__text-field'} method={method} field={'id'} readOnly />
+                    <div className={'user-info-page__section-title'}>프로필</div>
+                    <div className={'user-info-page__profile-section'}>
+                        <div className={'profile-section__input-section'}>
+                            <div className={'input-section__input-container'}>
+                                <InputLabel className={'input-container__label'}>ID</InputLabel>
+                                <ControlTextField className={'input-container__text-field'} method={method} field={'id'} readOnly />
+                            </div>
+                            <div className={'input-section__input-container'}>
+                                <InputLabel className={'input-container__label'}>Email</InputLabel>
+                                <ControlTextField
+                                    className={'input-container__text-field'}
+                                    method={method}
+                                    field={'email'}
+                                    readOnly={isReadOnly}
+                                    successHelpText={successMessage}
+                                    checkImmediately
+                                />
+                            </div>
+                            <div className={'input-section__input-container'}>
+                                <InputLabel className={'input-container__label'}>닉네임</InputLabel>
+                                <ControlTextField
+                                    className={'input-container__text-field'}
+                                    method={method}
+                                    field={'nickname'}
+                                    readOnly={isReadOnly}
+                                    successHelpText={successMessage}
+                                    checkImmediately
+                                />
+                            </div>
                         </div>
-                        <div className={'input-section__input-container'}>
-                            <InputLabel className={'input-container__label'}>Email</InputLabel>
-                            <ControlTextField
-                                className={'input-container__text-field'}
-                                method={method}
-                                field={'email'}
-                                readOnly={isReadOnly}
-                                successHelpText={successMessage}
-                                checkImmediately
-                            />
+                        <div className={'profile-section__avatar-section'}>
+                            <Tooltip
+                                title='Change Your Avatar'
+                                disableHoverListener={pageMode === PageMode.READ}
+                                disableFocusListener={pageMode === PageMode.READ}
+                            >
+                                <Avatar
+                                    className={profileClass}
+                                    sx={{
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                    onClick={onClickChangeAvatar}
+                                />
+                            </Tooltip>
                         </div>
-                        <div className={'input-section__input-container'}>
-                            <InputLabel className={'input-container__label'}>닉네임</InputLabel>
-                            <ControlTextField
-                                className={'input-container__text-field'}
-                                method={method}
-                                field={'nickname'}
-                                readOnly={isReadOnly}
-                                successHelpText={successMessage}
-                                checkImmediately
-                            />
-                        </div>
-                        {pageMode == PageMode.READ && (
-                            <>
+                    </div>
+                    {pageMode == PageMode.READ && (
+                        <>
+                            <div className={'user-info-page__section-title'}>연동 정보</div>
+                            <div className={'user-info-page__sync-section'}>
                                 <div className={'input-section__input-container'}>
                                     <InputLabel className={'input-container__label'}>플랫폼 연동</InputLabel>
                                     <ControlTextField
@@ -180,9 +232,9 @@ const UserInfoPage = () => {
                                         readOnly={isReadOnly}
                                     />
                                 </div>
-                            </>
-                        )}
-                    </div>
+                            </div>
+                        </>
+                    )}
                     <div className={'user-info-page__button-section'}>
                         {pageMode == PageMode.READ && (
                             <Button className={'button-section__button'} variant='contained' onClick={() => onChangeMode(PageMode.MODIFY)}>
