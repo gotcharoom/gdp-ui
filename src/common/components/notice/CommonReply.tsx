@@ -1,17 +1,18 @@
 import { useState, ChangeEvent } from 'react';
 import { TextField, Button, Stack, Typography, IconButton } from '@mui/material';
 import { HighlightOff } from '@mui/icons-material';
+import { useModal } from '@/common/hooks/useModal';
 
 interface Comment {
-    user?: string;
-    reply?: string;
+    user: string;
+    reply: string;
 }
 
 interface CommonReplyProps {
     comments: Comment[]; // 댓글 리스트
     addComment: (newComment: Comment) => void; // 새로운 댓글 추가 함수
     removeComment: (postId: number, commentIndex: number) => void;
-    userId?: number;
+    postId?: number;
 }
 
 const CommonReply = ({ comments, addComment, removeComment }: CommonReplyProps) => {
@@ -19,6 +20,7 @@ const CommonReply = ({ comments, addComment, removeComment }: CommonReplyProps) 
     const [newComment, setNewComment] = useState<string>('');
     const [showAll, setShowAll] = useState<boolean>(false);
     const commentsToShow = 10;
+    const { openConfirmModal } = useModal();
 
     /* Privates */
     const visibleComments = showAll ? comments : comments.slice(0, commentsToShow);
@@ -32,9 +34,15 @@ const CommonReply = ({ comments, addComment, removeComment }: CommonReplyProps) 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setNewComment(event.target.value);
     };
-    const handleDelete = (userId: number, commentIndex: number) => {
+    const handleDelete = async (userId: number, commentIndex: number) => {
         if (userId !== undefined) {
-            removeComment(userId, commentIndex);
+            const confirm = await openConfirmModal({
+                width: '250px',
+                height: '200px',
+                contents: '댓글을 삭제하시겠습니까?',
+                title: '댓글 삭제 ',
+            });
+            if (confirm) removeComment(userId, commentIndex);
         }
     };
     /* Lifecycle */

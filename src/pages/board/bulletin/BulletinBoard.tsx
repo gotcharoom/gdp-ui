@@ -1,6 +1,7 @@
 import { getBulleinList } from '@/apis/notice/bulletin';
 import CommonNotice from '@/common/components/notice/CommonNotice';
 import CommonSearch from '@/common/components/notice/CommonSearch';
+import CommonPage from '@/common/components/CommonPage';
 import { SampleBulletinDataType } from '@/mocks/datas/sampleBulletinData';
 import NewBulletin from '@/types/pages/notice/NewBulletin.type';
 //Css
@@ -9,7 +10,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import CommonPage from '@/common/components/CommonPage';
+import '@styles/notice/bulletin/bulletinPage.scss';
+import { ClassNames } from '@emotion/react';
 
 const itemsPerPage = 5; // 페이지당 게시판 갯수
 
@@ -80,7 +82,7 @@ const BulletinBoard = () => {
         async function fetchAndSetNotice() {
             try {
                 const data = await getBulleinList(bulletinData);
-                setBulletins(data || []); // 🔹 null 방지
+                setBulletins(data);
             } catch (error) {
                 console.error('게시판 데이터를 불러오지 못했습니다:', error);
             } finally {
@@ -107,17 +109,19 @@ const BulletinBoard = () => {
                         renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
                     />
                 </Stack>
-                <Button variant='contained' onClick={handleWrite}>
-                    작성하기
-                </Button>
-                <CommonSearch
-                    searchType={searchType}
-                    searchQuery={searchQuery}
-                    onKeyDown={handleKeyDown}
-                    onSearch={handleSearch}
-                    onSearchChange={handleSearchChange}
-                    onSearchTypeChange={handleSearchTypeChange}
-                />
+                <div style={{ display: 'flex', marginTop: '5px' }}>
+                    <Button style={{ width: '100px', height: '50px' }} variant='contained' onClick={handleWrite}>
+                        작성하기
+                    </Button>
+                    <CommonSearch
+                        searchType={searchType}
+                        searchQuery={searchQuery}
+                        onKeyDown={handleKeyDown}
+                        onSearch={handleSearch}
+                        onSearchChange={handleSearchChange}
+                        onSearchTypeChange={handleSearchTypeChange}
+                    />
+                </div>
             </div>
         </CommonPage>
     );

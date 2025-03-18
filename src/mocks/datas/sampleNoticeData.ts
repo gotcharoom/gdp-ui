@@ -11,7 +11,7 @@ interface SampleNoticeDataType {
 const SampleNoticeData: SampleNoticeDataType[] = [
     {
         id: 1,
-        category: 'test1',
+        category: '공지사항',
         title: 'testtitle1',
         recommend: 100,
         view: 1000,
@@ -20,7 +20,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
     },
     {
         id: 2,
-        category: 'test2',
+        category: '공지사항',
         title: 'testtitle2',
         recommend: 50,
         view: 500,
@@ -29,7 +29,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
     },
     {
         id: 3,
-        category: 'test3',
+        category: '공지사항',
         title: 'testtitle3',
         recommend: 30,
         view: 300,
@@ -38,7 +38,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
     },
     {
         id: 4,
-        category: 'test4',
+        category: '공지사항',
         title: 'testtitle4',
         recommend: 40,
         view: 400,
@@ -47,7 +47,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
     },
     {
         id: 5,
-        category: 'test5',
+        category: '공지사항',
         title: 'testtitle5',
         recommend: 36,
         view: 356,
@@ -56,7 +56,7 @@ const SampleNoticeData: SampleNoticeDataType[] = [
     },
     {
         id: 6,
-        category: 'test6',
+        category: '공지사항',
         title: 'testtitle6',
         recommend: 46,
         view: 3564,

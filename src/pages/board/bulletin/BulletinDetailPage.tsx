@@ -5,7 +5,7 @@ import { getBulleinList } from '@/apis/notice/bulletin';
 import NewBulletin from '@/types/pages/notice/NewBulletin.type';
 import CommonReply from '@/common/components/notice/CommonReply';
 //Css
-import { Paper, Typography, Button, Divider, CircularProgress, IconButton, TextField } from '@mui/material';
+import { Typography, Button, Divider, CircularProgress, IconButton, TextField } from '@mui/material';
 import CommonPage from '@/common/components/CommonPage';
 import { ThumbDown, ThumbUp } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -29,10 +29,10 @@ const BulletinDetailPage = () => {
             ),
         );
     };
-    const removeComment = (userId: number, commentIndex: number) => {
+    const removeComment = (postId: number, commentIndex: number) => {
         setBulletins((prevBulletins) =>
             prevBulletins.map((bulletin) =>
-                bulletin.id === userId
+                bulletin.id === postId
                     ? {
                           ...bulletin,
                           comments: bulletin.comments.filter((_, index) => index !== commentIndex),
@@ -82,18 +82,18 @@ const BulletinDetailPage = () => {
 
     return (
         <CommonPage width={'100%'} height={'100%'} title=''>
-            <Paper sx={{ p: 3, maxWidth: 800, margin: 'auto', mt: 5 }}>
-                <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/board/bulletin')} sx={{ mb: 2 }}>
-                    뒤로 가기
-                </Button>
-                <Typography variant='h4' gutterBottom>
-                    {bulletin.title}
-                </Typography>
-                <Typography variant='subtitle1' color='textSecondary'>
-                    카테고리: {bulletin.category} | 조회수: {bulletin.view} | 추천: {bulletin.recommend}
-                </Typography>
-                <Divider sx={{ my: 2 }} />
-                <Typography variant='body1'>{bulletin.content || '내용이 없습니다.'}</Typography>
+            <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/board/bulletin')} sx={{ mb: 2 }}>
+                뒤로 가기
+            </Button>
+            <Typography variant='h4' gutterBottom>
+                {bulletin.title}
+            </Typography>
+            <Typography variant='subtitle1' color='textSecondary'>
+                카테고리: {bulletin.category} | 조회수: {bulletin.view} | 추천: {bulletin.recommend}
+            </Typography>
+            <Divider sx={{ my: 2 }} />
+            <Typography variant='body1'>{bulletin.content || '내용이 없습니다.'}</Typography>
+            <div>
                 <IconButton onClick={handleUpRecommend}>
                     <ThumbUp />
                     {recommend}
@@ -102,13 +102,8 @@ const BulletinDetailPage = () => {
                     <ThumbDown />
                     {down}
                 </IconButton>
-                <CommonReply
-                    comments={bulletin.comments ?? []}
-                    addComment={addComment}
-                    removeComment={removeComment}
-                    userId={bulletin?.id}
-                />
-            </Paper>
+            </div>
+            <CommonReply comments={bulletin.comments ?? []} addComment={addComment} removeComment={removeComment} postId={bulletin?.id} />
         </CommonPage>
     );
 };
