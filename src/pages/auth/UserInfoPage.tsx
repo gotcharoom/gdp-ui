@@ -20,7 +20,6 @@ import { RootState } from '@stores/store.ts';
 import '@styles/pages/auth/UserInfoPage.scss';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
-import FindIdModal from '@pages/auth/components/FindIdModal.tsx';
 import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
 
 const initData: UserInfoForm = {
@@ -39,7 +38,7 @@ const UserInfoPage = () => {
     const { pageMode, setPageMode, resetPageMode } = usePageMode();
     const [userData, setUserData] = useState<UserInfoForm>(initData);
     const { openAlert } = useAlert();
-    const { openModal } = useModal();
+    const { openModal, closeModal } = useModal();
 
     const method = useGlobalForm<UserInfoForm>({
         name: FormName.SIGN_UP,
@@ -123,6 +122,10 @@ const UserInfoPage = () => {
         [getUserInfo, openAlert, resetPageMode],
     );
 
+    const onCloseModal = useCallback(() => {
+        closeModal();
+    }, [closeModal]);
+
     const onClickChangeAvatar = useCallback(() => {
         if (pageMode !== PageMode.MODIFY) {
             return;
@@ -131,9 +134,9 @@ const UserInfoPage = () => {
         const config: CommonModalProps = {
             title: 'Avatar 변경',
             open: true,
-            width: '600px',
-            height: '400px',
-            contents: <ProfileAvatarModal />,
+            width: '700px',
+            height: '500px',
+            contents: <ProfileAvatarModal close={onCloseModal} />,
             formName: FormName.FIND_ID,
         };
 
