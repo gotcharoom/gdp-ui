@@ -1,35 +1,53 @@
 @use '../../constants/commonConstants' as *;
+@use '../../constants/userInfoConstants' as *;
 
 .user-info-page {
   flex: 1;
   display: flex;
 
-  .user-info-page__input-section {
+  .user-info-page__section-title {
+    padding: 1rem 0;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .user-info-page__profile-section {
     flex: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: $profile-section__gap;
 
-    .input-section__text-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px;
+    .profile-section__input-section {
+
+      @extend .common-input-section;
     }
 
-    .input-section__input-container {
+    .profile-section__avatar-section {
+      flex-shrink: 0; // 부모 크기에 의해 늘어나지 않도록 설정
       display: flex;
+      width: min($profile-container-__profile-size, 100%);
+      height: min($profile-container-__profile-size, 100%);
+      aspect-ratio: 1/1; // 정사각형 유지
       align-items: center;
+      justify-content: center;
 
-      .input-container__label {
-        width: 30%;
-        margin-bottom: calc($text-field__input__helpText__size)
+      .avatar_section__avatar--read {
+
       }
 
-      .input-container__text-field {
-        padding-left: 10%;
+      .avatar_section__avatar--modify {
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
   }
+
+  .user-info-page__sync-section {
+
+    @extend .common-input-section
+  }
+
 
   .user-info-page__button-section {
     display: flex;
@@ -38,5 +56,31 @@
     justify-content: end;
     align-items: center;
     gap: $paper__button-section__button__gap;
+  }
+}
+
+.common-input-section {
+
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  .input-section__text-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+
+  .input-section__input-container {
+    display: flex;
+    align-items: center;
+    gap: $input-container__gap;
+
+    .input-container__label {
+      min-width: $input-container__min-width;
+      max-width: $input-container__max-width;
+      margin-bottom: calc($text-field__input__helpText__size)
+    }
   }
 }

@@ -54,6 +54,7 @@ const useNavigationGuard = () => {
                 window.history.pushState(null, '', window.location.pathname);
 
                 console.log('뒤로 가기 감지됨, 모달 실행');
+
                 const confirmLeave = await openConfirmModal({
                     width: confirmModalSize.width,
                     height: confirmModalSize.height,
