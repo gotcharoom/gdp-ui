@@ -31,6 +31,8 @@ const initData: UserInfoForm = {
     name: '',
     platforms: {},
     socials: {},
+    imageUrl: undefined,
+    imageCropArea: undefined,
 };
 
 const UserInfoPage = () => {
@@ -41,10 +43,7 @@ const UserInfoPage = () => {
     const [userData, setUserData] = useState<UserInfoForm>(initData);
     const { openAlert } = useAlert();
     const { openModal, closeModal } = useModal();
-    const [image, setImage] = useState<string | null>(null);
-    const [area, setArea] = useState<Area | null>(null);
     const [croppedImage, setCroppedImage] = useState<string | undefined>(undefined);
-
     const method = useGlobalForm<UserInfoForm>({
         name: FormName.SIGN_UP,
         resolver: yupResolver(userInfoSchema),
@@ -87,10 +86,14 @@ const UserInfoPage = () => {
         }
     }, [method]);
 
+    const resetAvatar = useCallback(() => {
+        setCroppedImage(userData?.imageUrl);
+    }, [userData?.imageUrl]);
+
     const saveImages = useCallback(
-        async (targetImage: string | null, targetArea: Area | null) => {
-            setImage(targetImage);
-            setArea(targetArea);
+        async (targetImage: string | undefined, targetArea: Area | undefined) => {
+            method.setValue('imageUrl' as keyof UserInfoForm, targetImage, { shouldDirty: true });
+            method.setValue('imageCropArea' as keyof UserInfoForm, targetArea, { shouldDirty: true });
 
             if (!targetImage) {
                 setCroppedImage(undefined);
@@ -113,7 +116,7 @@ const UserInfoPage = () => {
 
             closeModal();
         },
-        [closeModal],
+        [closeModal, method],
     );
 
     /* Events */
@@ -128,8 +131,11 @@ const UserInfoPage = () => {
 
     const onClickCancel = useCallback(async () => {
         const isChanged = await onChangeMode(PageMode.READ);
-        if (isChanged) method.reset(userData);
-    }, [userData, method, onChangeMode]);
+        if (isChanged) {
+            method.reset(userData);
+            resetAvatar();
+        }
+    }, [onChangeMode, method, userData, resetAvatar]);
 
     const onSubmit = useCallback(
         async (forms: UserInfoForm) => {
@@ -165,7 +171,8 @@ const UserInfoPage = () => {
             return;
         }
 
-        console.log('area : ', area);
+        const image = method.getValues().imageUrl;
+        const area = method.getValues().imageCropArea;
 
         const config: CommonModalProps = {
             title: 'Avatar 변경',
@@ -177,7 +184,7 @@ const UserInfoPage = () => {
         };
 
         openModal(config);
-    }, [area, image, onCloseModal, openModal, pageMode, saveImages]);
+    }, [method, onCloseModal, openModal, pageMode, saveImages]);
 
     /* Lifecycles */
     useEffect(() => {
@@ -194,6 +201,7 @@ const UserInfoPage = () => {
         return () => {
             resetPageMode();
             method.reset(initData);
+            resetAvatar();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

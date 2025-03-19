@@ -1,3 +1,5 @@
+import { Area } from 'react-easy-crop';
+
 export default interface UserInfoForm {
     id: string;
     email: string;
@@ -5,4 +7,6 @@ export default interface UserInfoForm {
     name: string;
     platforms: Record<string, string>;
     socials: Record<string, string>;
+    imageUrl: string | undefined;
+    imageCropArea: Area | undefined;
 }

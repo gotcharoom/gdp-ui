@@ -13,7 +13,16 @@ export const userInfoSchema = yup
             .test('check-duplicate', '중복된 닉네임 입니다', (value) => checkLoginUserDuplicate(value, 'nickname'))
             .required(),
         name: yup.string().required(),
-        platforms: yup.object().shape({}).default({}), // TODO. [TR-YOO] 기본값 수정하기
-        socials: yup.object().shape({}).default({}), // TODO. [TR-YOO] 기본값 수정하기
+        platforms: yup.object().default({}), // TODO. [TR-YOO] 기본값 수정하기
+        socials: yup.object().default({}), // TODO. [TR-YOO] 기본값 수정하기
+        imageUrl: yup.string().required(),
+        imageCropArea: yup
+            .object({
+                width: yup.number().required(),
+                height: yup.number().required(),
+                x: yup.number().required(),
+                y: yup.number().required(),
+            })
+            .required(),
     })
     .required();
