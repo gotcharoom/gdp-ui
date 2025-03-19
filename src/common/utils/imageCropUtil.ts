@@ -31,7 +31,7 @@ export const rotateSize = (width: number, height: number, rotation: number) => {
 /**
  * This function was adapted from the one in the ReadMe of https://github.com/DominicTobias/react-image-crop
  */
-const getCroppedImg = async (imageSrc: string, pixelCrop: Area): Promise<string | undefined> => {
+const imageCropUtil = async (imageSrc: string, pixelCrop: Area): Promise<string | undefined> => {
     try {
         const image = await createImage(imageSrc);
         const canvas = document.createElement('canvas');
@@ -70,4 +70,4 @@ const getCroppedImg = async (imageSrc: string, pixelCrop: Area): Promise<string 
     }
 };
 
-export default getCroppedImg;
+export default imageCropUtil;

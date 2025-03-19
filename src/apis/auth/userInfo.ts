@@ -33,6 +33,8 @@ const putUserDetails = async (data: UserInfoForm) => {
 
     const formData = objectToFormData<UserInfoUpdateRequest>(request);
 
+    console.log(Array.from(formData.entries()));
+
     return await putData<void>(urls.putUserDetails, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
     });

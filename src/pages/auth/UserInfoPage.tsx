@@ -21,7 +21,7 @@ import '@styles/pages/auth/UserInfoPage.scss';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
-import getCroppedImg from '@/common/utils/getCroppedImg.ts';
+import imageCropUtil from '@/common/utils/imageCropUtil.ts';
 import { Area } from 'react-easy-crop';
 
 const initData: UserInfoForm = {
@@ -109,7 +109,7 @@ const UserInfoPage = () => {
                 return;
             }
             try {
-                const croppedImg = await getCroppedImg(targetImage, targetArea);
+                const croppedImg = await imageCropUtil(targetImage, targetArea);
                 setCroppedImage(croppedImg);
             } catch (error) {
                 console.error('Error cropping image:', error);

@@ -8,13 +8,7 @@ export const objectToFormData = <T extends object>(obj: T, formData: FormData = 
             if (value instanceof File) {
                 formData.append(fullKey, value);
             } else if (typeof value === 'object' && value !== null) {
-                if (Array.isArray(value) || value instanceof Date) {
-                    formData.append(fullKey, JSON.stringify(value)); // 배열이나 Date 객체는 JSON으로 변환
-                } else {
-                    // ✅ 중첩 객체를 JSON Blob으로 변환하여 추가
-                    const blob = new Blob([JSON.stringify(value)], { type: 'application/json' });
-                    formData.append(fullKey, blob);
-                }
+                formData.append(fullKey, JSON.stringify(value)); // 배열이나 Date 객체는 JSON으로 변환
             } else if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
                 formData.append(fullKey, String(value));
             }
