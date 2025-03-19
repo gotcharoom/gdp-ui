@@ -1,10 +1,13 @@
 import { getData, putData } from '@/common/utils/axiosUtils.ts';
 import { UserInfoResponse } from '@/types/apis/auth/UserInfoResponse.type.ts';
 import UserInfoForm from '@/types/pages/auth/UserInfoForm.ts';
+import { UserInfoUpdateRequest } from '@/types/apis/auth/UserInfoUpdateRequest.type.ts';
+import { urlToFile } from '@/common/utils/imageConvertUtil.ts';
+import { objectToFormData } from '@/common/utils/fileConvertUtil.ts';
 
 const urls = {
-    getUserDetails: '/api/v1/user/details',
-    putUserDetails: '/api/v1/user/details',
+    getUserDetails: '/api/v1/login-user/details',
+    putUserDetails: '/api/v1/login-user/details',
 };
 
 const getUserDetails = async (): Promise<UserInfoResponse> => {
@@ -14,7 +17,25 @@ const getUserDetails = async (): Promise<UserInfoResponse> => {
 };
 
 const putUserDetails = async (data: UserInfoForm) => {
-    return await putData<void>(urls.getUserDetails, data);
+    let file: File | null = null;
+
+    if (data.imageUrl) {
+        file = await urlToFile(data.imageUrl, 'profile-image.jpg');
+    }
+
+    const request: UserInfoUpdateRequest = {
+        name: data.name,
+        nickname: data.nickname,
+        email: data.email,
+        imageFile: file,
+        imageCropArea: data.imageCropArea ?? null,
+    };
+
+    const formData = objectToFormData<UserInfoUpdateRequest>(request);
+
+    return await putData<void>(urls.putUserDetails, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    });
 };
 
 export { getUserDetails, putUserDetails };

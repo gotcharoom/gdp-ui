@@ -13,16 +13,28 @@ export const userInfoSchema = yup
             .test('check-duplicate', '중복된 닉네임 입니다', (value) => checkLoginUserDuplicate(value, 'nickname'))
             .required(),
         name: yup.string().required(),
-        platforms: yup.object().default({}), // TODO. [TR-YOO] 기본값 수정하기
-        socials: yup.object().default({}), // TODO. [TR-YOO] 기본값 수정하기
-        imageUrl: yup.string().required(),
+        platforms: yup.object().nullable(), // TODO. [TR-YOO] 기본값 수정하기
+        socials: yup.object().nullable(), // TODO. [TR-YOO] 기본값 수정하기
+        imageUrl: yup.string().optional(),
         imageCropArea: yup
             .object({
-                width: yup.number().required(),
-                height: yup.number().required(),
-                x: yup.number().required(),
-                y: yup.number().required(),
+                width: yup.number().when('$hasCropArea', {
+                    is: true,
+                    then: (schema) => schema.required('width가 필요합니다.'),
+                }),
+                height: yup.number().when('$hasCropArea', {
+                    is: true,
+                    then: (schema) => schema.required('height가 필요합니다.'),
+                }),
+                x: yup.number().when('$hasCropArea', {
+                    is: true,
+                    then: (schema) => schema.required('x 좌표가 필요합니다.'),
+                }),
+                y: yup.number().when('$hasCropArea', {
+                    is: true,
+                    then: (schema) => schema.required('y 좌표가 필요합니다.'),
+                }),
             })
-            .required(),
+            .optional(),
     })
     .required();

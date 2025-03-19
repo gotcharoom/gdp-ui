@@ -76,6 +76,8 @@ const UserInfoPage = () => {
             const userInfo: UserInfoForm = {
                 ...initData,
                 ...data,
+                imageUrl: data.imageUrl ?? undefined,
+                imageCropArea: data.imageCropArea ?? undefined,
             };
 
             setUserData(userInfo);
@@ -229,6 +231,17 @@ const UserInfoPage = () => {
                                 />
                             </div>
                             <div className={'input-section__input-container'}>
+                                <InputLabel className={'input-container__label'}>이름</InputLabel>
+                                <ControlTextField
+                                    className={'input-container__text-field'}
+                                    method={method}
+                                    field={'name'}
+                                    readOnly={isReadOnly}
+                                    successHelpText={successMessage}
+                                    checkImmediately
+                                />
+                            </div>
+                            <div className={'input-section__input-container'}>
                                 <InputLabel className={'input-container__label'}>닉네임</InputLabel>
                                 <ControlTextField
                                     className={'input-container__text-field'}
@@ -291,7 +304,7 @@ const UserInfoPage = () => {
                         )}
                         {pageMode == PageMode.MODIFY && (
                             <>
-                                <Button className={'button-section__button'} variant='contained' type={'submit'}>
+                                <Button className={'button-section__button'} variant='contained' type='submit'>
                                     저장
                                 </Button>
                                 <Button className={'button-section__button'} variant='outlined' onClick={onClickCancel}>
