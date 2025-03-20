@@ -51,6 +51,10 @@ const BulletinDetailPage = () => {
     const handleDownRecommend = (event: ChangeEvent<MouseEvent>) => {
         setDown(down + 1);
     };
+    const handleModify = () => {
+        navigate(`/board/bulletin/${id}/modify`);
+    };
+
     /* Lifecycle */
     useEffect(() => {
         const fetchBulletinDetail = async () => {
@@ -102,6 +106,11 @@ const BulletinDetailPage = () => {
                     <ThumbDown />
                     {down}
                 </IconButton>
+                {bulletin.users.some((user) => user.userName === bulletin.writter) && (
+                    <Button style={{ width: '100px', height: '50px', marginLeft: '5px' }} variant='contained' onClick={handleModify}>
+                        수정하기
+                    </Button>
+                )}
             </div>
             <CommonReply comments={bulletin.comments ?? []} addComment={addComment} removeComment={removeComment} postId={bulletin?.id} />
         </CommonPage>

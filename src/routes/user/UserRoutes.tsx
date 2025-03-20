@@ -25,6 +25,7 @@ const ChangePasswordPage = lazy(() => import('@pages/auth/ChangePasswordPage.tsx
 const ChangePasswordPageComponent = withSuspense(ChangePasswordPage);
 
 // Components
+//Notices
 const Notice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
 const NoticeComponent = withSuspense(Notice);
 const NoticeDetail = lazy(() => import('@/pages/board/notice/NoticeDetailPage'));
@@ -35,6 +36,11 @@ const BulletinDetail = lazy(() => import('@/pages/board/bulletin/BulletinDetailP
 const BulletinDetailComponent = withSuspense(BulletinDetail);
 const BulletinWrtie = lazy(() => import('@pages/board/bulletin/BulletinBoardWrite'));
 const BulletinWriteComponent = withSuspense(BulletinWrtie);
+const BulletinModify = lazy(() => import('@pages/board/bulletin/BulletinBoardModify'));
+const BulletinModifyComponent = withSuspense(BulletinModify);
+//CSR(고객센터)
+const Representative = lazy(() => import('@/pages/csr/Representative'));
+const RepresentativeComponent = withSuspense(Representative);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -145,6 +151,15 @@ const UserRoutes: RouteObject[] = [
                                     title: '자유게시판',
                                     icon: 'more',
                                 },
+                                children: [
+                                    {
+                                        path: 'modify',
+                                        element: <BulletinModifyComponent />,
+                                        handle: {
+                                            title: '수정페이지',
+                                        },
+                                    },
+                                ],
                             },
                             {
                                 path: 'write',
@@ -172,6 +187,14 @@ const UserRoutes: RouteObject[] = [
                         handle: { title: '비밀번호 변경' },
                     },
                 ],
+            },
+            {
+                path: 'CSR',
+                handle: {
+                    title: '고객센터',
+                    showMenu: true,
+                },
+                element: <RepresentativeComponent />,
             },
         ],
     },

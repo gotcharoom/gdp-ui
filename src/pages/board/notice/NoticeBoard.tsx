@@ -28,9 +28,10 @@ const NoticeBoard = () => {
     /* Hooks */
     const [notices, setNotices] = useState<SampleNoticeDataType[]>([initBoard]);
     const [searchType, setSearchType] = useState<string>('title');
-    const [searchSession, setSeactSession] = useState<string>(''); // 입력중인 검색어 상태
+    const [inputText, setInputText] = useState<string>('');
     const [searchQuery, setSearchQuery] = useState<string>(''); // 검색 실행 시 적용될 검색어
     const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
+    const [debounceTimeout, setDebounceTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
     const navigate = useNavigate();
     const noticeData: NewNotice = {
         search: '게시판',
@@ -66,11 +67,18 @@ const NoticeBoard = () => {
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSeactSession(event.target.value);
+        setInputText(event.target.value);
+        if (debounceTimeout) {
+            clearTimeout(debounceTimeout); // 기존 타이머 제거 (디바운스)
+        }
+
+        const timeout = setTimeout(() => {
+            setSearchQuery(event.target.value);
+        }, 1000); // 1초 후 실행
+        setDebounceTimeout(timeout);
     };
 
     const handleSearch = () => {
-        setSearchQuery(searchSession);
         setCurrentPage(1);
     };
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -114,10 +122,10 @@ const NoticeBoard = () => {
 
                 <CommonSearch
                     searchType={searchType}
-                    searchQuery={searchQuery}
+                    searchQuery={inputText}
+                    onSearchChange={handleSearchChange}
                     onKeyDown={handleKeyDown}
                     onSearch={handleSearch}
-                    onSearchChange={handleSearchChange}
                     onSearchTypeChange={handleSearchTypeChange}
                 />
             </div>

@@ -6,10 +6,19 @@ interface SampleBulletinDataType {
     view: number;
     date: string;
     content: string;
-    comments: { user: string; reply: string }[];
+    comments: Comments[];
     commnetsIndex: number;
+    users: User[];
+    writter: string;
 }
-
+interface Comments {
+    user: string;
+    reply: string;
+}
+interface User {
+    userId: number;
+    userName: string;
+}
 const SampleBulletinData: SampleBulletinDataType[] = [
     {
         id: 11,
@@ -30,6 +39,13 @@ const SampleBulletinData: SampleBulletinDataType[] = [
             },
         ],
         commnetsIndex: 1,
+        users: [
+            {
+                userId: 1322,
+                userName: 'gaile',
+            },
+        ],
+        writter: 'gaile',
     },
     {
         id: 12,
@@ -46,6 +62,13 @@ const SampleBulletinData: SampleBulletinDataType[] = [
             },
         ],
         commnetsIndex: 2,
+        users: [
+            {
+                userId: 1323,
+                userName: 'gorry',
+            },
+        ],
+        writter: 'gerry',
     },
     {
         id: 13,
@@ -62,6 +85,13 @@ const SampleBulletinData: SampleBulletinDataType[] = [
             },
         ],
         commnetsIndex: 3,
+        users: [
+            {
+                userId: 1324,
+                userName: 'OeweO',
+            },
+        ],
+        writter: 'OeweO',
     },
     {
         id: 14,
@@ -78,6 +108,13 @@ const SampleBulletinData: SampleBulletinDataType[] = [
             },
         ],
         commnetsIndex: 4,
+        users: [
+            {
+                userId: 1325,
+                userName: 'Reesd',
+            },
+        ],
+        writter: 'gerqry',
     },
     {
         id: 15,
@@ -94,6 +131,13 @@ const SampleBulletinData: SampleBulletinDataType[] = [
             },
         ],
         commnetsIndex: 5,
+        users: [
+            {
+                userId: 1326,
+                userName: 'Wrath',
+            },
+        ],
+        writter: 'gerrey',
     },
     {
         id: 16,
@@ -110,6 +154,13 @@ const SampleBulletinData: SampleBulletinDataType[] = [
             },
         ],
         commnetsIndex: 6,
+        users: [
+            {
+                userId: 1326,
+                userName: 'Earta',
+            },
+        ],
+        writter: 'gerryy',
     },
 ];
 

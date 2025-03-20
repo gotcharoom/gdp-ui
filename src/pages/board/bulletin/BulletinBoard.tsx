@@ -19,10 +19,11 @@ const BulletinBoard = () => {
     /*Hooks*/
     const [bulletins, setBulletins] = useState<SampleBulletinDataType[]>([]);
     const [searchType, setSearchType] = useState<string>('title');
-    const [searchSession, setSearchSession] = useState<string>(''); // 입력중인 검색어 상태
     const [searchQuery, setSearchQuery] = useState<string>(''); // 검색 실행 시 적용될 검색어
+    const [inputText, setInputText] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
     const [loading, setLoading] = useState<boolean>(true);
+    const [debounceTimeout, setDebounceTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
     const navigate = useNavigate();
     const bulletinData: NewBulletin = {
         search: '게시판',
@@ -57,11 +58,18 @@ const BulletinBoard = () => {
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchSession(event.target.value);
+        setInputText(event.target.value);
+        if (debounceTimeout) {
+            clearTimeout(debounceTimeout); // 기존 타이머 제거 (디바운스)
+        }
+
+        const timeout = setTimeout(() => {
+            setSearchQuery(event.target.value);
+        }, 1000); // 1초 후 실행
+        setDebounceTimeout(timeout);
     };
 
     const handleSearch = () => {
-        setSearchQuery(searchSession);
         setCurrentPage(1);
     };
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -115,7 +123,7 @@ const BulletinBoard = () => {
                     </Button>
                     <CommonSearch
                         searchType={searchType}
-                        searchQuery={searchQuery}
+                        searchQuery={inputText}
                         onKeyDown={handleKeyDown}
                         onSearch={handleSearch}
                         onSearchChange={handleSearchChange}
