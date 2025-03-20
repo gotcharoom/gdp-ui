@@ -27,16 +27,13 @@ const useAuth = () => {
     }, [dispatch]);
 
     const fetchUserData = useCallback(async () => {
-        if (!isAuthenticated || hasFetched.current) return;
-
         try {
             const data = await getLoginUserInfo();
             dispatch(setUser(data));
-            hasFetched.current = true;
         } catch (error) {
             console.error('Failed to fetch user data:', error);
         }
-    }, [isAuthenticated, dispatch]);
+    }, [dispatch]);
 
     useEffect(() => {
         void checkToken();
@@ -44,9 +41,13 @@ const useAuth = () => {
     }, []);
 
     useEffect(() => {
+        if (!isAuthenticated || hasFetched.current) return;
+
         void fetchUserData();
+
+        hasFetched.current = true;
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [isAuthenticated]);
 };
 
 export default useAuth;
