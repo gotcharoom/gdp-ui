@@ -1,11 +1,11 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { SampleBulletinDataType } from '@/mocks/datas/sampleBulletinData';
 import { getBulleinList } from '@/apis/notice/bulletin';
 import NewBulletin from '@/types/pages/notice/NewBulletin.type';
 import CommonReply from '@/common/components/notice/CommonReply';
 //Css
-import { Typography, Button, Divider, CircularProgress, IconButton, TextField } from '@mui/material';
+import { Typography, Button, Divider, CircularProgress, IconButton } from '@mui/material';
 import CommonPage from '@/common/components/CommonPage';
 import { ThumbDown, ThumbUp } from '@mui/icons-material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -44,11 +44,13 @@ const BulletinDetailPage = () => {
     /* Privates */
 
     /* Events */
-    const handleUpRecommend = (event: ChangeEvent<MouseEvent>) => {
+    // TODO. 현재 사용하지 않는 변수명 변경 (event -> _event) -> 추후 사용 시 변경 필요
+    const handleUpRecommend = (_event: React.MouseEvent<HTMLButtonElement>) => {
         setRecommend(recommend + 1);
     };
 
-    const handleDownRecommend = (event: ChangeEvent<MouseEvent>) => {
+    // TODO. 현재 사용하지 않는 변수명 변경 (event -> _event) -> 추후 사용 시 변경 필요
+    const handleDownRecommend = (_event: React.MouseEvent<HTMLButtonElement>) => {
         setDown(down + 1);
     };
     const handleModify = () => {

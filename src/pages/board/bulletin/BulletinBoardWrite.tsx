@@ -2,7 +2,7 @@ import CommonEditor from '@/common/components/CommonEditor';
 import CommonPage from '@/common/components/CommonPage';
 import useNavigationGuard from '@/common/hooks/useNavigationGuard';
 import { Button } from '@mui/material';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
 const BulletinBoardWrite = () => {

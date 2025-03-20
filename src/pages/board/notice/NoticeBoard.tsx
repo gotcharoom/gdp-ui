@@ -1,11 +1,11 @@
 import { SampleNoticeDataType } from '@/mocks/datas/sampleNoticeData';
 import NewNotice from '@/types/pages/notice/NewNotice.type';
 import { getNoticeList } from '@apis/notice/notice';
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //csss
-import { Pagination, Stack, PaginationItem, SelectChangeEvent, Button } from '@mui/material';
+import { Pagination, Stack, PaginationItem, SelectChangeEvent } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CommonNotice from '@/common/components/notice/CommonNotice';
@@ -87,7 +87,8 @@ const NoticeBoard = () => {
             handleSearch();
         }
     };
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const handlePageChange = (event: ChangeEvent<unknown>, value: number) => {
+        console.log(event);
         setCurrentPage(value);
     };
 

@@ -1,7 +1,6 @@
 import { useState, ChangeEvent } from 'react';
 import { TextField, Button, Stack, Typography, IconButton } from '@mui/material';
 import { HighlightOff } from '@mui/icons-material';
-import { useModal } from '@/common/hooks/useModal';
 
 interface Comment {
     user: string;
@@ -15,12 +14,15 @@ interface CommonReplyProps {
     postId?: number;
 }
 
-const CommonReply = ({ comments, addComment, removeComment }: CommonReplyProps) => {
+// TODO. 현재 사용하지 않는 변수 제거 (removeComment) -> 추후 사용시 추가 필요
+const CommonReply = ({ comments, addComment }: CommonReplyProps) => {
     //Hooks
     const [newComment, setNewComment] = useState<string>('');
     const [showAll, setShowAll] = useState<boolean>(false);
     const commentsToShow = 10;
-    const { openConfirmModal } = useModal();
+
+    // TODO. 현재 사용되지 않는 기능 주석처리 -> 추후 사용시 주석 해제 필요
+    // const { openConfirmModal } = useModal();
 
     /* Privates */
     const visibleComments = showAll ? comments : comments.slice(0, commentsToShow);
@@ -34,17 +36,19 @@ const CommonReply = ({ comments, addComment, removeComment }: CommonReplyProps) 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setNewComment(event.target.value);
     };
-    const handleDelete = async (userId: number, commentIndex: number) => {
-        if (userId !== undefined) {
-            const confirm = await openConfirmModal({
-                width: '250px',
-                height: '200px',
-                contents: '댓글을 삭제하시겠습니까?',
-                title: '댓글 삭제 ',
-            });
-            if (confirm) removeComment(userId, commentIndex);
-        }
-    };
+
+    // TODO. 현재 구현되지 않은 기능 주석 처리 -> 추후 사용시 주석 해제 필요
+    // const handleDelete = async (userId: number, commentIndex: number) => {
+    //     if (userId !== undefined) {
+    //         const confirm = await openConfirmModal({
+    //             width: '250px',
+    //             height: '200px',
+    //             contents: '댓글을 삭제하시겠습니까?',
+    //             title: '댓글 삭제 ',
+    //         });
+    //         if (confirm) removeComment(userId, commentIndex);
+    //     }
+    // };
     /* Lifecycle */
 
     return (
@@ -71,7 +75,7 @@ const CommonReply = ({ comments, addComment, removeComment }: CommonReplyProps) 
                             <strong>{comment.user}</strong>
                         </Typography>
                         <Typography variant='body1'>{comment.reply}</Typography>
-                        <IconButton onClick={handleDelete} size='small'>
+                        <IconButton size='small'>
                             <HighlightOff fontSize='small' />
                         </IconButton>
                     </div>

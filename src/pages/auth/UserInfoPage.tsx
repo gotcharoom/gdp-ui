@@ -21,7 +21,7 @@ import '@styles/pages/auth/UserInfoPage.scss';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
-import imageCropUtil, { createImageFromImageUrl } from '@/common/utils/imageCropUtil.ts';
+import imageCropUtil from '@/common/utils/imageCropUtil.ts';
 import { Area } from 'react-easy-crop';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { resetAvatar } from '@/common/utils/avatarUtil.ts';
