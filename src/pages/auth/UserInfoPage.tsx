@@ -21,7 +21,7 @@ import '@styles/pages/auth/UserInfoPage.scss';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
-import getCroppedImg from '@/common/utils/getCroppedImg.ts';
+import imageCropUtil from '@/common/utils/imageCropUtil.ts';
 import { Area } from 'react-easy-crop';
 
 const initData: UserInfoForm = {
@@ -31,6 +31,8 @@ const initData: UserInfoForm = {
     name: '',
     platforms: {},
     socials: {},
+    imageUrl: undefined,
+    imageCropArea: undefined,
 };
 
 const UserInfoPage = () => {
@@ -41,10 +43,7 @@ const UserInfoPage = () => {
     const [userData, setUserData] = useState<UserInfoForm>(initData);
     const { openAlert } = useAlert();
     const { openModal, closeModal } = useModal();
-    const [image, setImage] = useState<string | null>(null);
-    const [area, setArea] = useState<Area | null>(null);
     const [croppedImage, setCroppedImage] = useState<string | undefined>(undefined);
-
     const method = useGlobalForm<UserInfoForm>({
         name: FormName.SIGN_UP,
         resolver: yupResolver(userInfoSchema),
@@ -77,6 +76,8 @@ const UserInfoPage = () => {
             const userInfo: UserInfoForm = {
                 ...initData,
                 ...data,
+                imageUrl: data.imageUrl ?? undefined,
+                imageCropArea: data.imageCropArea ?? undefined,
             };
 
             setUserData(userInfo);
@@ -87,10 +88,14 @@ const UserInfoPage = () => {
         }
     }, [method]);
 
+    const resetAvatar = useCallback(() => {
+        setCroppedImage(userData?.imageUrl);
+    }, [userData?.imageUrl]);
+
     const saveImages = useCallback(
-        async (targetImage: string | null, targetArea: Area | null) => {
-            setImage(targetImage);
-            setArea(targetArea);
+        async (targetImage: string | undefined, targetArea: Area | undefined) => {
+            method.setValue('imageUrl' as keyof UserInfoForm, targetImage, { shouldDirty: true });
+            method.setValue('imageCropArea' as keyof UserInfoForm, targetArea, { shouldDirty: true });
 
             if (!targetImage) {
                 setCroppedImage(undefined);
@@ -104,7 +109,7 @@ const UserInfoPage = () => {
                 return;
             }
             try {
-                const croppedImg = await getCroppedImg(targetImage, targetArea);
+                const croppedImg = await imageCropUtil(targetImage, targetArea);
                 setCroppedImage(croppedImg);
             } catch (error) {
                 console.error('Error cropping image:', error);
@@ -113,7 +118,7 @@ const UserInfoPage = () => {
 
             closeModal();
         },
-        [closeModal],
+        [closeModal, method],
     );
 
     /* Events */
@@ -128,8 +133,11 @@ const UserInfoPage = () => {
 
     const onClickCancel = useCallback(async () => {
         const isChanged = await onChangeMode(PageMode.READ);
-        if (isChanged) method.reset(userData);
-    }, [userData, method, onChangeMode]);
+        if (isChanged) {
+            method.reset(userData);
+            resetAvatar();
+        }
+    }, [onChangeMode, method, userData, resetAvatar]);
 
     const onSubmit = useCallback(
         async (forms: UserInfoForm) => {
@@ -165,7 +173,8 @@ const UserInfoPage = () => {
             return;
         }
 
-        console.log('area : ', area);
+        const image = method.getValues().imageUrl;
+        const area = method.getValues().imageCropArea;
 
         const config: CommonModalProps = {
             title: 'Avatar 변경',
@@ -177,7 +186,7 @@ const UserInfoPage = () => {
         };
 
         openModal(config);
-    }, [area, image, onCloseModal, openModal, pageMode, saveImages]);
+    }, [method, onCloseModal, openModal, pageMode, saveImages]);
 
     /* Lifecycles */
     useEffect(() => {
@@ -194,6 +203,7 @@ const UserInfoPage = () => {
         return () => {
             resetPageMode();
             method.reset(initData);
+            resetAvatar();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -215,6 +225,17 @@ const UserInfoPage = () => {
                                     className={'input-container__text-field'}
                                     method={method}
                                     field={'email'}
+                                    readOnly={isReadOnly}
+                                    successHelpText={successMessage}
+                                    checkImmediately
+                                />
+                            </div>
+                            <div className={'input-section__input-container'}>
+                                <InputLabel className={'input-container__label'}>이름</InputLabel>
+                                <ControlTextField
+                                    className={'input-container__text-field'}
+                                    method={method}
+                                    field={'name'}
                                     readOnly={isReadOnly}
                                     successHelpText={successMessage}
                                     checkImmediately
@@ -283,7 +304,7 @@ const UserInfoPage = () => {
                         )}
                         {pageMode == PageMode.MODIFY && (
                             <>
-                                <Button className={'button-section__button'} variant='contained' type={'submit'}>
+                                <Button className={'button-section__button'} variant='contained' type='submit'>
                                     저장
                                 </Button>
                                 <Button className={'button-section__button'} variant='outlined' onClick={onClickCancel}>

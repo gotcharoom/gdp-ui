@@ -1,10 +1,11 @@
-import { useDropzone } from 'react-dropzone';
+import { Accept, useDropzone } from 'react-dropzone';
 import { useCallback } from 'react';
 
 import '@styles/common/components/CommonDropzone.scss';
 
 interface CommonDropzoneProps {
     onChangeImage: (file: File) => void;
+    accept: Accept;
 }
 
 const CommonDropzone = (props: CommonDropzoneProps) => {
@@ -16,7 +17,7 @@ const CommonDropzone = (props: CommonDropzoneProps) => {
         [props],
     );
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: props.accept });
     /* Privates */
 
     /* Events */

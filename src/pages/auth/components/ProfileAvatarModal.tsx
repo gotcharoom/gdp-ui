@@ -7,20 +7,21 @@ import { Button } from '@mui/material';
 import '@styles/pages/auth/components/ProfileAvatarModal.scss';
 
 interface ProfileAvatarModalProps {
-    image: string | null;
-    area: Area | null;
+    image: string | undefined;
+    area: Area | undefined;
     close: () => void;
-    save: (image: string | null, area: Area | null) => void;
+    save: (image: string | undefined, area: Area | undefined) => void;
 }
 
 const ProfileAvatarModal = (props: ProfileAvatarModalProps) => {
     /* Hooks */
-    const [image, setImage] = useState<string | null>(null);
-    const [area, setArea] = useState<Area | null>(null);
+    const [image, setImage] = useState<string | undefined>(undefined);
+    const [area, setArea] = useState<Area | undefined>(undefined);
 
     /* Privates */
     const clearImage = useCallback(() => {
-        setImage(null);
+        setImage(undefined);
+        setArea(undefined);
     }, []);
 
     /* Events */
@@ -65,7 +66,7 @@ const ProfileAvatarModal = (props: ProfileAvatarModalProps) => {
                         clear={clearImage}
                     />
                 ) : (
-                    <CommonDropzone onChangeImage={onChangeImage} />
+                    <CommonDropzone onChangeImage={onChangeImage} accept={{ 'image/*': ['.jpeg', '.jpg', '.png'] }} />
                 )}
             </div>
             <div className={'profile-avatar-modal__button-section'}>

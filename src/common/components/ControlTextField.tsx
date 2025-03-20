@@ -127,6 +127,7 @@ const ControlTextField = <T extends FieldValues = FieldValues, V extends TextFie
         if (!props.method.formState.isDirty) {
             setHelpText(props.defaultHelpText || ' ');
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.method.formState.isDirty]);
 
     return (
