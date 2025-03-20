@@ -1,5 +1,22 @@
 import { Area } from 'react-easy-crop';
 
+export const createImageFromImageUrl = async (imageUrl: string): Promise<string | null> => {
+    try {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    } catch (error) {
+        console.error('Error converting image to Base64:', error);
+        return null;
+    }
+};
+
 export const createImage = (url: string): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
         const image = new Image();

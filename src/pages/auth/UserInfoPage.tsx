@@ -21,8 +21,10 @@ import '@styles/pages/auth/UserInfoPage.scss';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
-import imageCropUtil from '@/common/utils/imageCropUtil.ts';
+import imageCropUtil, { createImageFromImageUrl } from '@/common/utils/imageCropUtil.ts';
 import { Area } from 'react-easy-crop';
+import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
+import { resetAvatar } from '@/common/utils/avatarUtil.ts';
 
 const initData: UserInfoForm = {
     id: '',
@@ -82,15 +84,12 @@ const UserInfoPage = () => {
 
             setUserData(userInfo);
             method.reset(userInfo);
+            await resetAvatar(userInfo?.imageUrl, userInfo?.imageCropArea, setCroppedImage);
         } catch (e) {
             console.log(e);
             setUserData(initData);
         }
     }, [method]);
-
-    const resetAvatar = useCallback(() => {
-        setCroppedImage(userData?.imageUrl);
-    }, [userData?.imageUrl]);
 
     const saveImages = useCallback(
         async (targetImage: string | undefined, targetArea: Area | undefined) => {
@@ -135,14 +134,18 @@ const UserInfoPage = () => {
         const isChanged = await onChangeMode(PageMode.READ);
         if (isChanged) {
             method.reset(userData);
-            resetAvatar();
+            await resetAvatar(userData?.imageUrl, userData?.imageCropArea, setCroppedImage);
         }
-    }, [onChangeMode, method, userData, resetAvatar]);
+    }, [onChangeMode, method, userData]);
 
     const onSubmit = useCallback(
         async (forms: UserInfoForm) => {
             try {
-                await putUserDetails(forms);
+                const response = await putUserDetails(forms);
+
+                if (response.code !== ResponseCode.SUCCESS.code) {
+                    throw new Error();
+                }
 
                 const successAlert: AlertConfigProps = {
                     severity: 'success',
@@ -203,7 +206,7 @@ const UserInfoPage = () => {
         return () => {
             resetPageMode();
             method.reset(initData);
-            resetAvatar();
+            void resetAvatar(undefined, undefined, setCroppedImage);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

@@ -8,6 +8,8 @@ import { postLogoutRequest } from '@apis/auth/login.ts';
 import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
 import { useAlert } from '@/common/hooks/useAlert.ts';
 import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
+import { resetAvatar } from '@/common/utils/avatarUtil.ts';
+import UserState from '@/types/pages/auth/UserState.type.ts';
 
 interface HeaderProps {
     onClickMenu: (isOpen: boolean) => void;
@@ -17,9 +19,12 @@ const Header = (props: HeaderProps) => {
     /* Hooks */
     // const user: UserState = useSelector((state: RootState) => state.user);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const user: UserState = useSelector((state: RootState) => state.user);
     const [isLogin, setIsLogin] = useState(isAuthenticated);
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [croppedImage, setCroppedImage] = useState<string | undefined>(undefined);
+    const [isLogout, setIsLogout] = useState<boolean>(false);
     const open = Boolean(anchorEl);
     const { openAlert } = useAlert();
 
@@ -67,17 +72,29 @@ const Header = (props: HeaderProps) => {
 
     // Logout 메세지 처리
     useEffect(() => {
-        const isLogout = sessionStorage.getItem(SessionStorageKey.IS_LOGOUT);
+        const logoutState = sessionStorage.getItem(SessionStorageKey.IS_LOGOUT);
 
-        if (isLogout === 'true') {
+        if (logoutState === 'true') {
+            setIsLogout(true);
+            sessionStorage.removeItem(SessionStorageKey.IS_LOGOUT);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isLogout) {
             const logoutAlert: AlertConfigProps = {
                 severity: 'success',
                 contents: '로그아웃했습니다',
             };
             openAlert(logoutAlert);
-            sessionStorage.removeItem(SessionStorageKey.IS_LOGOUT);
+            setIsLogout(false);
         }
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLogout]);
+
+    useEffect(() => {
+        void resetAvatar(user?.imageUrl, user?.imageCropArea, setCroppedImage);
+    }, [user]);
 
     return (
         <div className={'header'}>
@@ -102,7 +119,14 @@ const Header = (props: HeaderProps) => {
                     {isLogin ? (
                         <>
                             <IconButton className={'account'} onClick={onClickUserMenu}>
-                                <Avatar className={'logo'} alt='Remy Sharp' src='/logo/GDP_LOGO.png' />
+                                <Avatar
+                                    className={'logo'}
+                                    sx={{
+                                        width: '100%',
+                                        height: '100%',
+                                    }}
+                                    src={croppedImage}
+                                />
                             </IconButton>
                             <Menu
                                 id='basic-menu'

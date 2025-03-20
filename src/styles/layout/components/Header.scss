@@ -69,12 +69,19 @@
       display: flex;
     }
 
-    .header__social__account .account {
+    .header__social__account {
+      flex: 1;
+      display: flex;
 
-      .logo {
-        border: 0.8px solid lightgrey;
-        @extend .logo
+      .account {
+        flex:1;
+
+        .logo {
+          border: 0.8px solid lightgrey;
+          @extend .logo
+        }
       }
+
     }
 
   }
