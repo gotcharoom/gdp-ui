@@ -8,7 +8,9 @@ const Representative = () => {
     /* Hooks */
     const [searchType, setSearchType] = useState<string>('title');
     const [searchQuery, setSearchQuery] = useState<string>(''); // 검색 실행 시 적용될 검색어
-    const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
+
+    // TODO. 현재 사용하지 않는 변수명 변경 (currentPage -> _currentPage) -> 추후 사용 시 변경 필요
+    const [_currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
     const { title } = useOutletContext<{ title: string }>();
     /* Privates */
     /* Events */

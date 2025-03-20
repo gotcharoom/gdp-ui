@@ -8,9 +8,10 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 
 const BulletinBoardModify = () => {
     /* Hooks */
-    const { title } = useOutletContext<{ title: string }>;
+    const { title } = useOutletContext<{ title: string }>();
     const [bulletins, setBulletins] = useState<SampleBulletinDataType[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    // TODO. 현재 사용하지 않는 변수명 변경 (loading -> _loading) -> 추후 사용 시 변경 필요
+    const [_loading, setLoading] = useState<boolean>(true);
     const [isModifying, setIsModifying] = useState<boolean>(false);
     const [modifiedBulletin, setModifiedBulletin] = useState<SampleBulletinDataType | null>(null);
     const navigate = useNavigate();
@@ -25,7 +26,9 @@ const BulletinBoardModify = () => {
     const handleBack = () => {
         navigate(-1);
     };
-    const handleModify = (event: FormEvent, id: number) => {
+
+    // TODO. 현재 사용하지 않는 변수명 변경 (event -> _event) -> 추후 사용 시 변경 필요
+    const handleModify = (_event: FormEvent, id: number) => {
         const bulletinToModify = bulletins.find((b) => b.id === id);
         if (bulletinToModify) {
             setIsModifying(true);

@@ -34,8 +34,8 @@ const Bulletin = lazy(() => import('@pages/board/bulletin/BulletinBoard'));
 const BulletinComponent = withSuspense(Bulletin);
 const BulletinDetail = lazy(() => import('@/pages/board/bulletin/BulletinDetailPage'));
 const BulletinDetailComponent = withSuspense(BulletinDetail);
-const BulletinWrtie = lazy(() => import('@pages/board/bulletin/BulletinBoardWrite'));
-const BulletinWriteComponent = withSuspense(BulletinWrtie);
+const BulletinWrite = lazy(() => import('@pages/board/bulletin/BulletinBoardWrite'));
+const BulletinWriteComponent = withSuspense(BulletinWrite);
 const BulletinModify = lazy(() => import('@pages/board/bulletin/BulletinBoardModify'));
 const BulletinModifyComponent = withSuspense(BulletinModify);
 //CSR(고객센터)

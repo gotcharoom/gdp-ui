@@ -7,6 +7,6 @@ export default interface UserInfoForm {
     name: string;
     platforms: Record<string, string>;
     socials: Record<string, string>;
-    imageUrl: string | undefined;
-    imageCropArea: Area | undefined;
+    imageUrl?: string;
+    imageCropArea?: Area;
 }

@@ -26,9 +26,7 @@ const ProfileAvatarModal = (props: ProfileAvatarModalProps) => {
 
     /* Events */
 
-    const onCropComplete = useCallback((area: Area, pixelArea: Area) => {
-        console.log('percentage Area : ', area);
-        console.log('pixel Area : ', pixelArea);
+    const onCropComplete = useCallback((_area: Area, pixelArea: Area) => {
         setArea(pixelArea);
     }, []);
 

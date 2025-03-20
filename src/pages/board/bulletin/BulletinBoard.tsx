@@ -11,7 +11,6 @@ import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import '@styles/notice/bulletin/bulletinPage.scss';
-import { ClassNames } from '@emotion/react';
 
 const itemsPerPage = 5; // 페이지당 게시판 갯수
 
@@ -22,7 +21,8 @@ const BulletinBoard = () => {
     const [searchQuery, setSearchQuery] = useState<string>(''); // 검색 실행 시 적용될 검색어
     const [inputText, setInputText] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
-    const [loading, setLoading] = useState<boolean>(true);
+    // TODO. 현재 사용하지 않는 변수명 변경 (loading -> _loading) -> 추후 사용 시 변경 필요
+    const [_loading, setLoading] = useState<boolean>(true);
     const [debounceTimeout, setDebounceTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
     const navigate = useNavigate();
     const bulletinData: NewBulletin = {
@@ -78,7 +78,8 @@ const BulletinBoard = () => {
             handleSearch();
         }
     };
-    const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    // TODO. 현재 사용하지 않는 변수명 변경 (event -> _event) -> 추후 사용 시 변경 필요
+    const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
     };
     const handleWrite = () => {
