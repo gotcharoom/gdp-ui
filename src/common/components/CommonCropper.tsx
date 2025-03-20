@@ -8,7 +8,7 @@ interface CommonCropperProps {
     width: number; // 가로 비율
     height: number; // 세로 비율
     image: string; // 이미지
-    initialArea: Area | null; // area 비율;
+    initialArea: Area | undefined; // area 비율;
     cropShape: 'rect' | 'round';
     onCropComplete: (area: Area, pixelArea: Area) => void;
     clear: () => void;
@@ -46,9 +46,7 @@ const CommonCropper = (props: CommonCropperProps) => {
 
     /* Lifecycles */
     useEffect(() => {
-        if (props.initialArea) {
-            setInitialCroppedArea(props.initialArea);
-        }
+        setInitialCroppedArea(props.initialArea);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

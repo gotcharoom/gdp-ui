@@ -25,6 +25,22 @@ const ChangePasswordPage = lazy(() => import('@pages/auth/ChangePasswordPage.tsx
 const ChangePasswordPageComponent = withSuspense(ChangePasswordPage);
 
 // Components
+//Notices
+const Notice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
+const NoticeComponent = withSuspense(Notice);
+const NoticeDetail = lazy(() => import('@/pages/board/notice/NoticeDetailPage'));
+const NoticeDetailComponent = withSuspense(NoticeDetail);
+const Bulletin = lazy(() => import('@pages/board/bulletin/BulletinBoard'));
+const BulletinComponent = withSuspense(Bulletin);
+const BulletinDetail = lazy(() => import('@/pages/board/bulletin/BulletinDetailPage'));
+const BulletinDetailComponent = withSuspense(BulletinDetail);
+const BulletinWrtie = lazy(() => import('@pages/board/bulletin/BulletinBoardWrite'));
+const BulletinWriteComponent = withSuspense(BulletinWrtie);
+const BulletinModify = lazy(() => import('@pages/board/bulletin/BulletinBoardModify'));
+const BulletinModifyComponent = withSuspense(BulletinModify);
+//CSR(고객센터)
+const Representative = lazy(() => import('@/pages/csr/Representative'));
+const RepresentativeComponent = withSuspense(Representative);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -92,6 +108,72 @@ const UserRoutes: RouteObject[] = [
                 ],
             },
             {
+                path: 'board',
+                handle: { title: '게시판', showMenu: true },
+                children: [
+                    {
+                        path: 'notice',
+                        element: <CommonChildrenLayout />,
+                        handle: {
+                            title: '공지사항',
+                            icon: 'more',
+                            showMenu: true,
+                        },
+                        children: [
+                            { index: true, element: <NoticeComponent /> },
+
+                            {
+                                path: ':id',
+                                element: <NoticeDetailComponent />,
+                                handle: {
+                                    title: '공지사항',
+                                    icon: 'more',
+                                },
+                            },
+                        ],
+                    },
+
+                    {
+                        path: 'bulletin',
+                        element: <CommonChildrenLayout />,
+                        handle: {
+                            title: '자유게시판',
+                            icon: 'more',
+                            showMenu: true,
+                        },
+                        children: [
+                            { index: true, element: <BulletinComponent />, handle: { showMenu: true } },
+
+                            {
+                                path: ':id',
+                                element: <BulletinDetailComponent />,
+                                handle: {
+                                    title: '자유게시판',
+                                    icon: 'more',
+                                },
+                                children: [
+                                    {
+                                        path: 'modify',
+                                        element: <BulletinModifyComponent />,
+                                        handle: {
+                                            title: '수정페이지',
+                                        },
+                                    },
+                                ],
+                            },
+                            {
+                                path: 'write',
+                                element: <BulletinWriteComponent />,
+                                handle: {
+                                    title: '작성페이지',
+                                    icon: 'more',
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
                 path: 'user',
                 children: [
                     {
@@ -105,6 +187,14 @@ const UserRoutes: RouteObject[] = [
                         handle: { title: '비밀번호 변경' },
                     },
                 ],
+            },
+            {
+                path: 'CSR',
+                handle: {
+                    title: '고객센터',
+                    showMenu: true,
+                },
+                element: <RepresentativeComponent />,
             },
         ],
     },
