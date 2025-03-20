@@ -78,6 +78,8 @@ const UserInfoPage = () => {
             const userInfo: UserInfoForm = {
                 ...initData,
                 ...data,
+                platforms: data.platforms ?? {},
+                socials: data.socials ?? {},
                 imageUrl: data.imageUrl ?? undefined,
                 imageCropArea: data.imageCropArea ?? undefined,
             };
@@ -210,6 +212,10 @@ const UserInfoPage = () => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        console.log('폼 유효성 검사 결과:', method.formState.errors);
+    }, [method.formState]);
 
     return (
         <div className={'user-info-page'}>
