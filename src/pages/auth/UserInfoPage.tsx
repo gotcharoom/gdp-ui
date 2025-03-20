@@ -14,10 +14,8 @@ import usePageMode from '@/common/hooks/usePageMode.ts';
 import { getUserDetails, putUserDetails } from '@apis/auth/userInfo.ts';
 import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
 import { useAlert } from '@/common/hooks/useAlert.ts';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
-
-import '@styles/pages/auth/UserInfoPage.scss';
 import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import ProfileAvatarModal from '@pages/auth/components/ProfileAvatarModal.tsx';
@@ -25,6 +23,10 @@ import imageCropUtil from '@/common/utils/imageCropUtil.ts';
 import { Area } from 'react-easy-crop';
 import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { resetAvatar } from '@/common/utils/avatarUtil.ts';
+
+import '@styles/pages/auth/UserInfoPage.scss';
+import { setUser } from '@stores/slices/userSlice.ts';
+import { getLoginUserInfo } from '@apis/auth/login.ts';
 
 const initData: UserInfoForm = {
     id: '',
@@ -51,6 +53,7 @@ const UserInfoPage = () => {
         resolver: yupResolver(userInfoSchema),
         defaultValues: userData,
     });
+    const dispatch = useDispatch();
 
     const { sudoNavigate } = useNavigationGuard();
 
@@ -71,6 +74,11 @@ const UserInfoPage = () => {
         return 'avatar_section__avatar--read';
     }, [pageMode]);
 
+    const updateUserState = useCallback(async () => {
+        const updatedUserInfo = await getLoginUserInfo();
+        dispatch(setUser(updatedUserInfo)); // Redux 상태 업데이트
+    }, [dispatch]);
+
     const getUserInfo = useCallback(async () => {
         try {
             const data = await getUserDetails();
@@ -78,6 +86,8 @@ const UserInfoPage = () => {
             const userInfo: UserInfoForm = {
                 ...initData,
                 ...data,
+                platforms: data.platforms ?? {},
+                socials: data.socials ?? {},
                 imageUrl: data.imageUrl ?? undefined,
                 imageCropArea: data.imageCropArea ?? undefined,
             };
@@ -154,6 +164,7 @@ const UserInfoPage = () => {
                 openAlert(successAlert);
 
                 resetPageMode();
+                void updateUserState();
                 void getUserInfo();
             } catch (e) {
                 console.log(e);
@@ -164,7 +175,7 @@ const UserInfoPage = () => {
                 openAlert(errorAlert);
             }
         },
-        [getUserInfo, openAlert, resetPageMode],
+        [getUserInfo, openAlert, resetPageMode, updateUserState],
     );
 
     const onCloseModal = useCallback(() => {
@@ -210,6 +221,10 @@ const UserInfoPage = () => {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        console.log('폼 유효성 검사 결과:', method.formState.errors);
+    }, [method.formState]);
 
     return (
         <div className={'user-info-page'}>
