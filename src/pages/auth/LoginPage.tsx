@@ -11,7 +11,7 @@ import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 import { setAuth } from '@stores/slices/authSlice.ts';
-import Provider from '@/common/constants/Provider.ts';
+import SocialType from '@/common/constants/SocialType.ts';
 import ControlCheckbox from '@/common/components/ControlCheckbox.tsx';
 import CommonPage from '@/common/components/CommonPage.tsx';
 import FindIdModal from '@pages/auth/components/FindIdModal.tsx';
@@ -113,7 +113,7 @@ const LoginPage = () => {
     );
 
     const onClickSocialLogin = useCallback(
-        async (provider: Provider) => {
+        async (provider: SocialType) => {
             const isRememberMe = method.getValues().rememberMe;
 
             await postRequestRememberMe(isRememberMe);
@@ -167,7 +167,7 @@ const LoginPage = () => {
                         <Button
                             className={'social__container--google'}
                             variant='contained'
-                            onClick={() => onClickSocialLogin(Provider.GOOGLE)}
+                            onClick={() => onClickSocialLogin(SocialType.GOOGLE)}
                         >
                             <div className={'google__icon__container'}>
                                 <img className={'google__icon'} alt={'google__icon'} src={'/logo/GDP_SOCIAL_LOGIN_GOOGLE.png'} />
@@ -178,7 +178,7 @@ const LoginPage = () => {
                         <Button
                             className={'social__container--kakao'}
                             variant='contained'
-                            onClick={() => onClickSocialLogin(Provider.KAKAO)}
+                            onClick={() => onClickSocialLogin(SocialType.KAKAO)}
                         >
                             <div className={'kakao__icon__container'}>
                                 <img className={'kakao__icon'} alt={'kakao__icon'} src={'/logo/GDP_SOCIAL_LOGIN_KAKAO.png'} />
@@ -189,7 +189,7 @@ const LoginPage = () => {
                         <Button
                             className={'social__container--naver'}
                             variant='contained'
-                            onClick={() => onClickSocialLogin(Provider.NAVER)}
+                            onClick={() => onClickSocialLogin(SocialType.NAVER)}
                         >
                             <div className={'naver__icon__container'}>
                                 <img className={'naver__icon'} alt={'naver__icon'} src={'/logo/GDP_SOCIAL_LOGIN_NAVER.png'} />

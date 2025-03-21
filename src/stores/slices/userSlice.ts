@@ -3,6 +3,7 @@ import UserState from '@/types/pages/auth/UserState.type.ts';
 
 const initialState: UserState = {
     id: '',
+    socialType: undefined,
     email: '',
     name: '',
     nickname: '',
@@ -18,6 +19,7 @@ const userSlice = createSlice({
         },
         resetUser: (state) => {
             state.id = '';
+            state.socialType = undefined;
             state.email = '';
             state.name = '';
             state.nickname = '';

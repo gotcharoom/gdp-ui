@@ -5,7 +5,7 @@ import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import { store } from '@stores/store.ts';
 import { resetUser } from '@stores/slices/userSlice.ts';
 import { removeAuth } from '@stores/slices/authSlice.ts';
-import Provider from '@/common/constants/Provider.ts';
+import SocialType from '@/common/constants/SocialType.ts';
 import RememberMeRequestForm from '@/types/pages/auth/RememberMeRequestForm.type.ts';
 import { allowForceLogout, preventForceLogout } from '@/common/hooks/useNavigationGuard.ts';
 import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
@@ -47,7 +47,7 @@ const postTokenCheck = async () => {
     return response.data;
 };
 
-const requestSocialLoginUri = (provider: Provider) => {
+const requestSocialLoginUri = (provider: SocialType) => {
     return urls.socialLogin(provider);
 };
 

@@ -4,10 +4,12 @@ import UserInfoForm from '@/types/pages/auth/UserInfoForm.ts';
 import { UserInfoUpdateRequest } from '@/types/apis/auth/UserInfoUpdateRequest.type.ts';
 import { urlToFile } from '@/common/utils/imageConvertUtil.ts';
 import { objectToFormData } from '@/common/utils/fileConvertUtil.ts';
+import ChangePasswordForm from '@/types/pages/auth/ChangePasswordForm.ts';
 
 const urls = {
     getUserDetails: '/api/v1/login-user/details',
     putUserDetails: '/api/v1/login-user/details',
+    changePassword: '/api/v1/login-user/password',
 };
 
 const getUserDetails = async (): Promise<UserInfoResponse> => {
@@ -33,11 +35,13 @@ const putUserDetails = async (data: UserInfoForm) => {
 
     const formData = objectToFormData<UserInfoUpdateRequest>(request);
 
-    console.log(Array.from(formData.entries()));
-
     return await putData<void>(urls.putUserDetails, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
     });
 };
 
-export { getUserDetails, putUserDetails };
+const putUserPassword = async (data: ChangePasswordForm) => {
+    return await putData<void>(urls.changePassword, data);
+};
+
+export { getUserDetails, putUserDetails, putUserPassword };
