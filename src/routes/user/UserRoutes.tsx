@@ -146,17 +146,20 @@ const UserRoutes: RouteObject[] = [
 
                             {
                                 path: ':id',
-                                element: <BulletinDetailComponent />,
+                                element: <CommonChildrenLayout />,
                                 handle: {
                                     title: '자유게시판',
                                     icon: 'more',
                                 },
+
                                 children: [
+                                    { index: true, element: <BulletinDetailComponent /> },
                                     {
                                         path: 'modify',
                                         element: <BulletinModifyComponent />,
                                         handle: {
                                             title: '수정페이지',
+                                            icon: 'more',
                                         },
                                     },
                                 ],
