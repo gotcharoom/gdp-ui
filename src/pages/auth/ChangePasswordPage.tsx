@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 
 import '@styles/pages/auth/ChangePasswordPage.scss';
+import { putUserPassword } from '@apis/auth/userInfo.ts';
+import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 
 const ChangePasswordPage = () => {
     /* Hooks */
@@ -38,9 +40,25 @@ const ChangePasswordPage = () => {
 
     /* Events */
     const onSubmit = useCallback(
-        async (forms: ChangePasswordForm) => {
+        async (form: ChangePasswordForm) => {
             try {
-                console.log(forms);
+                const response = await putUserPassword(form);
+
+                if (response.code !== ResponseCode.SUCCESS.code) {
+                    const failAlert: AlertConfigProps = {
+                        severity: 'error',
+                        contents: response.message,
+                    };
+                    openAlert(failAlert);
+                    return;
+                }
+
+                const successAlert: AlertConfigProps = {
+                    severity: 'success',
+                    contents: '비밀번호를 변경했습니다',
+                };
+                openAlert(successAlert);
+                method.reset();
             } catch (e) {
                 console.log(e);
                 const errorAlert: AlertConfigProps = {
@@ -50,7 +68,7 @@ const ChangePasswordPage = () => {
                 openAlert(errorAlert);
             }
         },
-        [openAlert],
+        [method, openAlert],
     );
 
     const onClickCancel = useCallback(() => {
@@ -75,15 +93,30 @@ const ChangePasswordPage = () => {
                     <div className={'change-password-page__input-section'}>
                         <div className={'input-section__input-container'}>
                             <InputLabel className={'input-container__label'}>비밀번호</InputLabel>
-                            <ControlTextField className={'input-container__text-field'} method={method} field={'prevPassword'} />
+                            <ControlTextField
+                                className={'input-container__text-field'}
+                                type='password'
+                                method={method}
+                                field={'prevPassword'}
+                            />
                         </div>
                         <div className={'input-section__input-container'}>
                             <InputLabel className={'input-container__label'}>변경 비밀번호</InputLabel>
-                            <ControlTextField className={'input-container__text-field'} method={method} field={'newPassword'} />
+                            <ControlTextField
+                                className={'input-container__text-field'}
+                                type='password'
+                                method={method}
+                                field={'newPassword'}
+                            />
                         </div>
                         <div className={'input-section__input-container'}>
                             <InputLabel className={'input-container__label'}>변경 비밀번호 확인</InputLabel>
-                            <ControlTextField className={'input-container__text-field'} method={method} field={'newPasswordConfirm'} />
+                            <ControlTextField
+                                className={'input-container__text-field'}
+                                type='password'
+                                method={method}
+                                field={'newPasswordConfirm'}
+                            />
                         </div>
                     </div>
                     <div className={'change-password-page__button-section'}>

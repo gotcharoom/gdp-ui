@@ -3,6 +3,8 @@ import { RouteObject } from 'react-router-dom';
 import { lazy } from 'react';
 import withSuspense from '@/common/utils/withSuspense.tsx';
 import CommonChildrenLayout from '@/common/layout/CommonChildrenLayout.tsx';
+import withProtect from '@/common/utils/withProtect.tsx';
+import SocialType from '@/common/constants/SocialType.ts';
 
 // Sample Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
@@ -23,6 +25,7 @@ const UserInfoPage = lazy(() => import('@pages/auth/UserInfoPage.tsx'));
 const UserInfoPageComponent = withSuspense(UserInfoPage);
 const ChangePasswordPage = lazy(() => import('@pages/auth/ChangePasswordPage.tsx'));
 const ChangePasswordPageComponent = withSuspense(ChangePasswordPage);
+const ProtectedChangePasswordPageComponent = withProtect(ChangePasswordPageComponent, { allowSocialType: SocialType.GDP });
 
 // Components
 //Notices
@@ -186,7 +189,7 @@ const UserRoutes: RouteObject[] = [
                     },
                     {
                         path: 'change-password',
-                        element: <ChangePasswordPageComponent />,
+                        element: <ProtectedChangePasswordPageComponent />,
                         handle: { title: '비밀번호 변경' },
                     },
                 ],
