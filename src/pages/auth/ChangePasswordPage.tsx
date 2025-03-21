@@ -68,7 +68,7 @@ const ChangePasswordPage = () => {
                 openAlert(errorAlert);
             }
         },
-        [openAlert],
+        [method, openAlert],
     );
 
     const onClickCancel = useCallback(() => {
