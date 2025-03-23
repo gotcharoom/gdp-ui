@@ -202,6 +202,18 @@ const UserInfoPage = () => {
         openModal(config);
     }, [method, onCloseModal, openModal, pageMode, saveImages]);
 
+    const onClickManagePlatform = useCallback(() => {
+        const config: CommonModalProps = {
+            title: 'Avatar 변경',
+            open: true,
+            width: '700px',
+            height: '500px',
+            contents: <ProfileAvatarModal close={onCloseModal} save={saveImages} image={image} area={area} />,
+        };
+
+        openModal(config);
+    }, []);
+
     /* Lifecycles */
     useEffect(() => {
         if (!isAuthenticated) {
@@ -316,19 +328,39 @@ const UserInfoPage = () => {
                     )}
                     <div className={'user-info-page__button-section'}>
                         {pageMode == PageMode.READ && (
-                            <Button className={'button-section__button'} variant='contained' onClick={() => onChangeMode(PageMode.MODIFY)}>
-                                수정
-                            </Button>
+                            <>
+                                <div className={'button-section__connection-container'}>
+                                    <Button
+                                        className={'connection-container__platform-button'}
+                                        variant='contained'
+                                        onClick={onClickManagePlatform}
+                                    >
+                                        플랫폼 관리
+                                    </Button>
+                                    <Button className={'connection-container__social-button'} variant='contained'>
+                                        소셜 관리
+                                    </Button>
+                                </div>
+                                <div className={'button-section__modify-container'}>
+                                    <Button
+                                        className={'.modify_container__modify-button'}
+                                        variant='contained'
+                                        onClick={() => onChangeMode(PageMode.MODIFY)}
+                                    >
+                                        수정
+                                    </Button>
+                                </div>
+                            </>
                         )}
                         {pageMode == PageMode.MODIFY && (
-                            <>
+                            <div className={'button-section__modify-container'}>
                                 <Button className={'button-section__button'} variant='contained' type='submit'>
                                     저장
                                 </Button>
                                 <Button className={'button-section__button'} variant='outlined' onClick={onClickCancel}>
                                     취소
                                 </Button>
-                            </>
+                            </div>
                         )}
                     </div>
                 </form>
