@@ -17,12 +17,19 @@ export const userInfoSchema = yup
             .array()
             .of(
                 yup.object({
-                    id: yup.string().required(),
-                    name: yup.string().required(),
+                    userPlatformId: yup.number().required(),
+                    platformId: yup.number().required(),
+                    platformName: yup.string().required(),
+
+                    connected: yup.boolean().required(),
+                    connectUrl: yup.string().url().required(),
+
+                    platformUserId: yup.string().required(),
+                    platformUserSecret: yup.string().required(),
                 }),
             )
             .default([])
-            .required('platforms는 필수입니다.'),
+            .required(),
         socials: yup
             .object()
             .shape({})
