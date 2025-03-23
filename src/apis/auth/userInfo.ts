@@ -1,6 +1,6 @@
 import { getData, putData } from '@/common/utils/axiosUtils.ts';
 import { UserInfoResponse } from '@/types/apis/auth/UserInfoResponse.type.ts';
-import UserInfoForm from '@/types/pages/auth/UserInfoForm.ts';
+import UserInfoForm from '@/types/pages/auth/UserInfoForm.type.ts';
 import { UserInfoUpdateRequest } from '@/types/apis/auth/UserInfoUpdateRequest.type.ts';
 import { urlToFile } from '@/common/utils/imageConvertUtil.ts';
 import { objectToFormData } from '@/common/utils/fileConvertUtil.ts';
@@ -10,6 +10,7 @@ const urls = {
     getUserDetails: '/api/v1/login-user/details',
     putUserDetails: '/api/v1/login-user/details',
     changePassword: '/api/v1/login-user/password',
+    clearConnectionCookie: '/api/v1/connect/connection-cookie/clear',
 };
 
 const getUserDetails = async (): Promise<UserInfoResponse> => {
@@ -44,4 +45,8 @@ const putUserPassword = async (data: ChangePasswordForm) => {
     return await putData<void>(urls.changePassword, data);
 };
 
-export { getUserDetails, putUserDetails, putUserPassword };
+const putClearCookie = async () => {
+    await putData<void>(urls.clearConnectionCookie);
+};
+
+export { getUserDetails, putUserDetails, putUserPassword, putClearCookie };

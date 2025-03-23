@@ -5,7 +5,7 @@ import useNavigationGuard from '@/common/hooks/useNavigationGuard.ts';
 import { useGlobalForm } from '@/common/hooks/useGlobalForm.ts';
 import FormName from '@/common/constants/FormName.ts';
 import { signUpSchema } from '@/validations/auth/signUpSchema.ts';
-import SignUpRequestForm from '@/types/pages/auth/SignUpRequestForm.ts';
+import SignUpRequestForm from '@/types/pages/auth/SignUpRequestForm.type.ts';
 import CommonPage from '@/common/components/CommonPage.tsx';
 import ControlTextField from '@/common/components/ControlTextField.tsx';
 

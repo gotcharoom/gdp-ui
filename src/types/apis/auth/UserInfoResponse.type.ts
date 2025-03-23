@@ -1,4 +1,5 @@
 import { Area } from 'react-easy-crop';
+import Platform from '@/types/pages/auth/Platform.type.ts';
 
 export interface UserInfoResponse {
     id: string;
@@ -7,6 +8,6 @@ export interface UserInfoResponse {
     name: string;
     imageUrl: string | null;
     imageCropArea: Area | null;
-    platforms: Record<string, string>;
+    platforms: Platform[];
     socials: Record<string, string>;
 }

@@ -14,10 +14,15 @@ export const userInfoSchema = yup
             .required(),
         name: yup.string().required(),
         platforms: yup
-            .object()
-            .shape({})
-            .default({})
-            .test('is-valid-object', 'platforms 필드는 키-값 쌍이어야 합니다.', (value) => typeof value === 'object' && value !== null),
+            .array()
+            .of(
+                yup.object({
+                    id: yup.string().required(),
+                    name: yup.string().required(),
+                }),
+            )
+            .default([])
+            .required('platforms는 필수입니다.'),
         socials: yup
             .object()
             .shape({})

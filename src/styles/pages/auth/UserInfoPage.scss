@@ -53,9 +53,34 @@
     display: flex;
     height: $paper__button-section__height;
     flex-shrink: 0;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
-    gap: $paper__button-section__button__gap;
+
+
+    .button-section__connection-container {
+      display: flex;
+      gap: $paper__button-section__button__gap;
+
+      .connection-container__platform-button {
+        background-color: #F57C00;
+        color: white;
+      }
+
+      .connection-container__social-button {
+        background-color: #7E57C2;
+        color: white;
+      }
+    }
+
+    .button-section__modify-container {
+      display: flex;
+      margin-left: auto;
+      gap: $paper__button-section__button__gap;
+
+      .modify_container__modify-button {
+
+      }
+    }
   }
 }
 
@@ -81,6 +106,32 @@
       min-width: $input-container__min-width;
       max-width: $input-container__max-width;
       margin-bottom: calc($text-field__input__helpText__size)
+    }
+
+    .input-container__contents {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      padding: 10px 14px;
+
+      .contents__platform-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: start;
+        flex-direction: row;
+        gap: 7%;
+
+        .platform-container__platform-name {
+          width: 30%;
+        }
+
+        .platform-container__platform-user-id {
+          flex: 1;
+        }
+      }
     }
   }
 }
