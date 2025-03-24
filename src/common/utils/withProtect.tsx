@@ -23,7 +23,7 @@ const withProtect = <P extends object>(Component: ComponentType<P>, options: Wit
             return <Navigate to='/login' state={{ from: location }} replace />;
         }
 
-        if (allowSocialType) {
+        if (allowSocialType && socialType) {
             const allowed = Array.isArray(allowSocialType) ? allowSocialType.includes(socialType) : allowSocialType === socialType;
 
             if (!allowed) {

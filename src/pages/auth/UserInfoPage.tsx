@@ -8,10 +8,10 @@ import FormName from '@/common/constants/FormName.ts';
 import { yupResolver } from '@hookform/resolvers/yup';
 import PageMode from '@/common/constants/PageMode.ts';
 import { userInfoSchema } from '@/validations/auth/userInfoSchema.ts';
-import UserInfoForm from '@/types/pages/auth/UserInfoForm.ts';
+import UserInfoForm from '@/types/pages/auth/UserInfoForm.type.ts';
 import useNavigationGuard from '@/common/hooks/useNavigationGuard.ts';
 import usePageMode from '@/common/hooks/usePageMode.ts';
-import { getUserDetails, putUserDetails } from '@apis/auth/userInfo.ts';
+import { getUserDetails, putClearCookie, putUserDetails } from '@apis/auth/userInfo.ts';
 import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
 import { useAlert } from '@/common/hooks/useAlert.ts';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,13 +27,14 @@ import { resetAvatar } from '@/common/utils/avatarUtil.ts';
 import '@styles/pages/auth/UserInfoPage.scss';
 import { setUser } from '@stores/slices/userSlice.ts';
 import { getLoginUserInfo } from '@apis/auth/login.ts';
+import ManagePlatformModal from '@pages/auth/components/ManagePlatformModal.tsx';
 
 const initData: UserInfoForm = {
     id: '',
     email: '',
     nickname: '',
     name: '',
-    platforms: {},
+    platforms: [],
     socials: {},
     imageUrl: undefined,
     imageCropArea: undefined,
@@ -86,7 +87,7 @@ const UserInfoPage = () => {
             const userInfo: UserInfoForm = {
                 ...initData,
                 ...data,
-                platforms: data.platforms ?? {},
+                platforms: data.platforms ?? [],
                 socials: data.socials ?? {},
                 imageUrl: data.imageUrl ?? undefined,
                 imageCropArea: data.imageCropArea ?? undefined,
@@ -129,6 +130,15 @@ const UserInfoPage = () => {
         },
         [closeModal, method],
     );
+
+    const connectionCookie = useMemo(() => {
+        const match = document.cookie.match(new RegExp('(^| )platform_connection=([^;]+)'));
+        return match ? match[2] : null;
+    }, []);
+
+    const putClearConnectionCookie = useCallback(async () => {
+        await putClearCookie();
+    }, []);
 
     /* Events */
     const onChangeMode = useCallback(
@@ -203,16 +213,18 @@ const UserInfoPage = () => {
     }, [method, onCloseModal, openModal, pageMode, saveImages]);
 
     const onClickManagePlatform = useCallback(() => {
+        const platforms = method.getValues().platforms;
+
         const config: CommonModalProps = {
-            title: 'Avatar 변경',
+            title: '플랫폼 관리',
             open: true,
             width: '700px',
             height: '500px',
-            contents: <ProfileAvatarModal close={onCloseModal} save={saveImages} image={image} area={area} />,
+            contents: <ManagePlatformModal platforms={platforms} />,
         };
 
         openModal(config);
-    }, []);
+    }, [method, openModal]);
 
     /* Lifecycles */
     useEffect(() => {
@@ -237,6 +249,18 @@ const UserInfoPage = () => {
     useEffect(() => {
         console.log('폼 유효성 검사 결과:', method.formState.errors);
     }, [method.formState]);
+
+    useEffect(() => {
+        if (connectionCookie !== null && connectionCookie == 'true') {
+            const successAlert: AlertConfigProps = {
+                severity: 'success',
+                contents: '연동되었습니다',
+            };
+            openAlert(successAlert);
+            void putClearConnectionCookie();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={'user-info-page'}>
@@ -307,12 +331,32 @@ const UserInfoPage = () => {
                             <div className={'user-info-page__sync-section'}>
                                 <div className={'input-section__input-container'}>
                                     <InputLabel className={'input-container__label'}>플랫폼 연동</InputLabel>
-                                    <ControlTextField
-                                        className={'input-container__text-field'}
-                                        method={method}
-                                        field={'id'}
-                                        readOnly={isReadOnly}
-                                    />
+                                    <div className={'input-container__contents'}>
+                                        {method
+                                            .getValues()
+                                            .platforms.filter((platform) => platform.connected)
+                                            .map((platform) => {
+                                                return (
+                                                    <div
+                                                        className={'contents__platform-container'}
+                                                        key={'platform-container' + platform.platformId}
+                                                    >
+                                                        <div
+                                                            className={'platform-container__platform-name'}
+                                                            key={'platform-name' + platform.platformId}
+                                                        >
+                                                            {platform.platformName}
+                                                        </div>
+                                                        <div
+                                                            className={'platform-container__platform-user-id'}
+                                                            key={'platform-user-id' + platform.platformId}
+                                                        >
+                                                            {platform.platformUserId}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                    </div>
                                 </div>
                                 <div className={'input-section__input-container'}>
                                     <InputLabel className={'input-container__label'}>소셜 연동</InputLabel>

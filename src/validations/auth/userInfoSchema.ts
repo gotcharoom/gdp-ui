@@ -14,10 +14,22 @@ export const userInfoSchema = yup
             .required(),
         name: yup.string().required(),
         platforms: yup
-            .object()
-            .shape({})
-            .default({})
-            .test('is-valid-object', 'platforms 필드는 키-값 쌍이어야 합니다.', (value) => typeof value === 'object' && value !== null),
+            .array()
+            .of(
+                yup.object({
+                    userPlatformId: yup.number().required(),
+                    platformId: yup.number().required(),
+                    platformName: yup.string().required(),
+
+                    connected: yup.boolean().required(),
+                    connectUrl: yup.string().url().required(),
+
+                    platformUserId: yup.string().required(),
+                    platformUserSecret: yup.string().required(),
+                }),
+            )
+            .default([])
+            .required(),
         socials: yup
             .object()
             .shape({})

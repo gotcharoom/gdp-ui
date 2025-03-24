@@ -1,0 +1,39 @@
+.manage-platform-modal {
+
+  .manage-platform-modal__accordion {
+
+    .accordion__summary {
+      text-transform: uppercase;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .accordion__summary__title {
+        flex: 1;
+        font-family: 'Roboto Mono';
+      }
+    }
+
+    .accordion__details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .accordion__details__contents {
+        flex: 1;
+        display: flex;
+
+
+        .accordion__details__contents__title {
+          color: #555;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+.connected-title {
+  color: #2E7D32;
+}
