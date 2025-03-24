@@ -35,7 +35,6 @@ const CommonReply = ({ comments, addComment, _users, removeComment, currentUser 
             addComment({ user: currentUser.userName, reply: newComment });
             setNewComment('');
         }
-        console.log(currentUser.userName);
     };
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setNewComment(event.target.value);

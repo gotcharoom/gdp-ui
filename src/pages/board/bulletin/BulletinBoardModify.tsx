@@ -2,19 +2,21 @@ import { getBulleinList } from '@/apis/notice/bulletin';
 import CommonPage from '@/common/components/CommonPage';
 import { SampleBulletinDataType } from '@/mocks/datas/sampleBulletinData';
 import NewBulletin from '@/types/pages/notice/NewBulletin.type';
-import { Button, TextField, Typography } from '@mui/material';
-import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { Button, TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 
 const BulletinBoardModify = () => {
     /* Hooks */
     const { title } = useOutletContext<{ title: string }>();
     const [_bulletins, setBulletins] = useState<SampleBulletinDataType[]>([]);
     const navigate = useNavigate();
+    const location = useLocation();
+    const initialBulletin = location.state?.bulletin;
     // TODO. 현재 사용하지 않는 변수명 변경 (loading -> _loading) -> 추후 사용 시 변경 필요
     const [_loading, setLoading] = useState<boolean>(true);
     const [_isModifying, setIsModifying] = useState<number | null>(null);
-    const [modifiedBulletin, setModifiedBulletin] = useState<SampleBulletinDataType | null>(null);
+    const [modifiedBulletin, setModifiedBulletin] = useState(initialBulletin);
     const bulletinData: NewBulletin = {
         search: '게시판',
         pagePerItems: 10,
@@ -24,30 +26,14 @@ const BulletinBoardModify = () => {
 
     /* Events */
 
-    // TODO. 현재 사용하지 않는 변수명 변경 (event -> _event) -> 추후 사용 시 변경 필요
-    // const handleModify = (_event: FormEvent, id: number) => {
-    //     // 해당 ID의 게시글 찾기
-    //     const bulletinToModify = bulletins.find((b) => b.id === id);
-
-    //     // 게시글이 존재하고, 해당 게시글의 writer가 users 배열에 있는지 확인
-    //     if (bulletinToModify) {
-    //         const isWriter = bulletinToModify.users.some((user) => user.userName === bulletinToModify.writer);
-
-    //         if (isWriter) {
-    //             setIsModifying(id);
-    //             setModifiedBulletin({ ...bulletinToModify });
-    //         } else {
-    //             alert('수정 권한이 없습니다.');
-    //         }
-    //     }
-    // };
     const handleSave = () => {
         if (!modifiedBulletin) return;
 
         setBulletins((prev) => prev.map((b) => (b.id === modifiedBulletin.id ? { ...b, ...modifiedBulletin } : b)));
-
+        console.log('수정된 내용', modifiedBulletin);
         setIsModifying(null); // ⭐ 수정 완료 후 모드 해제
         setModifiedBulletin(null);
+        navigate(-1);
     };
     const handleBack = () => {
         navigate(-1);

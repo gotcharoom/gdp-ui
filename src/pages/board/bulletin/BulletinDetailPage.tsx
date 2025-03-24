@@ -55,7 +55,7 @@ const BulletinDetailPage = () => {
         setDown(down + 1);
     };
     const handleModify = () => {
-        navigate(`/board/bulletin/${id}/modify`);
+        navigate(`/board/bulletin/${id}/modify`, { state: { bulletin } });
     };
 
     /* Lifecycle */
@@ -86,7 +86,7 @@ const BulletinDetailPage = () => {
             </Typography>
         );
     }
-    const currentUser = bulletin.users;
+    const currentUser = bulletin.users.find((user) => user.userName === bulletin.writer) || { userId: 0, userName: '익명' };
 
     return (
         <CommonPage width={'100%'} height={'100%'} title=''>
