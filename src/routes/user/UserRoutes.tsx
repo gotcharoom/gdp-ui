@@ -44,6 +44,8 @@ const BulletinModifyComponent = withSuspense(BulletinModify);
 //CSR(고객센터)
 const Representative = lazy(() => import('@/pages/csr/Representative'));
 const RepresentativeComponent = withSuspense(Representative);
+const CsrFaqPage = lazy(() => import('@/pages/csr/CsrFaqPage'));
+const CsrFaqPageComponent = withSuspense(CsrFaqPage);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -195,12 +197,20 @@ const UserRoutes: RouteObject[] = [
                 ],
             },
             {
-                path: 'CSR',
+                path: 'Csr',
                 handle: {
                     title: '고객센터',
                     showMenu: true,
                 },
-                element: <RepresentativeComponent />,
+
+                children: [
+                    { index: true, element: <RepresentativeComponent />, handle: { showMenu: true } },
+                    {
+                        path: 'faq',
+                        element: <CsrFaqPageComponent />,
+                        handle: { title: '비밀번호 변경' },
+                    },
+                ],
             },
         ],
     },

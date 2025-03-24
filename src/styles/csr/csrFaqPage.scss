@@ -1,0 +1,9 @@
+.csr-faq-Page {
+    flex:1;
+    display: flex;
+
+    .csr-faq-Page__button{
+        display:flex;
+        gap: 20px;
+    }
+}
