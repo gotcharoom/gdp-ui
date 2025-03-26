@@ -1,0 +1,33 @@
+@use '../../../constants/commonConstants' as  *;
+@use '../../../constants/loginConstants' as  *;
+
+.find-id-modal {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .find-id-modal__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $modal__info__height;
+    margin-bottom: 5%;
+  }
+
+  .find-id-modal__email {
+    @extend .find-id-modal__text-field;
+  }
+
+  .find-id-modal__button__submit {
+    width: 100%;
+    height: $text-field__input__height--medium;
+  }
+}
+
+.find-id-modal__text-field {
+  flex: 1;
+}
+

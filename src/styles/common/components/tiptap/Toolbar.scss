@@ -1,0 +1,46 @@
+@use '../../../constants/commonConstants' as *;
+.toolbar {
+  flex: 1;
+  min-width: $editor__min__width;
+  height: $editor__toolbar__height;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  border-bottom: 1px solid $editor__common__color;
+
+  .toolbar__heading-container {
+    @extend .toolbar__container__common;
+  }
+
+  .toolbar__format-container {
+    @extend .toolbar__container__common;
+  }
+
+  .toolbar__list-container {
+    @extend .toolbar__container__common;
+  }
+
+  .toolbar__divider {
+    width: 1px;
+    height: $editor__toolbar__divider__height;
+    background-color: $editor__common__color;
+  }
+}
+
+.toolbar__container__common {
+  display: flex;
+
+  .toolbar__container__button {
+    border: none;
+    background-color: transparent;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.active {
+      background-color: $editor__toolbar__active__color
+    }
+  }
+}

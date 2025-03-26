@@ -2,7 +2,8 @@ import { useOutletContext } from 'react-router-dom';
 import { postSample } from '@apis/sample/sample.ts';
 import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import { useState } from 'react';
-import { Alert, AlertColor, Button, Snackbar } from '@mui/material';
+import { Alert, AlertColor, Button, CircularProgress, Snackbar } from '@mui/material';
+import { AxiosError } from 'axios';
 const SampleUserMain = () => {
     const { title } = useOutletContext<{ title: string }>();
     const [loading, setLoading] = useState(false);
@@ -12,17 +13,19 @@ const SampleUserMain = () => {
 
     const handleClick = async () => {
         try {
-            const response: ApiResponse = await postSample();
+            const response: ApiResponse<unknown> = await postSample();
 
             if (response.status === 200) {
-                setAlertMessage('요청 성공! 🎉');
+                setAlertMessage('요청 성공!');
                 setAlertSeverity('success');
             } else {
-                setAlertMessage('예상과 다른 응답이 도착했습니다. 🤔');
+                setAlertMessage('예상과 다른 응답이 도착했습니다.');
                 setAlertSeverity('warning');
             }
         } catch (error) {
-            setAlertMessage('요청 실패! 😢\n' + (error.response?.data?.message || error.message));
+            const err = error as AxiosError<ApiResponse<void>>;
+
+            setAlertMessage('요청 실패! \n' + (err.response?.data?.message || err.message));
             setAlertSeverity('error');
         } finally {
             setLoading(false);

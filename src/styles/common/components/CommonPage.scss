@@ -1,0 +1,35 @@
+@use '../../global/variables' as *;
+@use '../../constants/commonConstants' as *;
+
+.common-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: $paper__padding;
+
+  .common-page__title {
+    width: 100%;
+    height: $paper__header__size;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-weight: $title--font--weight;
+  }
+
+  .common-page__contents {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: $paper__content__height__padding $paper__content__width__padding--large;
+
+    form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

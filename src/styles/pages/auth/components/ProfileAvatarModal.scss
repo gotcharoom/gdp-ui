@@ -1,0 +1,24 @@
+@use '../../../constants/commonConstants' as *;
+
+.profile-avatar-modal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .profile-avatar-modal__image-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile-avatar-modal__button-section {
+    display: flex;
+    height: $paper__button-section__height;
+    flex-shrink: 0;
+    justify-content: end;
+    align-items: center;
+    gap: $paper__button-section__button__gap;
+  }
+}

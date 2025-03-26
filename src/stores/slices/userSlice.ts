@@ -1,21 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import UserState from '@/types/pages/login/UserState.type.ts';
+import UserState from '@/types/pages/auth/UserState.type.ts';
 
 const initialState: UserState = {
     id: '',
+    socialType: undefined,
     email: '',
+    name: '',
+    nickname: '',
+    imageUrl: undefined,
+    imageCropArea: undefined,
 };
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<UserState>) => {
-            state.id = action.payload.id;
-            state.email = action.payload.email;
+            return { ...state, ...action.payload };
         },
         resetUser: (state) => {
             state.id = '';
+            state.socialType = undefined;
             state.email = '';
+            state.name = '';
+            state.nickname = '';
+            state.imageUrl = undefined;
+            state.imageCropArea = undefined;
         },
     },
 });

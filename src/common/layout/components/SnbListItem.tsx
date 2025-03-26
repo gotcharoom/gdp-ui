@@ -87,7 +87,7 @@ const SnbListItem = (props: SnbListItemProps) => {
                                     className={'snb__list__item-button__icon'}
                                     key={'list-item-icon' + item.title + depth + index}
                                 >
-                                    <span className='material-icons icon'>{item.icon}</span>
+                                    <span className='material-symbols-outlined icon'>{item.icon}</span>
                                 </ListItemIcon>
                                 <ListItemText primary={item.title} />
                                 {drawExpand(item, index)}

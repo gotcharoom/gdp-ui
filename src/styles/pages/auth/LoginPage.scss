@@ -1,0 +1,147 @@
+@use '../../global/variables' as *;
+@use '../../constants/loginConstants' as *;
+@use '../../constants/commonConstants' as *;
+
+.login {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .login__input-container {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login__option {
+    width: 100%;
+    flex-direction: column;
+
+    display: flex;
+
+    .login__button {
+      height: $text-field__button__height;
+    }
+  }
+
+  .login__support {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+
+    .support__button {
+      text-transform: none;
+    }
+  }
+
+  .login__social {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .social__container--google {
+      @extend .social__container;
+
+      background-color: $social__color__google;
+
+      .google__icon__container {
+        @extend .social__icon__container;
+
+        .google__icon {
+          @extend .social__icon;
+
+        }
+      }
+
+      .google__text__container {
+        @extend  .social__text__container;
+
+        color: $social__font--color--google;
+      }
+    }
+
+
+
+    .social__container--kakao {
+      @extend .social__container;
+
+      background-color: $social__color--kakao;
+
+      .kakao__icon__container {
+        @extend .social__icon__container;
+
+        .kakao__icon {
+          @extend .social__icon;
+        }
+      }
+
+      .kakao__text__container {
+        @extend  .social__text__container;
+        color: $social__font__color--kakao;
+      }
+    }
+
+    .social__container--naver {
+      @extend .social__container;
+
+      background-color: $social__color--naver;
+
+      .naver__icon__container {
+        @extend .social__icon__container;
+
+        .naver__icon {
+          @extend .social__icon;
+        }
+      }
+
+      .naver__text__container {
+        @extend  .social__text__container;
+
+        color: $social__font__color--naver;
+      }
+    }
+  }
+
+  .social__container {
+    width: 100%;
+    height: $text-field__button__height;
+    margin-bottom: 2%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: filter 0.3s ease-in-out;
+
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
+
+  .social__icon__container {
+    width: $social__icon__container__width;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .social__icon {
+    object-fit: contain;
+    width:100%;
+    height:80%;
+  }
+
+  .social__text__container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: $social__icon__container__width;
+  }
+}

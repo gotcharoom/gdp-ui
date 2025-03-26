@@ -6,19 +6,27 @@ import Snb from '@/common/layout/components/Snb.tsx';
 import Footer from '@/common/layout/components/Footer.tsx';
 
 import '@styles/layout/CommonLayout.scss';
-import { useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ExtendedMatch } from '@/types/common/ExtendMatch.type.ts';
+import { ModalProvider } from '@/common/contexts/ModalProvider.tsx';
 
-const CommonLayout = () => {
+interface CommonLayoutProps {
+    children?: ReactNode;
+}
+const CommonLayout = (props: CommonLayoutProps) => {
     /* Hooks */
-    const matches = useMatches();
+    const matches = useMatches() as ExtendedMatch[];
 
-    const title = matches.reverse().find((match) => match.handle?.title)?.handle?.title;
+    const [title, setTitle] = useState<string>('');
 
     const [open, setOpen] = useState(false);
 
     /* Privates */
+    const computedTitle = useMemo(() => {
+        return matches.reverse().find((match) => match.handle?.title)?.handle?.title ?? '';
+    }, [matches]);
 
-    /* Event */
+    /* Events */
 
     const onClickMenu = (isOpen: boolean) => {
         setOpen(isOpen);
@@ -27,17 +35,22 @@ const CommonLayout = () => {
         setOpen(isOpen);
     };
 
-    /* Lifecycle */
+    /* Lifecycles */
+    useEffect(() => {
+        setTitle(computedTitle);
+    }, [computedTitle]);
 
     return (
-        <div className={'common-layout'}>
-            <Header onClickMenu={onClickMenu} />
-            <Snb isOpen={open} toggleDrawer={toggleDrawer} />
-            <main className={'common-layout__main'}>
-                <Outlet context={{ title }} />
-            </main>
-            <Footer />
-        </div>
+        <ModalProvider>
+            <div className={'common-layout'}>
+                <Header onClickMenu={onClickMenu} />
+                <Snb isOpen={open} toggleDrawer={toggleDrawer} />
+                <main className={'common-layout__main'}>
+                    <div className='common-layout__main__content'>{props.children ? props.children : <Outlet context={{ title }} />}</div>
+                </main>
+                <Footer />
+            </div>
+        </ModalProvider>
     );
 };
 
