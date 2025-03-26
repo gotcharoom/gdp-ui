@@ -208,7 +208,7 @@ const UserRoutes: RouteObject[] = [
                     {
                         path: 'faq',
                         element: <CsrFaqPageComponent />,
-                        handle: { title: '비밀번호 변경' },
+                        handle: { title: '고객센터' },
                     },
                 ],
             },
