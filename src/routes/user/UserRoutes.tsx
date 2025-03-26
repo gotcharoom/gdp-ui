@@ -28,6 +28,11 @@ const ChangePasswordPageComponent = withSuspense(ChangePasswordPage);
 const ProtectedChangePasswordPageComponent = withProtect(ChangePasswordPageComponent, { allowSocialType: SocialType.GDP });
 
 // Components
+
+// Achievement
+const DisplayStand = lazy(() => import('@/pages/achievement/displayStand/DisplayStandBoard'));
+const DisplayStandComponent = withSuspense(DisplayStand);
+
 //Notices
 const Notice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
 const NoticeComponent = withSuspense(Notice);
@@ -110,6 +115,29 @@ const UserRoutes: RouteObject[] = [
                     },
                 ],
             },
+            {
+                path: 'achievement',
+                handle: { title: '도전과제 전시대', showMenu: true },
+                children: [
+                    {
+                        path: 'displayStand',
+                        element: <CommonChildrenLayout />,
+                        handle: { title: 'displayStand list', showMenu: true },
+                        children: [
+                            {
+                                index: true,
+                                element: <DisplayStandComponent />,
+                                handle: {
+                                    title: 'adfasdf',
+                                    icon: 'more',
+                                    showManu: true,
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+
             {
                 path: 'board',
                 handle: { title: '게시판', showMenu: true },
