@@ -121,11 +121,12 @@ const UserRoutes: RouteObject[] = [
                 children: [
                     {
                         path: 'displayStand',
-                        element: <CommonChildrenLayout />,
+                        element: <DisplayStandComponent />,
                         handle: { title: 'displayStand list', showMenu: true },
                         children: [
                             {
                                 index: true,
+                                path: ':id',
                                 element: <DisplayStandComponent />,
                                 handle: {
                                     title: 'adfasdf',
