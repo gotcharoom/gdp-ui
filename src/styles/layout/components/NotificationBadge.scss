@@ -18,6 +18,10 @@
 
       .badge__popper__paper__list__item {
         padding: 20px;
+
+        .badge__popper__paper__list__item--hover {
+          cursor: pointer;
+        }
       }
     }
   }
