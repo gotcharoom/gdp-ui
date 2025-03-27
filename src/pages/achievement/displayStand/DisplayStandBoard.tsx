@@ -1,7 +1,7 @@
 import DisplayStandCard from '@/common/components/aheievement/displayStand/DisplayStandCard';
 import CommonPage from '@/common/components/CommonPage';
 import { Button, Grid2, Pagination, TextField } from '@mui/material';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const DisplayStandBoard = () => {
@@ -11,7 +11,7 @@ const DisplayStandBoard = () => {
 
     /** 일반 로직 */
     // 현재 페이지 번호를 가져오기 (없으면 기본값 1)
-    const page: number = Number(searchParams.get('page')) || 1;
+    const [page, setPage] = useState<number>(Number(searchParams.get('page')) || 1);
     const total = 12;
     const lsatDate = '2025-02-09';
 
@@ -20,11 +20,16 @@ const DisplayStandBoard = () => {
         setSearchParams({ page: newPage.toString() });
     };
 
-    /** useEffect */
+    /** 제어 함수 */
     const handleChange = useCallback((event: React.ChangeEvent<unknown>, value: number) => {
         goToPage(value);
         console.log(value);
     }, []);
+
+    /** useEffect */
+    useEffect(() => {
+        console.log(`로직 실행: ${page}`);
+    }, [page]);
 
     return (
         <CommonPage width={'100%'} height={'100%'} title={'도전과제 전시대'}>
@@ -55,7 +60,6 @@ const DisplayStandBoard = () => {
                 </Grid2>
                 {/** list */}
                 <Grid2 container justifyContent='center' columnSpacing={6} rowSpacing={3}>
-                    {/* <Grid2 size={{ xs: 12, md: 4 }}> */}
                     {Array.from({ length: 8 }, (_, index) => (
                         <Grid2 key={index}>
                             <DisplayStandCard title='merong' create_date='2002/02/02' />
