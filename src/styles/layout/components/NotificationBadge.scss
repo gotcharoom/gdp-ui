@@ -1,0 +1,28 @@
+.notification-badge {
+
+}
+
+// Popper는 Portal을 이용해 렌더링함
+.badge__popper {
+  z-index: 3;
+
+  .badge__popper__paper {
+    background-color: #f0f4ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    .badge__popper__paper__empty-notification {
+      padding: 20px;
+    }
+
+    .badge__popper__paper__list {
+
+      .badge__popper__paper__list__item {
+        padding: 20px;
+
+        .badge__popper__paper__list__item--hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

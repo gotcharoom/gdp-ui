@@ -6,6 +6,7 @@ import useAuth from '@/common/hooks/useAuth.ts';
 // Styles
 import './styles/main.scss';
 import { AlertProvider } from '@/common/contexts/AlertProvider.tsx';
+import { SseProvider } from '@/common/contexts/SseProvider.tsx';
 
 const App = () => {
     useAuth();
@@ -13,9 +14,11 @@ const App = () => {
     return (
         <AlertProvider>
             <GlobalFormProvider>
-                <RoutesProvider>
-                    <RouterProvider router={CustomRouter} />
-                </RoutesProvider>
+                <SseProvider>
+                    <RoutesProvider>
+                        <RouterProvider router={CustomRouter} />
+                    </RoutesProvider>
+                </SseProvider>
             </GlobalFormProvider>
         </AlertProvider>
     );
