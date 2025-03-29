@@ -12,6 +12,7 @@ export interface Notification {
     toName: string;
     isRead: boolean;
     notificationType: NotificationType;
+    createdAt: string;
 }
 
 export interface SseContextType {
