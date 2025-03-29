@@ -37,6 +37,7 @@ export const SseProvider = ({ children }: SseProviderProps) => {
 
         return () => {
             eventSource.close();
+            setEvents([]);
         };
     }, [isAuthenticated, url]);
 
