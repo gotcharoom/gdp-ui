@@ -30,13 +30,16 @@ const NotificationBadge = () => {
         setOpen((previousOpen) => !previousOpen);
     }, []);
 
-    const onClickNavigate = useCallback((url: string | undefined) => {
-        if (url == undefined) {
-            return;
-        }
+    const onClickNavigate = useCallback(
+        (url: string | undefined) => {
+            if (url == undefined) {
+                return;
+            }
 
-        navigate(url);
-    }, []);
+            navigate(url);
+        },
+        [navigate],
+    );
 
     const onClickRead = useCallback(
         async (notification: Notification) => {
@@ -65,12 +68,21 @@ const NotificationBadge = () => {
                                 <div key={idx}>
                                     <ListItem className={'badge__popper__paper__list__item'}>
                                         <ListItemText
-                                            className={clsx(notification.url ? 'badge__popper__paper__list__item--hover' : '')}
-                                            primary={notification.content}
-                                            secondary={notification.toName}
+                                            className={clsx(
+                                                'badge__popper__paper__list__item__text',
+                                                notification.url ? 'badge__popper__paper__list__item__text--hover' : '',
+                                            )}
+                                            primary={<Typography className={'list__item__text__sender'}>{notification.toName}</Typography>}
+                                            secondary={
+                                                <Typography className={'list__item__text__content'}>{notification.content}</Typography>
+                                            }
                                             onClick={notification.url ? () => onClickNavigate(notification.url) : undefined}
                                         />
-                                        <Button variant='text' onClick={() => onClickRead(notification)}>
+                                        <Button
+                                            className={'badge__popper__paper__list__item__button'}
+                                            variant='text'
+                                            onClick={() => onClickRead(notification)}
+                                        >
                                             읽음
                                         </Button>
                                     </ListItem>
