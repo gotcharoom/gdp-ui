@@ -19,4 +19,4 @@ export interface SseContextType {
     removeEvent: (id: number) => void;
 }
 
-export const SseContext = createContext<SseContextType>({ events: [] });
+export const SseContext = createContext<SseContextType>({ events: [], removeEvent: () => {} });

@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { SseContext, SseContextType } from '@/common/contexts/SseContext.ts';
+import { Notification, SseContext, SseContextType } from '@/common/contexts/SseContext.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 
@@ -11,7 +11,7 @@ export const SseProvider = ({ children }: SseProviderProps) => {
     const [events, setEvents] = useState<Notification[]>([]);
     const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
 
-    const url: string = import.meta.env.VITE_SSE_URL;
+    const url: string = import.meta.env.VITE_API_URL + '/api/v1/notification/connect';
 
     useEffect(() => {
         if (!isAuthenticated) {
