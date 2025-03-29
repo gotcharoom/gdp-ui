@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { SseContext, SseContextType } from '@/common/contexts/SseContext.ts';
+import { Notification, SseContext, SseContextType } from '@/common/contexts/SseContext.ts';
 import { useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 
