@@ -1,5 +1,6 @@
 import { getDisplayStandList } from '@/apis/achievement/displayStand/displayStand';
-import DisplayStandCard from '@/common/components/aheievement/displayStand/DisplayStandCard';
+import CommonExportButton from '@/common/components/aheievement/CommonExportButton';
+import CommonDisplayStandCard from '@/common/components/aheievement/displayStand/CommonDisplayStandCard';
 import CommonPage from '@/common/components/CommonPage';
 import DisplayStandType from '@/types/pages/achievement/displayStand/DisplayStand.type';
 import PageObjectType from '@/types/pages/achievement/PageObject.type';
@@ -12,9 +13,8 @@ const DisplayStandBoard = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     // const navigate = useNavigate();
 
-    /** 일반 로직 */
+    /** Data */
     const currentPage = Number(searchParams.get('page')); // 페이지 초기 입장 시 null(0으로 처리됨)
-
     const lsatDate = '2025-02-09';
     const [tableRows, setTableRows] = useState<DisplayStandType[]>([]);
     const [pageData, setPageData] = useState<PageObjectType>({
@@ -23,9 +23,6 @@ const DisplayStandBoard = () => {
         totalElements: 0,
         totalPages: 0,
     });
-
-    // 페이지 변경 함수
-    /** 제어 함수 */
 
     /** 검색 로직
      * 1. handleChange 작동 혹은 페이지 진입 -> url 파라미터 변경
@@ -54,6 +51,12 @@ const DisplayStandBoard = () => {
         }
     };
 
+    /** 함수 */
+    const onClickHandler = () => {
+        console.log('메롱메롱');
+        return;
+    };
+
     /** useEffect */
     useEffect(() => {
         searchData(currentPage);
@@ -66,17 +69,14 @@ const DisplayStandBoard = () => {
         <CommonPage width={'100%'} height={'100%'} title={'도전과제 전시대'}>
             <Grid2 container rowSpacing={5} direction='column'>
                 {/** bottun */}
-                <Grid2 container columnSpacing={1} ml='auto'>
-                    <Button component='label' variant='contained' startIcon={<span className='material-symbols-outlined icon'>add</span>}>
-                        전체 내보내기
-                    </Button>
-                    <Button component='label' variant='contained' startIcon={<span className='material-symbols-outlined icon'>add</span>}>
-                        가져오기기
-                    </Button>
-                    <Button component='label' variant='contained' startIcon={<span className='material-symbols-outlined icon'>add</span>}>
-                        생성
-                    </Button>
-                </Grid2>
+                <CommonExportButton
+                    container
+                    columnSpacing={1}
+                    ml='auto'
+                    fullExportHandler={onClickHandler}
+                    exportHandler={onClickHandler}
+                    createHandler={onClickHandler}
+                />
                 {/** total & search */}
                 <Grid2 container justifyContent='space-between' alignItems='center'>
                     <Grid2>
@@ -90,33 +90,14 @@ const DisplayStandBoard = () => {
                     </Grid2>
                 </Grid2>
                 {/** list */}
-                {/* <Grid2 container justifyContent='center' columnSpacing={6} rowSpacing={3}>
-                    {Array.from({ length: 8 }, (_, index) => (
-                        <Grid2 key={index}>
-                            <DisplayStandCard title='merong' create_date='2002/02/02' />
-                        </Grid2>
-                    ))}
-                </Grid2> */}
                 <Grid2 container justifyContent='center' columnSpacing={6} rowSpacing={3}>
                     {tableRows.map((column) => (
                         <Grid2 key={column.id}>
-                            <DisplayStandCard title={column.title} create_date={column.create_date.toString()} />
+                            <CommonDisplayStandCard title={column.title} create_date={column.create_date.toString()} />
                         </Grid2>
                     ))}
                 </Grid2>
-
                 {/** paging */}
-                {/* <Grid2 container justifyContent='center'>
-                    <Pagination
-                        count={total}
-                        page={currentPage}
-                        onChange={handleChange}
-                        variant='outlined'
-                        shape='rounded'
-                        style={{ justifyContent: 'center' }}
-                    />
-                </Grid2> */}
-
                 <Grid2 container justifyContent='center'>
                     <Pagination
                         count={pageData.totalPages}

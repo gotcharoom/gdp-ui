@@ -1,11 +1,11 @@
 import { Grid2, Typography } from '@mui/material';
 
-interface DisplayStandCardProps {
+interface Props {
     title: string;
     create_date: string;
 }
 
-const DisplayStandCard = (props: DisplayStandCardProps) => {
+const CommonDisplayStandCard = (props: Props) => {
     return (
         <Grid2
             container
@@ -40,4 +40,4 @@ const DisplayStandCard = (props: DisplayStandCardProps) => {
     );
 };
 
-export default DisplayStandCard;
+export default CommonDisplayStandCard;

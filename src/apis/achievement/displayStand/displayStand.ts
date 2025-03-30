@@ -6,17 +6,17 @@ const urls = {
     test: '/api/v1/displayStand',
 };
 
-interface Params {
+interface ListParams {
     page_no: number;
 }
 
-interface Data {
+interface ListData {
     content: DisplayStandType[];
     page: PageObjectType;
 }
 
-const getDisplayStandList = async (params: Params): Promise<Data> => {
-    return await getData<Data>(urls.test, { params: params }).then((res) => res.data);
+const getDisplayStandList = async (params: ListParams): Promise<ListData> => {
+    return await getData<ListData>(urls.test, { params: params }).then((res) => res.data);
 };
 
 export { getDisplayStandList };
