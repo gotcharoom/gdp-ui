@@ -11,8 +11,6 @@ import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
 import { resetAvatar } from '@/common/utils/avatarUtil.ts';
 import UserState from '@/types/pages/auth/UserState.type.ts';
 import SocialType from '@/common/constants/SocialType.ts';
-import { useSse } from '@/common/hooks/useSse.ts';
-import { NotificationType } from '@/common/contexts/SseContext.ts';
 import NotificationBadge from '@/common/layout/components/NotificationBadge.tsx';
 
 interface HeaderProps {
@@ -31,8 +29,6 @@ const Header = (props: HeaderProps) => {
     const [isLogout, setIsLogout] = useState<boolean>(false);
     const open = Boolean(anchorEl);
     const { openAlert } = useAlert();
-
-    const { events } = useSse();
 
     /* Privates */
     const isGdpUser = useMemo(() => {
