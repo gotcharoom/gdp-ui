@@ -124,7 +124,7 @@ const UserRoutes: RouteObject[] = [
                     {
                         path: 'displayStand',
                         element: <DisplayStandComponent />,
-                        handle: { title: 'displayStand list', showMenu: true },
+                        handle: { title: '전시대 목록', showMenu: true },
                         children: [
                             {
                                 index: true,
