@@ -1,0 +1,51 @@
+@use '../../constants/notificationConstants' as *;
+
+.notification-badge {
+
+}
+
+// Popper는 Portal을 이용해 렌더링함
+.badge__popper {
+  z-index: 3;
+
+  .badge__popper__paper {
+    background-color: #fffbe6;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: $badge__popper__paper__width;
+
+    .badge__popper__paper__empty-notification {
+      padding: $badge__popper__paper__padding;
+    }
+
+    .badge__popper__paper__list {
+
+      .badge__popper__paper__list__item {
+        padding: $badge__popper__paper__list__item__padding;
+
+        .badge__popper__paper__list__item__text {
+          flex: 1;
+          padding-right: $badge__popper__paper__list__item__padding;
+
+          .list__item__text__sender {
+            font-weight: bold;
+            font-size: 13px;
+          }
+
+          .list__item__text__content {
+            padding-top: $badge__popper__paper__list__item__text__content__padding;
+          }
+        }
+
+        .badge__popper__paper__list__item__text--hover {
+          cursor: pointer;
+        }
+
+        .badge__popper__paper__list__item__button {
+          justify-content: end;
+          min-width: unset; // 기본 최소 너비 제거
+          width: auto;
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ import SessionStorageKey from '@/common/constants/SessionStorageKey.ts';
 import { resetAvatar } from '@/common/utils/avatarUtil.ts';
 import UserState from '@/types/pages/auth/UserState.type.ts';
 import SocialType from '@/common/constants/SocialType.ts';
+import NotificationBadge from '@/common/layout/components/NotificationBadge.tsx';
 
 interface HeaderProps {
     onClickMenu: (isOpen: boolean) => void;
@@ -120,9 +121,11 @@ const Header = (props: HeaderProps) => {
                         <img className={'logo'} alt={'header__logo'} src={'/logo/Discord_Logo.png'} />
                     </IconButton>
                 </div>
-                <div className={'header__social__account'}>
-                    {isLogin ? (
-                        <>
+
+                {isLogin ? (
+                    <>
+                        <NotificationBadge />
+                        <div className={'header__social__account'}>
                             <IconButton className={'account'} onClick={onClickUserMenu}>
                                 <Avatar
                                     className={'logo'}
@@ -146,11 +149,11 @@ const Header = (props: HeaderProps) => {
                                 {isGdpUser && <MenuItem onClick={onClickChangePassword}>비밀번호 변경</MenuItem>}
                                 <MenuItem onClick={onClickLogout}>로그아웃</MenuItem>
                             </Menu>
-                        </>
-                    ) : (
-                        <Button onClick={onClickLogin}>로그인</Button>
-                    )}
-                </div>
+                        </div>
+                    </>
+                ) : (
+                    <Button onClick={onClickLogin}>로그인</Button>
+                )}
             </div>
         </div>
     );
