@@ -7,6 +7,7 @@ import PageObjectType from '@/types/pages/achievement/PageObject.type';
 import { Button, Grid2, Pagination, TextField } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import DragXComponent from '@/common/components/aheievement/album/DragXComponent';
 
 const AlbumBoard = () => {
     /** hook */
@@ -66,7 +67,7 @@ const AlbumBoard = () => {
     }, [pageData]);
 
     return (
-        <CommonPage width={'100%'} height={'100%'} title={'전시대 앨범 목록록'}>
+        <CommonPage width={'100%'} height={'100%'} title={'전시대 앨범 목록'}>
             <Grid2 container rowSpacing={5} direction='column'>
                 {/** bottun */}
                 <CommonExportButton
@@ -90,13 +91,12 @@ const AlbumBoard = () => {
                     </Grid2>
                 </Grid2>
                 {/** list */}
-                <Grid2 container justifyContent='center' columnSpacing={6} rowSpacing={3}>
+                <DragXComponent>
                     {tableRows.map((column) => (
-                        <Grid2 key={column.id}>
-                            <CommonAlbumCard title={column.title} create_date={column.create_date.toString()} />
-                        </Grid2>
+                        <CommonAlbumCard key={column.id} title={column.title} create_date={column.create_date.toString()} />
                     ))}
-                </Grid2>
+                </DragXComponent>
+
                 {/** paging */}
                 <Grid2 container justifyContent='center'>
                     <Pagination

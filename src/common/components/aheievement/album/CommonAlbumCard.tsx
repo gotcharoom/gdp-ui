@@ -22,9 +22,10 @@ const CommonAlbumCard = (props: Props) => {
             container
             direction='column'
             alignItems='center'
-            minHeight={250}
-            minWidth={250}
-            p={1}
+            height={260}
+            width={250}
+            m='20px'
+            p='2px'
             sx={{
                 borderRadius: 2,
                 color: 'white',
@@ -33,6 +34,7 @@ const CommonAlbumCard = (props: Props) => {
                     border: `3px solid blue`,
                     cursor: `pointer`,
                 },
+                display: 'inline-block',
             }}
         >
             <Grid2 alignSelf='flex-start' mt='10px' ml='10px'>
