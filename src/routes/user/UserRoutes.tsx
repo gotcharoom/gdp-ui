@@ -51,6 +51,8 @@ const Representative = lazy(() => import('@/pages/csr/Representative'));
 const RepresentativeComponent = withSuspense(Representative);
 const CsrFaqPage = lazy(() => import('@/pages/csr/CsrFaqPage'));
 const CsrFaqPageComponent = withSuspense(CsrFaqPage);
+const CsrFaqDetailPage = lazy(() => import('@/pages/csr/CsrFaqDetailPage'));
+const CsrFaqDetailPageComponent = withSuspense(CsrFaqDetailPage);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -236,8 +238,16 @@ const UserRoutes: RouteObject[] = [
                     { index: true, element: <RepresentativeComponent />, handle: { showMenu: true } },
                     {
                         path: 'faq',
-                        element: <CsrFaqPageComponent />,
+
                         handle: { title: '고객센터' },
+                        children: [
+                            { index: true, element: <CsrFaqPageComponent />, handle: { showMenu: true } },
+                            {
+                                path: ':id',
+                                element: <CsrFaqDetailPageComponent />,
+                                handle: { title: '고객센터 상세페이지' },
+                            },
+                        ],
                     },
                 ],
             },

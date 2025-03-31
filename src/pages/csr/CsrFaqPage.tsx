@@ -1,8 +1,8 @@
 import CommonPage from '@/common/components/CommonPage';
 import CommonSearch from '@/common/components/notice/CommonSearch';
-import { Button, SelectChangeEvent } from '@mui/material';
+import { Button, Pagination, PaginationItem, SelectChangeEvent, Stack, TableCell, TableRow } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import '@styles/csr/csrFaqPage.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/stores/store';
@@ -10,22 +10,32 @@ import { setCsr } from '@/stores/slices/csrSlice';
 import CsrState from '@/types/pages/csr/CsrState.type';
 import NewCsr from '@/types/pages/csr/NewCsrType';
 import { getCsrList } from '@/apis/csr/csr';
-
+import { SampleCsrDataType } from '@/mocks/datas/sampleCsrData';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 const CsrFAQPage = () => {
     /* Hooks */
     const [searchType, setSearchType] = useState<string>('title');
     const [searchQuery, setSearchQuery] = useState<string>(''); // 검색 실행 시 적용될 검색어
-    const [_currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
-    const [_csrFaq, setCsrFaq] = useState<SampleCsrDataType[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1); //현재 페이지 상태
+    const [csrFaq, setCsrFaq] = useState<SampleCsrDataType[]>([]);
     const [_loading, setLoading] = useState<boolean>(true);
     const { title } = useOutletContext<{ title: string }>();
+    const { id } = useParams<{ id: string }>();
     const faqClickItem = useSelector((state: RootState) => state.csr.faqClickItem);
     const dispatch = useDispatch();
     const csrFaqItem: NewCsr = {
         search: '질문사항',
         pagePerItems: 10,
     };
+    const itemsPerPage = 10;
+    const navigate = useNavigate();
     /* Privates */
+
+    const indexOfLastCsrFaq = currentPage * itemsPerPage;
+    const indexOfFirstCsrFaq = indexOfLastCsrFaq - itemsPerPage;
+    const filterCsrFaqs = csrFaq.filter((item) => item.category === faqClickItem);
+    const currentCsrFaqs = filterCsrFaqs.slice(indexOfFirstCsrFaq, indexOfLastCsrFaq);
     /* Events */
     const handleSearchTypeChange = (event: SelectChangeEvent<string>) => {
         setSearchType(event.target.value);
@@ -44,12 +54,16 @@ const CsrFAQPage = () => {
             handleSearch();
         }
     };
-    const handleNavigate = (str: string) => {
-        const item: CsrState = {
-            faqClickItem: str,
-        };
-        dispatch(setCsr(item));
+    const handleNavigate = (category: string) => {
+        dispatch(setCsr({ faqClickItem: category }));
     };
+    const handleNaviDetailPage = () => {
+        navigate(`/Csr/Faq/${id}`);
+    };
+    const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+        setCurrentPage(value);
+    };
+
     /* Lifecycle */
     useEffect(() => {
         const fetchCsrDetail = async () => {
@@ -64,6 +78,7 @@ const CsrFAQPage = () => {
         };
         fetchCsrDetail();
     }, []);
+
     return (
         <div className={'csr-faq-Page'}>
             <CommonPage width={'100%'} height={'100%'} title={title}>
@@ -78,14 +93,41 @@ const CsrFAQPage = () => {
                     onSearchTypeChange={handleSearchTypeChange}
                 />
                 <div className={'csr-faq-Page__button'}>
-                    <Button variant='outlined'>회원기능</Button>
-                    <Button variant='outlined'>사이트 이용</Button>
-                    <Button variant='outlined'>콘텐츠</Button>
-                    <Button variant='outlined'>도전과제 연동</Button>
-                    <Button variant='outlined'>소셜기능</Button>
-                    <Button variant='outlined'>이용약관</Button>
+                    <Button variant='outlined' onClick={() => handleNavigate('회원기능')}>
+                        회원기능
+                    </Button>
+                    <Button variant='outlined' onClick={() => handleNavigate('사이트 이용')}>
+                        사이트 이용
+                    </Button>
+                    <Button variant='outlined' onClick={() => handleNavigate('콘텐츠')}>
+                        콘텐츠
+                    </Button>
+                    <Button variant='outlined' onClick={() => handleNavigate('도전과제 연동')}>
+                        도전과제 연동
+                    </Button>
+                    <Button variant='outlined' onClick={() => handleNavigate('소셜기능')}>
+                        소셜기능
+                    </Button>
+                    <Button variant='outlined' onClick={() => handleNavigate('이용약관')}>
+                        이용약관
+                    </Button>
                 </div>
-                {}
+                {currentCsrFaqs.map((csrFaq, index) => (
+                    <TableRow key={index} onClick={handleNaviDetailPage}>
+                        <TableCell>{csrFaq.id}</TableCell>
+                        <TableCell>{csrFaq.category}</TableCell>
+                        <TableCell>{csrFaq.title}</TableCell>
+                        <TableCell>{csrFaq.questionCount}</TableCell>
+                    </TableRow>
+                ))}
+                <Stack spacing={2}>
+                    <Pagination
+                        count={Math.ceil(currentCsrFaqs.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+                    />
+                </Stack>
             </CommonPage>
         </div>
     );

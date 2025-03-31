@@ -92,22 +92,22 @@ const Representative = () => {
                     onSearchTypeChange={handleSearchTypeChange}
                 />
                 <div className={'csr-page__button'}>
-                    <Button variant='outlined' onClick={() => handleNavigate('sign')}>
+                    <Button variant='outlined' onClick={() => handleNavigate('회원기능')}>
                         회원기능
                     </Button>
-                    <Button variant='outlined' onClick={() => handleNavigate('site')}>
+                    <Button variant='outlined' onClick={() => handleNavigate('사이트 이용')}>
                         사이트 이용
                     </Button>
-                    <Button variant='outlined' onClick={() => handleNavigate('content')}>
+                    <Button variant='outlined' onClick={() => handleNavigate('콘텐츠')}>
                         콘텐츠
                     </Button>
-                    <Button variant='outlined' onClick={() => handleNavigate('achievement')}>
+                    <Button variant='outlined' onClick={() => handleNavigate('도전과제 연동')}>
                         도전과제 연동
                     </Button>
-                    <Button variant='outlined' onClick={() => handleNavigate('social')}>
+                    <Button variant='outlined' onClick={() => handleNavigate('소셜기능')}>
                         소셜기능
                     </Button>
-                    <Button variant='outlined' onClick={() => handleNavigate('')}>
+                    <Button variant='outlined' onClick={() => handleNavigate('이용약관')}>
                         이용약관
                     </Button>
                 </div>
@@ -118,11 +118,21 @@ const Representative = () => {
                             <div key={csrFaq.id}>
                                 <Card
                                     className={'.csr-page__card'}
-                                    sx={{ display: 'grid', placeItems: 'center', textAlign: 'center', padding: '30px', margin: '5px' }}
+                                    sx={{
+                                        display: 'grid',
+                                        placeItems: 'center',
+                                        textAlign: 'center',
+                                        padding: '30px',
+                                        margin: '5px',
+                                        '&:hover': {
+                                            color: 'grey',
+                                            cursor: 'pointer',
+                                        },
+                                    }}
                                     key={index}
                                     onClick={() => handleFaqToggle(csrFaq.id)}
                                 >
-                                    {csrFaq.content}
+                                    {csrFaq.title}
                                 </Card>
 
                                 {faqOpenStates[csrFaq.id] && (
@@ -133,6 +143,10 @@ const Representative = () => {
                                             padding: '16px',
                                             backgroundColor: '#f9f9f9',
                                             borderRadius: '8px',
+                                            '&:hover': {
+                                                color: 'grey',
+                                                cursor: 'pointer',
+                                            },
                                         }}
                                         onClick={() => handleFaqToggle(csrFaq.id)}
                                     >

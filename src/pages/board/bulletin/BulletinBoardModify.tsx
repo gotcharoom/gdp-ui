@@ -1,5 +1,6 @@
 import { getBulleinList } from '@/apis/notice/bulletin';
 import CommonPage from '@/common/components/CommonPage';
+import useNavigationGuard from '@/common/hooks/useNavigationGuard';
 import { SampleBulletinDataType } from '@/mocks/datas/sampleBulletinData';
 import NewBulletin from '@/types/pages/notice/NewBulletin.type';
 import { Button, TextField } from '@mui/material';
@@ -12,6 +13,7 @@ const BulletinBoardModify = () => {
     const [_bulletins, setBulletins] = useState<SampleBulletinDataType[]>([]);
     const navigate = useNavigate();
     const location = useLocation();
+    useNavigationGuard();
     const initialBulletin = location.state?.bulletin;
     // TODO. 현재 사용하지 않는 변수명 변경 (loading -> _loading) -> 추후 사용 시 변경 필요
     const [_loading, setLoading] = useState<boolean>(true);
