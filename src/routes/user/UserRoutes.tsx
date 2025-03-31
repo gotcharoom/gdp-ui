@@ -5,6 +5,7 @@ import withSuspense from '@/common/utils/withSuspense.tsx';
 import CommonChildrenLayout from '@/common/layout/CommonChildrenLayout.tsx';
 import withProtect from '@/common/utils/withProtect.tsx';
 import SocialType from '@/common/constants/SocialType.ts';
+import AlbumBoard from '@/pages/achievement/album/AlbumBoard';
 
 // Sample Components
 const SampleUserMain = lazy(() => import('@pages/sample/SampleUserMain.tsx'));
@@ -128,6 +129,23 @@ const UserRoutes: RouteObject[] = [
                                 index: true,
                                 path: ':id',
                                 element: <DisplayStandComponent />,
+                                handle: {
+                                    title: 'adfasdf',
+                                    icon: 'more',
+                                    showManu: true,
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        path: 'album',
+                        element: <AlbumBoard />,
+                        handle: { title: '앨범 목록(임시)', showMenu: true },
+                        children: [
+                            {
+                                index: true,
+                                path: ':id',
+                                element: <AlbumBoard />,
                                 handle: {
                                     title: 'adfasdf',
                                     icon: 'more',
