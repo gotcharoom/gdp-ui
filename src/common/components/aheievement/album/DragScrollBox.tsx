@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import ScrollContainer from 'react-indiana-drag-scroll';
 
-export default function DragXComponent({ children }: { children: React.ReactNode }) {
+export default function DragScrollBox({ children }: { children: React.ReactNode }) {
     return <SScrollXLayout>{children}</SScrollXLayout>;
 }
 

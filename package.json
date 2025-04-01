@@ -34,6 +34,7 @@
     "react-indiana-drag-scroll": "^3.0.4-alpha",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.29.0",
+    "swiper": "^11.2.6",
     "tiptap-markdown": "^0.8.10",
     "yup": "^1.6.1"
   },

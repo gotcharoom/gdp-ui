@@ -37,13 +37,13 @@ const CommonAlbumCard = (props: Props) => {
                 display: 'inline-block',
             }}
         >
-            <Grid2 alignSelf='flex-start' mt='10px' ml='10px'>
+            <Grid2 alignSelf='flex-start' pt='10px' pl='10px'>
                 <Typography color='red'>{props.title}</Typography>
             </Grid2>
             <Grid2 width='100%'>
                 <div style={{ margin: '20px', height: '120px', backgroundColor: 'gray' }}></div>
             </Grid2>
-            <Grid2 container alignItems='center' justifyContent='space-between' width='100%'>
+            <Grid2 container alignItems='center' justifyContent='space-between' width='100%' pl='10px'>
                 <Grid2>
                     <Typography color='red'>{props.create_date}</Typography>
                 </Grid2>

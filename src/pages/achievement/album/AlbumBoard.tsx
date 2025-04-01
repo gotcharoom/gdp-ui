@@ -7,7 +7,7 @@ import PageObjectType from '@/types/pages/achievement/PageObject.type';
 import { Button, Grid2, Pagination, TextField } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import DragXComponent from '@/common/components/aheievement/album/DragXComponent';
+import DragScrollBox from '@/common/components/aheievement/album/DragScrollBox';
 
 const AlbumBoard = () => {
     /** hook */
@@ -52,7 +52,7 @@ const AlbumBoard = () => {
         }
     };
 
-    /** 함수 */
+    /** Handler */
     const onClickHandler = () => {
         console.log('메롱메롱');
         return;
@@ -69,7 +69,7 @@ const AlbumBoard = () => {
     return (
         <CommonPage width={'100%'} height={'100%'} title={'전시대 앨범 목록'}>
             <Grid2 container rowSpacing={5} direction='column'>
-                {/** bottun */}
+                {/** Bottun */}
                 <CommonExportButton
                     container
                     columnSpacing={1}
@@ -78,7 +78,7 @@ const AlbumBoard = () => {
                     exportHandler={onClickHandler}
                     createHandler={onClickHandler}
                 />
-                {/** total & search */}
+                {/** Total & Search */}
                 <Grid2 container justifyContent='space-between' alignItems='center'>
                     <Grid2>
                         <span>
@@ -90,14 +90,25 @@ const AlbumBoard = () => {
                         <Button variant='contained'>검색</Button>
                     </Grid2>
                 </Grid2>
-                {/** list */}
-                <DragXComponent>
+            </Grid2>
+            <div
+                style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '50px',
+                }}
+            >
+                {/** Data List */}
+                <DragScrollBox>
                     {tableRows.map((column) => (
                         <CommonAlbumCard key={column.id} title={column.title} create_date={column.create_date.toString()} />
                     ))}
-                </DragXComponent>
+                </DragScrollBox>
 
-                {/** paging */}
+                {/** Paging */}
                 <Grid2 container justifyContent='center'>
                     <Pagination
                         count={pageData.totalPages}
@@ -108,7 +119,7 @@ const AlbumBoard = () => {
                         style={{ justifyContent: 'center' }}
                     />
                 </Grid2>
-            </Grid2>
+            </div>
         </CommonPage>
     );
 };
