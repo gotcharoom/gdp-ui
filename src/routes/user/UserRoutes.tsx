@@ -32,6 +32,9 @@ const ProtectedChangePasswordPageComponent = withProtect(ChangePasswordPageCompo
 // Achievement
 const DisplayStand = lazy(() => import('@/pages/achievement/displayStand/DisplayStandBoard'));
 const DisplayStandComponent = withSuspense(DisplayStand);
+const Album = lazy(() => import('@/pages/achievement/album/AlbumBoard'));
+const AlbumComponent = withSuspense(Album);
+const AchievementTest = withSuspense(lazy(() => import('@/pages/achievement/AchievementTest')));
 
 //Notices
 const Notice = lazy(() => import('@/pages/board/notice/NoticeBoard'));
@@ -139,6 +142,28 @@ const UserRoutes: RouteObject[] = [
                                 },
                             },
                         ],
+                    },
+                    {
+                        path: 'album',
+                        element: <AlbumComponent />,
+                        handle: { title: '앨범 목록(임시)', showMenu: true },
+                        children: [
+                            {
+                                index: true,
+                                path: ':id',
+                                element: <AlbumComponent />,
+                                handle: {
+                                    title: 'adfasdf',
+                                    icon: 'more',
+                                    showManu: true,
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        path: 'test',
+                        element: <AchievementTest />,
+                        handle: { title: '테스트 페이지', showMenu: true },
                     },
                 ],
             },
