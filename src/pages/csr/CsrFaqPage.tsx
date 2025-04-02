@@ -1,7 +1,7 @@
 import CommonPage from '@/common/components/CommonPage';
 import CommonSearch from '@/common/components/notice/CommonSearch';
 import { Button, Pagination, PaginationItem, SelectChangeEvent, Stack, TableCell, TableRow } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import '@styles/csr/csrFaqPage.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +21,6 @@ const CsrFAQPage = () => {
     const [csrFaq, setCsrFaq] = useState<SampleCsrDataType[]>([]);
     const [_loading, setLoading] = useState<boolean>(true);
     const { title } = useOutletContext<{ title: string }>();
-    const { id } = useParams<{ id: string }>();
     const faqClickItem = useSelector((state: RootState) => state.csr.faqClickItem);
     const dispatch = useDispatch();
     const csrFaqItem: NewCsr = {
@@ -57,9 +56,13 @@ const CsrFAQPage = () => {
     const handleNavigate = (category: string) => {
         dispatch(setCsr({ faqClickItem: category }));
     };
-    const handleNaviDetailPage = () => {
-        navigate(`/Csr/Faq/${id}`);
-    };
+    const handleNaviDetailPage = useCallback(
+        (id: string) => {
+            navigate(`/Csr/Faq/${id}`);
+        },
+        [navigate],
+    );
+
     const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
         setCurrentPage(value);
     };
@@ -113,7 +116,7 @@ const CsrFAQPage = () => {
                     </Button>
                 </div>
                 {currentCsrFaqs.map((csrFaq, index) => (
-                    <TableRow key={index} onClick={handleNaviDetailPage}>
+                    <TableRow key={index} onClick={() => handleNaviDetailPage(csrFaq.id)}>
                         <TableCell>{csrFaq.id}</TableCell>
                         <TableCell>{csrFaq.category}</TableCell>
                         <TableCell>{csrFaq.title}</TableCell>
