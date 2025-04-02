@@ -9,7 +9,7 @@ interface SampleBulletinDataType {
     comments: Comments[];
     commnetsIndex: number;
     users: User[];
-    writter: string;
+    writer: string;
 }
 interface Comments {
     user: string;
@@ -45,7 +45,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 userName: 'gaile',
             },
         ],
-        writter: 'gaile',
+        writer: 'gaile',
     },
     {
         id: 12,
@@ -68,7 +68,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 userName: 'gorry',
             },
         ],
-        writter: 'gerry',
+        writer: 'gerry',
     },
     {
         id: 13,
@@ -91,7 +91,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 userName: 'OeweO',
             },
         ],
-        writter: 'OeweO',
+        writer: 'OeweO',
     },
     {
         id: 14,
@@ -114,7 +114,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 userName: 'Reesd',
             },
         ],
-        writter: 'gerqry',
+        writer: 'gerqry',
     },
     {
         id: 15,
@@ -137,7 +137,7 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 userName: 'Wrath',
             },
         ],
-        writter: 'gerrey',
+        writer: 'gerrey',
     },
     {
         id: 16,
@@ -160,7 +160,30 @@ const SampleBulletinData: SampleBulletinDataType[] = [
                 userName: 'Earta',
             },
         ],
-        writter: 'gerryy',
+        writer: 'gerryy',
+    },
+    {
+        id: 17,
+        category: 'test56',
+        title: 'testtitle56',
+        recommend: 50,
+        view: 500,
+        date: 'testdate56',
+        content: '몬헌 업적을 만들었습니다. 몬헌 시간 1000시간 업적',
+        comments: [
+            {
+                user: 'test',
+                reply: '이거 쉽고 재밌네요',
+            },
+        ],
+        commnetsIndex: 4,
+        users: [
+            {
+                userId: 1234,
+                userName: 'test',
+            },
+        ],
+        writer: 'test',
     },
 ];
 

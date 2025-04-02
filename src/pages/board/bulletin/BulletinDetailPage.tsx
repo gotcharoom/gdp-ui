@@ -22,6 +22,7 @@ const BulletinDetailPage = () => {
         search: '게시판',
         pagePerItems: 10,
     };
+
     const addComment = (newComment: { user: string; reply: string }) => {
         setBulletins((prevBulletins) =>
             prevBulletins.map((bulletin) =>
@@ -29,13 +30,13 @@ const BulletinDetailPage = () => {
             ),
         );
     };
-    const removeComment = (postId: number, commentIndex: number) => {
+    const removeComment = (bulletinId: number, commentIndex: number) => {
         setBulletins((prevBulletins) =>
             prevBulletins.map((bulletin) =>
-                bulletin.id === postId
+                bulletin.id === bulletinId // 올바른 게시글 찾기
                     ? {
                           ...bulletin,
-                          comments: bulletin.comments.filter((_, index) => index !== commentIndex),
+                          comments: bulletin.comments.filter((_, index) => index !== commentIndex), // 댓글 삭제
                       }
                     : bulletin,
             ),
@@ -54,7 +55,7 @@ const BulletinDetailPage = () => {
         setDown(down + 1);
     };
     const handleModify = () => {
-        navigate(`/board/bulletin/${id}/modify`);
+        navigate(`/board/bulletin/${id}/modify`, { state: { bulletin } });
     };
 
     /* Lifecycle */
@@ -85,6 +86,7 @@ const BulletinDetailPage = () => {
             </Typography>
         );
     }
+    const currentUser = bulletin.users.find((user) => user.userName === bulletin.writer) || { userId: 0, userName: '익명' };
 
     return (
         <CommonPage width={'100%'} height={'100%'} title=''>
@@ -108,13 +110,19 @@ const BulletinDetailPage = () => {
                     <ThumbDown />
                     {down}
                 </IconButton>
-                {bulletin.users.some((user) => user.userName === bulletin.writter) && (
+                {bulletin.users.some((user) => user.userName === bulletin.writer) && (
                     <Button style={{ width: '100px', height: '50px', marginLeft: '5px' }} variant='contained' onClick={handleModify}>
                         수정하기
                     </Button>
                 )}
             </div>
-            <CommonReply comments={bulletin.comments ?? []} addComment={addComment} removeComment={removeComment} postId={bulletin?.id} />
+            <CommonReply
+                comments={bulletin.comments ?? []}
+                addComment={addComment}
+                removeComment={(commentIndex) => removeComment(bulletin.id, commentIndex)}
+                users={[]}
+                currentUser={currentUser}
+            />
         </CommonPage>
     );
 };

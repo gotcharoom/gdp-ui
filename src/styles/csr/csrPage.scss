@@ -1,0 +1,31 @@
+@use '../constants/csrConstants.scss' as *;
+
+.csr-page {
+    flex:1;
+    display: flex;
+
+    .csr-page__box{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(20%, auto));
+        grid-template-rows: repeat(2,minmax(100px,auto));
+        gap: $box__grid__gap;
+       
+    }
+    .csr-page__button{
+        display: grid; 
+        grid-template-columns: 1fr 1fr 1fr; 
+        margin: 2px;
+        gap:$button__grid__gap;
+        
+    }
+    .csr-page__card{
+         display: grid;
+         place-items: center;
+        grid-template-columns: repeat(auto-fill, minmax(20%,auto));
+        gap:$card__grid__gap;
+        text-align: center;
+        &:hover{color:gray};
+    }
+    
+}

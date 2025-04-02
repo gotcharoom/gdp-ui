@@ -51,20 +51,18 @@ const NoticeDetail = () => {
 
     return (
         <CommonPage width={'100%'} height={'100%'} title={'공지사항'}>
-            <Paper sx={{ p: 3, maxWidth: 800, margin: 'auto', mt: 5 }}>
-                <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/board/notice')} sx={{ mb: 2 }}>
-                    뒤로 가기
-                </Button>
+            <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/board/notice')} sx={{ mb: 2 }}>
+                뒤로 가기
+            </Button>
 
-                <Typography variant='h4' gutterBottom>
-                    {notice.title}
-                </Typography>
-                <Typography variant='subtitle1' color='textSecondary'>
-                    카테고리: {notice.category} | 조회수: {notice.view} | 추천: {notice.recommend}
-                </Typography>
-                <Divider sx={{ my: 2 }} />
-                <Typography variant='body1'>{notice.content || '내용이 없습니다.'}</Typography>
-            </Paper>
+            <Typography variant='h4' gutterBottom>
+                {notice.title}
+            </Typography>
+            <Typography variant='subtitle1' color='textSecondary'>
+                카테고리: {notice.category} | 조회수: {notice.view} | 추천: {notice.recommend}
+            </Typography>
+            <Divider sx={{ my: 2 }} />
+            <Typography variant='body1'>{notice.content || '내용이 없습니다.'}</Typography>
         </CommonPage>
     );
 };
