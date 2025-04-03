@@ -22,7 +22,7 @@ const initBoard: SampleNoticeDataType = {
     content: '',
 };
 
-const itemsPerPage = 5; // 페이지당 게시판 갯수
+const itemsPerPage = 10; // 페이지당 게시판 갯수
 
 const NoticeBoard = () => {
     /* Hooks */

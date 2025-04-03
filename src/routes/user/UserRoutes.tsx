@@ -52,6 +52,10 @@ const BulletinModifyComponent = withSuspense(BulletinModify);
 //CSR(고객센터)
 const Representative = lazy(() => import('@/pages/csr/Representative'));
 const RepresentativeComponent = withSuspense(Representative);
+const CsrFaqPage = lazy(() => import('@/pages/csr/CsrFaqPage'));
+const CsrFaqPageComponent = withSuspense(CsrFaqPage);
+const CsrFaqDetailPage = lazy(() => import('@/pages/csr/CsrFaqDetailPage'));
+const CsrFaqDetailPageComponent = withSuspense(CsrFaqDetailPage);
 
 const UserRoutes: RouteObject[] = [
     {
@@ -203,17 +207,20 @@ const UserRoutes: RouteObject[] = [
 
                             {
                                 path: ':id',
-                                element: <BulletinDetailComponent />,
+                                element: <CommonChildrenLayout />,
                                 handle: {
                                     title: '자유게시판',
                                     icon: 'more',
                                 },
+
                                 children: [
+                                    { index: true, element: <BulletinDetailComponent /> },
                                     {
                                         path: 'modify',
                                         element: <BulletinModifyComponent />,
                                         handle: {
                                             title: '수정페이지',
+                                            icon: 'more',
                                         },
                                     },
                                 ],
@@ -246,12 +253,28 @@ const UserRoutes: RouteObject[] = [
                 ],
             },
             {
-                path: 'CSR',
+                path: 'Csr',
                 handle: {
                     title: '고객센터',
                     showMenu: true,
                 },
-                element: <RepresentativeComponent />,
+
+                children: [
+                    { index: true, element: <RepresentativeComponent />, handle: { showMenu: true } },
+                    {
+                        path: 'faq',
+
+                        handle: { title: '고객센터' },
+                        children: [
+                            { index: true, element: <CsrFaqPageComponent />, handle: { showMenu: true } },
+                            {
+                                path: ':id',
+                                element: <CsrFaqDetailPageComponent />,
+                                handle: { title: '고객센터 상세페이지' },
+                            },
+                        ],
+                    },
+                ],
             },
         ],
     },
