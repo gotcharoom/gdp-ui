@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Paper, Typography, Button, Divider, CircularProgress } from '@mui/material';
+import { Typography, Button, Divider, CircularProgress } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getNoticeList } from '@apis/notice/notice';
 import { SampleNoticeDataType } from '@/mocks/datas/sampleNoticeData';
@@ -51,12 +51,12 @@ const NoticeDetail = () => {
 
     return (
         <CommonPage width={'100%'} height={'100%'} title={'공지사항'}>
-            <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/board/notice')} sx={{ mb: 2 }}>
+            <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/board/notice')} sx={{ mb: 2, justifyContent: 'left' }}>
                 뒤로 가기
             </Button>
 
             <Typography variant='h4' gutterBottom>
-                {notice.title}
+                {notice.category} | {notice.title}
             </Typography>
             <Typography variant='subtitle1' color='textSecondary'>
                 카테고리: {notice.category} | 조회수: {notice.view} | 추천: {notice.recommend}

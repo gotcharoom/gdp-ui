@@ -4,7 +4,7 @@ import { getNoticeList } from '@apis/notice/notice';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-//csss
+//scss
 import { Pagination, Stack, PaginationItem, SelectChangeEvent } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -115,6 +115,8 @@ const NoticeBoard = () => {
                 <Stack spacing={2}>
                     <Pagination
                         count={Math.ceil(filterNotices.length / itemsPerPage)}
+                        showFirstButton
+                        showLastButton
                         page={currentPage}
                         onChange={handlePageChange}
                         renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}

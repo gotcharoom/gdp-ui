@@ -114,6 +114,8 @@ const BulletinBoard = () => {
                     <Pagination
                         count={Math.ceil(filterBulletins.length / itemsPerPage)}
                         page={currentPage}
+                        showFirstButton
+                        showLastButton
                         onChange={handlePageChange}
                         renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
                     />

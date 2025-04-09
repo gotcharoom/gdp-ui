@@ -1,3 +1,13 @@
-.notice-title {
-    font-size: 50px;
+@use '../constants/noticeConstants.scss' as *;
+
+.notice-layout{
+   .notice-layout__title{
+    font-size: $title__font--size;
+    font-family: Arial,sans-serif;
+    font-weight: 500;
+   }
+   .notice-layout__table{
+    font-size: $table__font--size;
+    font-family: Arial,sans-serif;
+   }
 }
