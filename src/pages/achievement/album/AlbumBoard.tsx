@@ -52,6 +52,16 @@ const AlbumBoard = () => {
         }
     };
 
+    /** delete */
+    // const deleteData = async (id: number) => {
+    //     try {
+    //         alert(`앨범 id는 ${id}입니다.`);
+    //         // const data = await deleteAlbum(id);
+    //     } catch (error) {
+    //         alert(error);
+    //     }
+    // };
+
     /** Handler */
     const onClickHandler = () => {
         console.log('메롱메롱');
@@ -104,7 +114,7 @@ const AlbumBoard = () => {
                 {/** Data List */}
                 <DragScrollBox>
                     {tableRows.map((column) => (
-                        <CommonAlbumCard key={column.id} title={column.title} create_date={column.create_date.toString()} />
+                        <CommonAlbumCard key={column.id} id={column.id} title={column.title} create_date={column.create_date.toString()} />
                     ))}
                 </DragScrollBox>
 

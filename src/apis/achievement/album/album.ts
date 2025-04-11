@@ -1,9 +1,10 @@
-import { getData } from '@/common/utils/axiosUtils';
+import { deleteData, getData } from '@/common/utils/axiosUtils';
 import AlbumType from '@/types/pages/achievement/album/Album.type';
 import PageObjectType from '@/types/pages/achievement/PageObject.type';
 
 const urls = {
-    test: '/api/v1/displayStand/album',
+    list: '/api/v1/displayStand/album',
+    delete: '/api/v1/displayStand/album',
 };
 
 interface ListParams {
@@ -17,7 +18,11 @@ interface ListData {
 }
 
 const getAlbumList = async (params: ListParams): Promise<ListData> => {
-    return await getData<ListData>(urls.test, { params: params }).then((res) => res.data);
+    return await getData<ListData>(urls.list, { params: params }).then((res) => res.data);
 };
 
-export { getAlbumList };
+const deleteAlbum = async (id: number) => {
+    return await deleteData(`${urls.delete}/${id}`).then((res) => res.data);
+};
+
+export { getAlbumList, deleteAlbum };

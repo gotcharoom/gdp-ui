@@ -1,13 +1,30 @@
-import { Grid2, Menu, MenuItem, Typography } from '@mui/material';
+import { deleteAlbum } from '@/apis/achievement/album/album';
+import { Box, Button, Grid2, Menu, MenuItem, Modal, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};
 
 interface Props {
+    id: number;
     title: string;
     create_date: string;
 }
 
 const CommonAlbumCard = (props: Props) => {
-    /** Dropdown controll */
+    const navigate = useNavigate();
+
+    /** Dropdown Controll */
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -15,6 +32,43 @@ const CommonAlbumCard = (props: Props) => {
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    /** Modal Controll */
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const handleModalOpen = () => {
+        setModalOpen(true);
+    };
+    const handleModalClose = () => setModalOpen(false);
+
+    /** Delete */
+    const [inputValue, setInputValue] = useState<string>('');
+    const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setInputValue(e.target.value); // 입력값 업데이트
+    };
+
+    const handleEnterKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter') handleDelete(props.id);
+    };
+
+    const handleDelete = (id: number) => {
+        if (inputValue == props.title) {
+            deleteData(id);
+        } else {
+            alert('똑띠 입력해라잉');
+        }
+    };
+
+    const deleteData = async (id: number) => {
+        try {
+            const data = await deleteAlbum(id);
+            console.log(data);
+            navigate(`/achievement/album`, { replace: true });
+        } catch (error) {
+            alert(`오류 발생 ${error}`);
+        } finally {
+            alert(`삭제되었습니다.`);
+        }
     };
 
     return (
@@ -25,6 +79,7 @@ const CommonAlbumCard = (props: Props) => {
             height={260}
             width={250}
             m='20px'
+            mb='40px'
             p='2px'
             sx={{
                 borderRadius: 2,
@@ -69,13 +124,46 @@ const CommonAlbumCard = (props: Props) => {
                             </span>
                             내보내기 (JSON)
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem
+                            onClick={() => {
+                                handleClose();
+                                handleModalOpen();
+                            }}
+                        >
                             <span className='material-symbols-outlined' style={{ marginRight: 10 }}>
                                 delete
                             </span>
                             삭제
                         </MenuItem>
                     </Menu>
+                    <Modal
+                        open={modalOpen}
+                        onClose={handleModalClose}
+                        aria-labelledby='modal-modal-title'
+                        aria-describedby='modal-modal-description'
+                    >
+                        <Box sx={modalStyle}>
+                            <Typography id='modal-modal-title' variant='h5' component='h2'>
+                                정말 삭제하시겠습니까?
+                            </Typography>
+                            <Typography id='modal-modal-description' sx={{ my: 2 }}>
+                                해당 앨범 명을 정확히 입력해주세요.
+                            </Typography>
+                            <Typography sx={{ mb: 1 }}>
+                                선택된 앨범명 : <span style={{ color: 'red' }}>{props.title}</span>
+                            </Typography>
+                            <TextField
+                                variant='outlined'
+                                size='small'
+                                sx={{ mr: 5 }}
+                                onChange={handleTextChange}
+                                onKeyDown={(e) => handleEnterKey(e)}
+                            />
+                            <Button variant='contained' color='warning' onClick={() => handleDelete(props.id)}>
+                                삭제
+                            </Button>
+                        </Box>
+                    </Modal>
                 </Grid2>
             </Grid2>
         </Grid2>
