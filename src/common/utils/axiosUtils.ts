@@ -1,6 +1,7 @@
 import { instance } from '@/common/utils/axiosInstance.ts';
 import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import ApiError from '@/common/utils/ApiError.ts';
 
 const handleAxiosError = (error: unknown): never => {
     if (axios.isAxiosError(error)) {
@@ -12,52 +13,46 @@ const handleAxiosError = (error: unknown): never => {
     }
 };
 
-export const getData = async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
+const handleApiResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
+    const { data } = response;
+
+    if (data.code !== 1001) {
+        throw new ApiError(data.code, data.message || 'API 실패');
+    }
+
+    return {
+        ...data,
+        status: response.status,
+    };
+};
+
+const requestWrapper = async <T>(
+    method: 'get' | 'post' | 'put' | 'delete',
+    url: string,
+    dataOrConfig?: unknown,
+    config?: AxiosRequestConfig,
+): Promise<ApiResponse<T>> => {
     try {
-        const response = await instance.get<T, AxiosResponse<ApiResponse<T>>>(url, config);
-        return {
-            ...response.data,
-            status: response.status,
-        };
-    } catch (error: unknown) {
-        return Promise.reject(handleAxiosError(error));
+        let response: AxiosResponse<ApiResponse<T>>;
+
+        if (method === 'get' || method === 'delete') {
+            response = await instance[method]<T, AxiosResponse<ApiResponse<T>>>(url, dataOrConfig as AxiosRequestConfig);
+        } else {
+            response = await instance[method]<T, AxiosResponse<ApiResponse<T>>>(url, dataOrConfig, config);
+        }
+
+        return handleApiResponse(response);
+    } catch (error) {
+        if (error instanceof ApiError) {
+            return Promise.reject(error);
+        } else {
+            return Promise.reject(handleAxiosError(error));
+        }
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const postData = async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
-    try {
-        const response = await instance.post<T, AxiosResponse<ApiResponse<T>>>(url, data, config);
-        return {
-            ...response.data,
-            status: response.status,
-        };
-    } catch (error) {
-        return Promise.reject(handleAxiosError(error));
-    }
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const putData = async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
-    try {
-        const response = await instance.put<T, AxiosResponse<ApiResponse<T>>>(url, data, config);
-        return {
-            ...response.data,
-            status: response.status,
-        };
-    } catch (error) {
-        return Promise.reject(handleAxiosError(error));
-    }
-};
-
-export const deleteData = async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
-    try {
-        const response = await instance.delete<T, AxiosResponse<ApiResponse<T>>>(url, config);
-        return {
-            ...response.data,
-            status: response.status, // 응답 객체에 statusCode 추가
-        };
-    } catch (error) {
-        return Promise.reject(handleAxiosError(error));
-    }
-};
+// Exported API methods
+export const getData = <T>(url: string, config?: AxiosRequestConfig) => requestWrapper<T>('get', url, config);
+export const postData = <T>(url: string, data?: unknown, config?: AxiosRequestConfig) => requestWrapper<T>('post', url, data, config);
+export const putData = <T>(url: string, data?: unknown, config?: AxiosRequestConfig) => requestWrapper<T>('put', url, data, config);
+export const deleteData = <T>(url: string, config?: AxiosRequestConfig) => requestWrapper<T>('delete', url, config);
