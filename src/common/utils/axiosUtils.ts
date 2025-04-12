@@ -2,6 +2,7 @@ import { instance } from '@/common/utils/axiosInstance.ts';
 import ApiResponse from '@/types/utils/ApiResponse.type.ts';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import ApiError from '@/common/utils/ApiError.ts';
+import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 
 const handleAxiosError = (error: unknown): never => {
     if (axios.isAxiosError(error)) {
@@ -16,7 +17,7 @@ const handleAxiosError = (error: unknown): never => {
 const handleApiResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
     const { data } = response;
 
-    if (data.code !== 1001) {
+    if (data.code !== ResponseCode.SUCCESS.code) {
         throw new ApiError(data.code, data.message || 'API 실패');
     }
 
