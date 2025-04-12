@@ -21,7 +21,6 @@ import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import { useAlert } from '@/common/hooks/useAlert.ts';
 import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
-import { instance } from '@/common/utils/axiosInstance.ts';
 import ApiError from '@/common/utils/ApiError.ts';
 
 const LoginPage = () => {
@@ -91,7 +90,6 @@ const LoginPage = () => {
                 openAlert(successAlert);
                 routeToRoot();
             } catch (e) {
-                console.log(e instanceof ApiError);
                 if (e instanceof ApiError) {
                     const failAlert: AlertConfigProps = {
                         severity: 'error',
