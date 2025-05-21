@@ -2,12 +2,12 @@ import CommonPage from '@/common/components/CommonPage';
 import CommonSearch from '@/common/components/notice/CommonSearch';
 import { Button, Pagination, PaginationItem, SelectChangeEvent, Stack, TableCell, TableRow } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import '@styles/csr/csrFaqPage.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/stores/store';
 import { setCsr } from '@/stores/slices/csrSlice';
-import CsrState from '@/types/pages/csr/CsrState.type';
+
 import NewCsr from '@/types/pages/csr/NewCsrType';
 import { getCsrList } from '@/apis/csr/csr';
 import { SampleCsrDataType } from '@/mocks/datas/sampleCsrData';
@@ -128,6 +128,8 @@ const CsrFAQPage = () => {
                         count={Math.ceil(currentCsrFaqs.length / itemsPerPage)}
                         page={currentPage}
                         onChange={handlePageChange}
+                        showFirstButton
+                        showLastButton
                         renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
                     />
                 </Stack>

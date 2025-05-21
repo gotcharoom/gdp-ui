@@ -1,4 +1,5 @@
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import '@styles/notice/noticeLayout.scss';
 
 interface Notice {
     id: number;
@@ -25,25 +26,43 @@ const CommonNotice = (props: CommonNoticeProps) => {
     };
     return (
         <TableContainer>
-            <Table>
+            <Table className={'notice-layout'}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>카테고리</TableCell>
-                        <TableCell align='left'>제목</TableCell>
-                        <TableCell align='left'>추천</TableCell>
-                        <TableCell align='left'>조회</TableCell>
-                        <TableCell align='left'>날짜</TableCell>
+                        <TableCell className={'notice-layout__title'}>카테고리</TableCell>
+                        <TableCell className={'notice-layout__title'} align='left'>
+                            제목
+                        </TableCell>
+                        <TableCell className={'notice-layout__title'} align='left'>
+                            추천
+                        </TableCell>
+                        <TableCell className={'notice-layout__title'} align='left'>
+                            조회
+                        </TableCell>
+                        <TableCell className={'notice-layout__title'} align='left'>
+                            날짜
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {currentNotices.length > 0 ? (
                         currentNotices.map((notice, index) => (
-                            <TableRow key={notice.id} onClick={() => props.onNoticeClick(notice.id)} hover sx={{ cursor: 'pointer' }}>
-                                <TableCell sx={{ color: isRed(notice, index) }}>{notice.category}</TableCell>
-                                <TableCell>{notice.title}</TableCell>
-                                <TableCell>{notice.recommend}</TableCell>
-                                <TableCell>{notice.view}</TableCell>
-                                <TableCell>{notice.date}</TableCell>
+                            <TableRow
+                                key={notice.id}
+                                onClick={() => props.onNoticeClick(notice.id)}
+                                hover
+                                sx={{
+                                    cursor: 'pointer',
+                                    backgroundColor: notice.category === '공지사항' && index < 3 ? '#f5f5f5' : 'transparent',
+                                }}
+                            >
+                                <TableCell className={'notice-layout__table'} sx={{ color: isRed(notice, index) }}>
+                                    {notice.category}
+                                </TableCell>
+                                <TableCell className={'notice-layout__table'}>{notice.title}</TableCell>
+                                <TableCell className={'notice-layout__table'}>{notice.recommend}</TableCell>
+                                <TableCell className={'notice-layout__table'}>{notice.view}</TableCell>
+                                <TableCell className={'notice-layout__table'}>{notice.date}</TableCell>
                             </TableRow>
                         ))
                     ) : (
