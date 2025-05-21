@@ -16,7 +16,7 @@ import { RootState } from '@stores/store.ts';
 
 import '@styles/pages/auth/ChangePasswordPage.scss';
 import { putUserPassword } from '@apis/auth/userInfo.ts';
-import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
+import ApiError from '@/common/utils/ApiError.ts';
 
 const ChangePasswordPage = () => {
     /* Hooks */
@@ -42,16 +42,7 @@ const ChangePasswordPage = () => {
     const onSubmit = useCallback(
         async (form: ChangePasswordForm) => {
             try {
-                const response = await putUserPassword(form);
-
-                if (response.code !== ResponseCode.SUCCESS.code) {
-                    const failAlert: AlertConfigProps = {
-                        severity: 'error',
-                        contents: response.message,
-                    };
-                    openAlert(failAlert);
-                    return;
-                }
+                await putUserPassword(form);
 
                 const successAlert: AlertConfigProps = {
                     severity: 'success',
@@ -61,11 +52,19 @@ const ChangePasswordPage = () => {
                 method.reset();
             } catch (e) {
                 console.log(e);
-                const errorAlert: AlertConfigProps = {
-                    severity: 'error',
-                    contents: '오류 발생으로 변경 사항을 저장하지 못했습니다',
-                };
-                openAlert(errorAlert);
+                if (e instanceof ApiError) {
+                    const failAlert: AlertConfigProps = {
+                        severity: 'error',
+                        contents: e.message,
+                    };
+                    openAlert(failAlert);
+                } else {
+                    const errorAlert: AlertConfigProps = {
+                        severity: 'error',
+                        contents: '오류 발생으로 변경 사항을 저장하지 못했습니다',
+                    };
+                    openAlert(errorAlert);
+                }
             }
         },
         [method, openAlert],

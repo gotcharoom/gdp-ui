@@ -7,7 +7,6 @@ import ControlTextField from '@/common/components/ControlTextField.tsx';
 import LoginRequestForm from '@/types/pages/auth/LoginRequestForm.type.ts';
 import { postLoginRequest, postRequestRememberMe, requestSocialLoginUri } from '@apis/auth/login.ts';
 import { useCallback, useEffect } from 'react';
-import { ResponseCode } from '@/common/utils/ReponseCodeUtil.ts';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@stores/store.ts';
 import { setAuth } from '@stores/slices/authSlice.ts';
@@ -22,6 +21,7 @@ import { useModal } from '@/common/hooks/useModal.ts';
 import { CommonModalProps } from '@/common/contexts/ModalContext.ts';
 import { useAlert } from '@/common/hooks/useAlert.ts';
 import { AlertConfigProps } from '@/common/contexts/AlertContext.ts';
+import ApiError from '@/common/utils/ApiError.ts';
 
 const LoginPage = () => {
     /* Hooks */
@@ -79,34 +79,34 @@ const LoginPage = () => {
             try {
                 const isRememberMe = request.rememberMe;
                 await postRequestRememberMe(isRememberMe);
-                const response = await postLoginRequest(request);
+                await postLoginRequest(request);
 
-                if (response.code === ResponseCode.SUCCESS.code) {
-                    dispatch(setAuth());
+                dispatch(setAuth());
 
-                    const successAlert: AlertConfigProps = {
-                        severity: 'success',
-                        contents: '로그인하였습니다',
-                    };
-                    openAlert(successAlert);
-                    routeToRoot();
-                } else {
+                const successAlert: AlertConfigProps = {
+                    severity: 'success',
+                    contents: '로그인하였습니다',
+                };
+                openAlert(successAlert);
+                routeToRoot();
+            } catch (e) {
+                if (e instanceof ApiError) {
                     const failAlert: AlertConfigProps = {
                         severity: 'error',
                         contents: '로그인 정보가 잘못됐습니다',
                     };
                     openAlert(failAlert);
-                }
-            } catch (e) {
-                await postRequestRememberMe(false);
-                console.error('Login Error:', e);
+                } else {
+                    await postRequestRememberMe(false);
+                    console.error('Login Error:', e);
 
-                const errorAlert: AlertConfigProps = {
-                    severity: 'error',
-                    contents: '로그인시 오류가 발생했습니다',
-                };
-                openAlert(errorAlert);
-                throw e;
+                    const errorAlert: AlertConfigProps = {
+                        severity: 'error',
+                        contents: '로그인시 오류가 발생했습니다',
+                    };
+                    openAlert(errorAlert);
+                    throw e;
+                }
             }
         },
         [dispatch, openAlert, routeToRoot],
