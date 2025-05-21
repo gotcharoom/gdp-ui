@@ -3,9 +3,7 @@ import NewNotice from '@/types/pages/notice/NewNotice.type';
 import { getNoticeList } from '@apis/notice/notice';
 import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-//scss
-import { Pagination, Stack, PaginationItem, SelectChangeEvent } from '@mui/material';
+import { Pagination, Stack, PaginationItem, SelectChangeEvent, Paper, Box, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CommonNotice from '@/common/components/notice/CommonNotice';
@@ -104,34 +102,42 @@ const NoticeBoard = () => {
 
     return (
         <CommonPage width={'100%'} height={'100%'} title={'공지사항'}>
-            <div>
-                <CommonNotice
-                    notices={filterNotices}
-                    onNoticeClick={handleNoticeClick}
-                    itemsPerPage={itemsPerPage}
-                    currentPage={currentPage}
-                />
+            <Box sx={{ p: 3 }}>
+                <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+                    <Typography variant='h6' sx={{ mb: 3, color: 'text.secondary' }}>
+                        총 {filterNotices.length}개의 공지사항이 있습니다.
+                    </Typography>
 
-                <Stack spacing={2}>
-                    <Pagination
-                        count={Math.ceil(filterNotices.length / itemsPerPage)}
-                        showFirstButton
-                        showLastButton
-                        page={currentPage}
-                        onChange={handlePageChange}
-                        renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+                    <CommonNotice
+                        notices={filterNotices}
+                        onNoticeClick={handleNoticeClick}
+                        itemsPerPage={itemsPerPage}
+                        currentPage={currentPage}
                     />
-                </Stack>
 
-                <CommonSearch
-                    searchType={searchType}
-                    searchQuery={inputText}
-                    onSearchChange={handleSearchChange}
-                    onKeyDown={handleKeyDown}
-                    onSearch={handleSearch}
-                    onSearchTypeChange={handleSearchTypeChange}
-                />
-            </div>
+                    <Stack spacing={2} sx={{ mt: 3, display: 'flex', alignItems: 'center' }}>
+                        <Pagination
+                            count={Math.ceil(filterNotices.length / itemsPerPage)}
+                            showFirstButton
+                            showLastButton
+                            page={currentPage}
+                            onChange={handlePageChange}
+                            renderItem={(item) => <PaginationItem slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }} {...item} />}
+                        />
+                    </Stack>
+                </Paper>
+
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+                    <CommonSearch
+                        searchType={searchType}
+                        searchQuery={inputText}
+                        onSearchChange={handleSearchChange}
+                        onKeyDown={handleKeyDown}
+                        onSearch={handleSearch}
+                        onSearchTypeChange={handleSearchTypeChange}
+                    />
+                </Box>
+            </Box>
         </CommonPage>
     );
 };
